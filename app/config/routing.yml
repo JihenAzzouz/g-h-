@@ -1,0 +1,42 @@
+my_app_admin:
+    resource: "@MyAppAdminBundle/Resources/config/routing.yml"
+    prefix:   /admin
+
+my_app_user:
+    resource: "@MyAppUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+guestandhost_experiences:
+    resource: "@MyAppUserBundle/Resources/config/Experience/routing.yml"
+    prefix:   /experience
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+mgilet_notifications:
+    resource: "@MgiletNotificationBundle/Controller/"
+    prefix: /notifications
+
+guest_and_host_demande:
+    resource: "@MyAppUserBundle/Resources/config/routing/demande.yml"
+    prefix:   /demande
+
+guest_and_host_proposition:
+    resource: "@MyAppUserBundle/Resources/config/routing/proposition.yml"
+    prefix:   /proposition
+Cuisine:
+    resource: "@MyAppAdminBundle/Resources/config/routing/cuisine.yml"
+    prefix:   /admin/cuisine
+Guide:
+    resource: "@MyAppAdminBundle/Resources/config/routing/offresguide.yml"
+    prefix:   /admin/guide
+lieu:
+    resource: "@MyAppAdminBundle/Resources/config/routing/lieuxavisiter.yml"
+    prefix:   /admin/lieu
+
+guide1:
+    resource: "@MyAppUserBundle/Resources/config/routing/offresguide.yml"
+    prefix:   /guide

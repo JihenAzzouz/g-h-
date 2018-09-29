@@ -1,0 +1,42 @@
+my_app_admin_homepage:
+    path:     /
+    defaults: { _controller:  MyAppAdminBundle:Admin:admin }
+my_app_admin_login:
+    path:     /login
+    defaults: { _controller: MyAppAdminBundle:Admin:login }
+Forum:
+    path:     /forum
+    defaults: { _controller: MyAppAdminBundle:Forum:forumStat }
+GenererCarte:
+     path:     /generer
+     defaults: { _controller:  MyAppAdminBundle:Carte:GenererCarte}
+
+AfficherCarte:
+     path:     /afficher
+     defaults: { _controller:  MyAppAdminBundle:Carte:afficherCarte }
+
+SupprimerCarte:
+     path:     /supprimer/{id}
+     defaults: { _controller:  MyAppAdminBundle:Carte:supprimerCarte }
+
+Supprimer2Carte:
+     path:     /supprimer2
+     defaults: { _controller:  MyAppAdminBundle:Carte:deleteDisAJAX }
+     methods: [post]
+
+_grapheChartLine:
+     path:     /chartLine
+     defaults: { _controller: MyAppAdminBundle:Reservation:chartLine }
+
+admin_aff:
+               path:     /afficher/
+               defaults: { _controller:  MyAppAdminBundle:Admin:admin }
+
+laf_user_delete:
+      path:     /admin/User/delete/{id}
+      defaults: { _controller: MyAppAdminBundle:Admin:Supprimer }
+
+
+laf_user_homepage:
+      path:     /admin/
+      defaults: { _controller: MyAppAdminBundle:Admin:admin }

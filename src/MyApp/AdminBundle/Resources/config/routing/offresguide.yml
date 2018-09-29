@@ -1,0 +1,62 @@
+offresguide_index:
+    path:     /
+    defaults: { _controller: "MyAppAdminBundle:Offresguide:index" }
+    methods:  GET
+
+offresguide_show:
+    path:     /{id}/show
+    defaults: { _controller: "MyAppAdminBundle:Offresguide:show" }
+    methods:  GET
+
+offresguide_new:
+    path:     /new
+    defaults: { _controller: "MyAppAdminBundle:Offresguide:new" }
+    methods:  [GET, POST]
+
+offresguide_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "MyAppAdminBundle:Offresguide:edit" }
+    methods:  [GET, POST]
+
+offresguide_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "MyAppAdminBundle:Offresguide:delete" }
+
+offresguide_showAll:
+    path:     /showAll
+    defaults: { _controller: "MyAppAdminBundle:Offresguide:showAll" }
+    methods:  GET
+
+offresguide_showAllFront:
+    path:     /showAllFront
+    defaults: { _controller: "MyAppAdminBundle:Offresguide:showAllFront" }
+    methods:  GET
+
+offre_detail:
+    path:     /{id}/offreDetail
+    defaults: { _controller: "MyAppAdminBundle:Offresguide:detailOffre" }
+    methods:  GET
+
+offreParPayss:
+    path:     /offreparP/{pays}
+    defaults: { _controller: "MyAppAdminBundle:Offresguide:OffreParPays" }
+    methods:  [GET, POST]
+
+ville:
+    path:     /ville/{idpays}
+    defaults: { _controller: "MyAppAdminBundle:Offresguide:ville" }
+    methods:  [GET, POST]
+
+AfficherSansFiltre:
+    path:     /AfficherSansFiltre/{im}
+    defaults: { _controller: "MyAppAdminBundle:Offresguide:AfficherSansFiltre" }
+    methods:  [GET, POST]
+
+offre_map:
+    path:     /offremap
+    defaults: { _controller: "MyAppAdminBundle:Offresguide:ShowMap" }
+    methods:  GET
+
+
+
+

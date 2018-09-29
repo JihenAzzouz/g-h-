@@ -1,0 +1,93 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+{% block body %}
+
+    <nav class="breadcrumbs">
+        <div class="container">
+            <ul>
+                <li class="breadcrumbs__item"><a href="{{ path('my_app_user_homepage') }}" class="breadcrumbs__link">Accueil</a></li>
+                <li class="breadcrumbs__item"><a href="{{ path('my_app_user_forumIndex') }}" class="breadcrumbs__link">Forum index</a></li>
+                <li class="breadcrumbs__item"><a href="{{ path('categorie',{'id': categorie.id }) }}" class="breadcrumbs__link">{{ categorie }}</a></li>
+                <li class="breadcrumbs__item"><a href="#" class="breadcrumbs__link">Modifier discussion</a></li>
+            </ul>
+        </div>
+    </nav>
+        <script>
+            $(document).ready(function() {
+                $('#myapp_userbundle_discussion_Lancer').click(function () {
+                    if ($("#myapp_userbundle_discussion_titre").val() == "")
+                    {
+                        event.preventDefault();
+                        $('#cctitre').show()
+                    }
+                    else if (CKEDITOR.instances['myapp_userbundle_discussion_description'].getData() == "")
+                    {
+                        event.preventDefault();
+                        $('#cctitre').hide();
+                        $('#ccdes').show();
+                    }
+                });
+            });
+        </script>
+        <div class="site__main">
+            <div class="widget js-widget widget--dashboard" style="padding-top: 10px;background-image: url('{{ asset('bundles/front/media-demo/banner/BackGForum.jpg') }}');">
+                <div class="container" style="margin: 30px;width: 1300px;">
+                    <div class="row">
+
+
+                        <!-- POST -->
+                        <div class="post" style="padding-bottom: 0px;box-shadow:0 0 1px 2px #c9cccd">
+                            <div class="topwrap">
+                                <div class="userinfo pull-left" style="padding-left: 30px">
+                                    <div class="avatar" >
+                                        <img src="{{ asset(app.user.photo) }}" alt="" style="height: 250%;width: 250%;" />
+                                        <div class="status green">&nbsp;</div>
+                                    </div>
+                                    <div class="icons" style="width: 125px">
+                                        <center> {{ app.user }}<br>
+                                            {% if app.user.roles[0] == 'ROLE_ADMIN' %}
+                                                <span style="color: #f44336;">Administrateur</span>
+                                            {% else %}
+                                                <span style="color: #009688;">Membre</span>
+                                            {% endif %}
+                                        </center>
+                                    </div>
+                                </div>
+
+                                <div class="posttext pull-left">
+                                    <div>
+                                        {{ form_start(f) }}
+                                        {{ form_widget(f.titre, {'attr' : {'class':'form-control', 'placeholder': 'Entrez le titre de la discussion'}}) }}
+                                        <div id="cctitre" style="color: #9c3328" hidden>Vous devez indiquer un titre!<span class="fa fa-arrow-up" style="margin-left:10px"></span></div>
+
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12">
+                                            {{ form_widget(f.idCategorie, {'attr' : {'class':'form-control', 'id': 'cat'}}) }}
+
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div>
+                                        {{ form_widget(f.description, {'attr' : {'class':'form-control js-ckeditor', 'name':'editor1'}}) }}
+                                        <div id="ccdes" style="color: #9c3328" hidden>Avez-vous oublié quelque chose?<br>Il faut remplir la description!<span class="fa fa-arrow-up" style="margin-left:10px"></span></div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="postinfobot">
+
+                                <div class="pull-right postreply" style="margin-bottom: 10px">
+                                    <div class="pull-left">{{ form_widget(f.Lancer, {'attr' : {'class':'btn btn-primary' } , 'label': 'Modifier la dicussion'}) }}</div>
+                                    {{ form_end(f) }}
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

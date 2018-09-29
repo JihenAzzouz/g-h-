@@ -1,0 +1,148 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+
+{% block body %}
+
+    <div class="dashboard_blog menu-default hover-default sidebar-left">
+        <div id="header-nav-offset"></div>
+
+        <!-- END NAVBAR-->
+        <div class="site-wrap js-site-wrap">
+            <!-- BEGIN CENTER SECTION-->
+            <div class="center">
+                <div class="container">
+                    <div class="row">
+                        <header class="site__header">
+                        <h1 class="site__title site__title--center">Dashboard</h1>
+                    </header>
+                    <!-- BEGIN LISTING-->
+                    <div class="site site--dashboard" style="background:white">
+
+                        <div class="site__main">
+                            <div class="widget js-widget widget--dashboard">
+                                <div class="widget__header">
+
+                                    <div class="navigation">
+
+                                    </div>
+                                </div>
+                                <div class="widget__content">
+                                    <div class="listing listing--grid">
+                                        <form method="post" action="{{ path('send_proposition')}}">
+                                            <input type="submit" value="Envoyer" class="widget__btn js-widget-btn widget__btn--action"/>
+                                            <input name="id_demande" type="hidden" value="{{ id_demande }}"/><br>
+                                            {% set i = 0 %}
+                                            {% for demande in page %}
+                                                <div class="listing__item">
+                                                    <article class="article article--grid article--management">
+                                                        <div class="article__item-header">
+                                                            <div class="article__actions">
+                                                                <button class="article__link">     <input type="checkbox" name="check[{{ i }}]" value="{{ demande.id }}"/></button>
+                                                            </div></div>
+                                                        <a href="{{ path('demande_detail',{'id':demande.id}) }}" class="article__photo">
+                                                            <img src="{{ asset('bundles/front/media-demo/news/image.jpg') }}" class="article__photo-img">
+                                                            <time datetime="2009-08-29" class="article__time">{{ demande.dateDebut|date('M')}}<strong>{{ demande.dateDebut|date('d') }}</strong></time>
+                                                        </a>
+                                                        <div class="article__details">
+                                                            <a href="#" class="article__item-title">{{ demande.typeLogement }}.</a>
+                                                            <div  class="article__intro">
+                                                                <p> {{ demande.description }}</p>
+                                                            </div>
+                                                        </div>
+                                                    </article>
+                                                </div>
+                                                {% set i = i+1 %}
+                                            {% endfor %}
+
+                                        </form>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- END LISTING-->
+                    <!-- BEGIN SIDEBAR-->
+                    <div class="sidebar sidebar--dashboard">
+                        <div class="widget js-widget widget--sidebar-dashboard widget--collapsing">
+                            <div class="widget__header"><a class="widget__btn js-widget-btn widget__btn--toggle">Dashboard</a>
+                            </div>
+                            <div class="widget__content">
+                                <nav class="nav nav--sidebar">
+                                    <ul class="nav__list">
+                                        <li class="nav__item"><a href="{{ path('Recharger Compte')}}"
+                                                                 class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-dashboard"></use>
+                                                </svg>
+                                                Profile</a></li>
+                                        <hr class="nav__separator">
+                                        <li class="nav__item"><a href="{{ path("afficherAnnonceUser") }}" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-add-listing"></use>
+                                                </svg>
+                                                Mes Annonces</a></li>
+                                        <li class="nav__item">
+
+                                        </li>
+                                        <li class="nav__item"><a href="{{ path("AllMydemande_show") }}" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-news"></use>
+                                                </svg>
+                                                Mes Demandes</a></li>
+                                        <li class="nav__item"><a href="{{ path("Afficher Favories") }}"
+                                                                 class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-user-admin"></use>
+                                                </svg>
+                                                Mes Favories</a></li>
+                                        <hr class="nav__separator">
+
+                                        <li class="nav__item"><a href="{{ url('experiences_affichage') }}" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-clock"></use>
+                                                </svg>
+                                                Mes Experiences</a></li>
+                                        <li class="nav__item">
+                                            <hr class="nav__separator">
+                                        </li>
+                                        <li class="nav__item"><a href="{{ path("Mes Reservations") }}" class="nav__link active">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-favorite-listings"></use>
+                                                </svg>
+                                                Mes Reservations</a></li>
+                                        <hr class="nav__separator">
+
+                                        <li class="nav__item"><a href="{{ url('graphePie') }}" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-favorite-agents"></use>
+                                                </svg>
+                                                Statistiques</a></li>
+                                        <li class="nav__item"><a href="#" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-favorite-search"></use>
+                                                </svg>
+                                                Paramètres</a></li>
+                                        <li class="nav__item">
+                                            <hr class="nav__separator">
+                                        </li>
+                                        <li class="nav__item"><a href="http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/logout" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-financials"></use>
+                                                </svg>
+                                                Deconnèxion</a></li>
+
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END SIDEBAR-->
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

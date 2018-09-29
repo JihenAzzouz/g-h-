@@ -1,0 +1,30 @@
+cuisine_index:
+    path:     /
+    defaults: { _controller: "MyAppAdminBundle:Cuisine:index" }
+    methods:  GET
+
+cuisine_show:
+    path:     /{id}/show
+    defaults: { _controller: "MyAppAdminBundle:Cuisine:show" }
+    methods:  GET
+
+cuisine_new:
+    path:     /{id}/new
+    defaults: { _controller: "MyAppAdminBundle:Cuisine:new" }
+    methods:  [GET, POST]
+
+cuisine_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "MyAppAdminBundle:Cuisine:edit" }
+    methods:  [GET, POST]
+
+cuisine_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "MyAppAdminBundle:Cuisine:delete" }
+
+
+cuisine:
+    path:     /{id}/cuisine
+    defaults: { _controller: "MyAppAdminBundle:Cuisine:cuisineDetailOffre" }
+    methods:  [GET, POST]
+

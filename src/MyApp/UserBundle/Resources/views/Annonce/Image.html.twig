@@ -1,0 +1,14 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+{% block body %}
+
+
+
+    {{ form_start(f) }}
+    {{ form_widget(f.file) }}
+{{ form_widget(f.file2) }}
+
+
+
+    {{ form_widget(f.create) }}
+{{ form_end(f) }}
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'MyAppAdminBundle:Default:index.html.twig' %}
+{% block body %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('bundles/front/css/vendor.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/front/css/bootstrap-datetimepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/front/css/font-awesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/front/css/ui-panel.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/front/css/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/front/css/theme-green_blue-red.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/front/css/ie-fix.css') }}"><![endif]-->
+    <link rel="icon" href="{{ asset('bundles/front/img/gof.ico') }}" type="image/x-icon">
+
+{% endblock %}
+
+
+    <div class="site-wrap js-site-wrap">
+        <div class="site__main" style="margin-right: 60px ; margin-left:60px ">
+            {{ form_start(form, {'attr': {'class': 'form form--flex form--property-add js-form js-form-property'}}) }}
+            <div class="row">
+
+                {{ form_widget(form.Valider,{'attr': {'class': 'form__submit'}}) }}
+
+
+
+            </div>
+            <div class="widget js-widget widget--main widget--no-margin widget--no-border widget--collapse">
+                </br>
+                </br>
+                <div class="widget__content">
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="in-1" class="control-label">Nom</label>
+                            {{ form_widget(form.nom,{'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="form-group">
+                            <label for="in-2" class="control-label">Adresse</label>
+                            {{ form_widget(form.adresse,{'attr': {'class': 'form-control'}}) }}
+                        </div>
+
+                </div>
+            </div>
+            <div class="widget js-widget widget--main widget--no-margin widget--no-border widget--collapse">
+
+                <div class="widget__content">
+
+                    <div class="row">
+
+                        <div class="form-group form-group--col-12">
+                            <label for="in-13" class="control-label">Description</label>
+                            {{ form_widget(form.descriptif,{'attr': {'class': 'form-control'}}) }} <br><br><br><br>
+                            <h4>Ajouter une image :</h4>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+            {{ form_end(form) }}
+    </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,82 @@
+
+demande_new:
+    path:     /AjouterDemande
+    defaults: { _controller: "MyAppUserBundle:Demande:AjouterDemande" }
+    methods:  [GET, POST]
+
+AllMydemande_show:
+    path:     /Mydemand
+    defaults: { _controller: "MyAppUserBundle:Demande:AfficherMesDemande" }
+    methods:  GET
+
+demande_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "MyAppUserBundle:Demande:supprimer" }
+
+demande_detail:
+    path:     /{id}/detailDemande
+    defaults: { _controller: "MyAppUserBundle:Demande:detailDemande" }
+    methods:  GET
+
+demande_show:
+    path:     /{id}/show
+    defaults: { _controller: "MyAppUserBundle:Demande:AfficherDemande" }
+    methods:  GET
+
+Alldemande_show:
+    path:     /showallDemand
+    defaults: { _controller: "MyAppUserBundle:Demande:afficherTouteDemande" }
+    methods:  [GET, POST]
+
+demande_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "MyAppUserBundle:Demande:ModifierDemande" }
+    methods:  [GET, POST]
+
+annonce_prop:
+    path:     /{id}/Myannonce
+    defaults: { _controller: "MyAppUserBundle:Demande:MesAnnonceAproposer" }
+    methods:  [GET, POST]
+
+ville:
+    path:     /ville/{idpays}
+    defaults: { _controller: "MyAppUserBundle:Demande:RechercheVille" }
+    methods:  [GET, POST]
+
+demandeparlogement:
+    path:     /demandefiltre/{logement}
+    defaults: { _controller: "MyAppUserBundle:Demande:RechercheParLogement" }
+    methods:  [GET, POST]
+
+demandeSansFiltre:
+    path:     /demandeSansfiltre/{im}
+    defaults: { _controller: "MyAppUserBundle:Demande:AfficherDemandeSansFiltre" }
+    methods:  [GET, POST]
+
+test_notif:
+    path:     /send-notification
+    defaults: { _controller: "MyAppUserBundle:Notification:sendNotification" }
+    methods:  GET
+
+demandefiltrePayss:
+    path:     /demandefiltrePays/{pays}/{im}
+    defaults: { _controller: "MyAppUserBundle:Demande:demandefiltrePays" }
+    methods:  [GET, POST]
+
+demandefiltrePaysVille:
+    path:     /demandefiltrePaysVille/{ville}/{im}
+    defaults: { _controller: "MyAppUserBundle:Demande:demandefiltrePaysVille" }
+    methods:  [GET, POST]
+
+afficheplus:
+    path:     /afficheplus/{im}
+    defaults: { _controller: "MyAppUserBundle:Demande:afficheplus" }
+    methods:  [GET, POST]
+
+
+
+
+
+
+
+

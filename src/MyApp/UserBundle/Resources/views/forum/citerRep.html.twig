@@ -1,0 +1,176 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+{% block body %}
+    <nav class="breadcrumbs">
+        <div class="container">
+            <ul>
+                <li class="breadcrumbs__item"><a href="{{ path('my_app_user_homepage') }}" class="breadcrumbs__link">Accueil</a></li>
+                <li class="breadcrumbs__item"><a href="{{ path('my_app_user_forumIndex') }}" class="breadcrumbs__link">Forum index</a></li>
+                <li class="breadcrumbs__item"><a href="{{ path('categorie',{'id':discussion.idCategorie.id  }) }}" class="breadcrumbs__link"> discussion.idCategorie </a></li>
+                <li class="breadcrumbs__item"><a href="{{ path('discussion', {'id': discussion.id }) }}" class="breadcrumbs__link">{{ discussion }}</a></li>
+                <li class="breadcrumbs__item"><a href="#" class="breadcrumbs__link">Nouvelle réponse</a></li>
+            </ul>
+        </div>
+    </nav>
+    {% if app.user.id is defined %}
+        <script>
+            $(document).ready(function() {
+                $('#myapp_userbundle_reponse_Repondre').click(function () {
+                    if ($("#myapp_userbundle_reponse_titre").val() == "")
+                    {
+                        event.preventDefault();
+                        $('#cctitre').show()
+                    }
+                    else if (CKEDITOR.instances['myapp_userbundle_reponse_contenu'].getData() == "")
+                    {
+                        event.preventDefault();
+                        $('#cctitre').hide();
+                        $('#ccrep').show();
+                    }
+                });
+                $('#previewbtn').click(function () {
+                    var d = new Date();
+                    var date = d.getDay()+'/'+d.getMonth()+'/'+d.getFullYear();
+                    $('#pretitre').html($('#myapp_userbundle_reponse_titre').val());
+                    $('#prerep').html(CKEDITOR.instances['myapp_userbundle_reponse_contenu'].getData());
+                    $('#prepost').html(date);
+                    $('#preview').slideDown();
+                    $('html, body').animate({
+                        scrollTop: $("#preview").offset().top
+                    }, 1000);
+                })
+            });
+        </script>
+        <div class="site__main">
+            <div class="widget js-widget widget--dashboard" style="padding-top: 10px;background-image: url('{{ asset('bundles/front/media-demo/banner/BackGForum.jpg') }}');">
+                <div class="container" style="margin: 30px;width: 1300px;">
+                    <div class="row">
+                        <!-- POST -->
+                        <div class="post" style="padding-bottom: 0px;box-shadow:0 0 1px 2px #c9cccd;margin-bottom: 20px">
+                            <div class="topwrap">
+                                <div class="userinfo pull-left" style="padding-left: 30px">
+                                    <div class="avatar" >
+                                        <img src="{{ asset(app.user.photo) }}" alt="" style="height: 250%;width: 250%;" />
+                                        <div class="status green">&nbsp;</div>
+                                    </div>
+                                    <div class="icons" style="width: 125px">
+                                        <center> {{ app.user }}<br>
+                                            {% if app.user.roles[0] == 'ROLE_ADMIN' %}
+                                                <span style="color: #f44336;">Administrateur</span>
+                                            {% else %}
+                                                <span style="color: #009688;">Membre</span>
+                                            {% endif %}
+                                        </center>
+                                    </div>
+                                </div>
+
+                                <div class="posttext pull-left">
+                                    <div>
+                                        {{ form_start(f) }}
+                                        <label>Titre</label>
+                                        {{ form_widget(f.titre, {'attr' : {'class':'form-control'}}) }}
+                                        <div id="cctitre" style="color: #9c3328" hidden>Vous devez indiquer un titre!<span class="fa fa-arrow-up" style="margin-left:10px"></span></div>
+
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12">
+                                            <label>Discussion</label>
+                                            <input type="text" class= "form-control" value="{{ discussion }}" disabled>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <label>Réponse citée</label>
+                                    <blockquote >
+                                        <span class="original" style="font-size: 16px;color:#0a7280"> {{ repc.idUser }} a dit :</span>
+                                        <span style="font-size: 16px">{{ repc.contenu|raw }}</span>
+                                    </blockquote>
+                                    <div>
+                                        <label>Réponse</label>
+                                        {{ form_widget(f.contenu, {'attr' : {'class':'form-control js-ckeditor', 'name':'editor1'}}) }}
+                                        <div id="ccrep" style="color: #9c3328" hidden>Vous devez indiquer le contenu de votre réponse<span class="fa fa-arrow-up" style="margin-left:10px"></span></div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="postinfobot">
+
+                                <div class="pull-right postreply" style="margin-bottom: 10px">
+
+                                    <div class="pull-left">
+                                        <input type="button" class="btn btn-primary" style="margin-right: 10px; background: #dd6666" id="previewbtn" value="Aperçu">
+                                        {{ form_widget(f.Repondre, {'attr' : {'class':'btn btn-primary' } , 'label': 'Répondre'}) }}</div>
+                                    {{ form_end(f) }}
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+
+                        <div class="post beforepagination" style="padding-bottom: 0px;box-shadow:0 0 1px 2px #c9cccd" hidden id="preview">
+                            <div class="topwrap">
+                                <div class="userinfo pull-left">
+                                    <div class="avatar" >
+                                        <img src="{{ asset(app.user.photo) }}" alt=""  style="height: 250%;width: 250%;" />
+                                        <div class="status green">&nbsp;</div>
+                                    </div>
+
+                                    <div class="icons" style="width: 100px">
+                                        <center>{{ app.user }}<br>
+                                            {% if app.user.roles[0] == 'ROLE_ADMIN' %}
+                                                <span style="color: #f44336;">Administrateur</span>
+                                            {% else %}
+                                                <span style="color: #009688;">Membre</span>
+                                            {% endif %}
+                                        </center>
+                                    </div>
+                                </div>
+                                <div class="posttext pull-left">
+                                    <h3 style="margin-top: 5px;margin-bottom: 5px" id="pretitre"></h3>
+                                    <p id="prerep">> </p>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="postinfobot">
+
+                                <div class="likeblock pull-left">
+                                    Score : 0
+                                </div>
+
+
+                                <div class="posted pull-left"><i class="fa fa-clock-o"></i><span id="prepost" ></span></div>
+
+                                <div class="next pull-right" style="width: 150px">
+                                    <button type="button" class="btn btn-primary tooltipi supp" style="background-color: #8c2e46;border-color: #8c2e46" disabled>
+                                        <span class="tooltiptexti">Supprimer</span>
+                                        <span class="fa fa-remove"></span></button>
+                                    <button type="button" class="btn btn-primary tooltipi" style="background-color: #cd353a;border-color: #cd353a" disabled>
+                                        <span class="tooltiptexti">Modifier</span>
+                                        <span class="fa fa-pencil"></span></button>
+                                    <button type="button" class="btn btn-primary tooltipi" style="background-color: #00bbaa;border-color: #00bbaa" disabled>
+                                        <span class="tooltiptexti">Citer</span>
+                                        <span class="fa fa-quote-right"></span></button>
+                                </div>
+
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% else %}
+        <div class="site__main" style="height: 450px">
+            <div class="widget js-widget widget--dashboard">
+                <div class="alert alert-dismissable alert-warning" style="display: inline-block;width:1200px;margin-top: 50px;margin-left: 70px" id="newrep">
+                    <h4>Bonjour visiteur!</h4>
+                    <p>Vous devez <a href="{{ path('fos_user_security_login') }}" class="alert-link">vous connecter</a> pour pouvoir lancer une disuccion</p>
+                    <br>
+                    <a href="{{ path('categorie', {'id' : discussion.idCategorie.id}) }}" >Retourner à la catégorie.</a>
+                </div>
+
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

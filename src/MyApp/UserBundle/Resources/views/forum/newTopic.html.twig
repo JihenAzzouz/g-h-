@@ -1,0 +1,173 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+{% block body %}
+
+    <nav class="breadcrumbs">
+        <div class="container">
+            <ul>
+                <li class="breadcrumbs__item"><a href="{{ path('my_app_user_homepage') }}" class="breadcrumbs__link">Accueil</a></li>
+                <li class="breadcrumbs__item"><a href="{{ path('my_app_user_forumIndex') }}" class="breadcrumbs__link">Forum index</a></li>
+                <li class="breadcrumbs__item"><a href="{{ path('categorie',{'id': categorie.id }) }}" class="breadcrumbs__link">{{ categorie }}</a></li>
+                <li class="breadcrumbs__item"><a href="#" class="breadcrumbs__link">Nouvelle discussion</a></li>
+            </ul>
+        </div>
+    </nav>
+    {% if app.user.id is defined %}
+        <script>
+            $(document).ready(function() {
+                $('#myapp_userbundle_discussion_Lancer').click(function () {
+                    if ($("#myapp_userbundle_discussion_titre").val() == "")
+                    {
+                        event.preventDefault();
+                        $('#cctitre').show()
+                    }
+                    else if (CKEDITOR.instances['myapp_userbundle_discussion_description'].getData() == "")
+                    {
+                        event.preventDefault();
+                        $('#cctitre').hide();
+                        $('#ccdes').show();
+                    }
+                });
+                $('#myapp_userbundle_discussion_titre').keyup(function () {
+                    if($("#myapp_userbundle_discussion_titre").val() != "") {
+                        var keytext = $("#myapp_userbundle_discussion_titre").val();
+                        $('#loading').show();
+                        $.ajax({
+                            url: 'http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/disrech',
+                            type: 'POST',
+                            data: {
+                                titre: $("#myapp_userbundle_discussion_titre").val()
+                            },
+                            dataType: 'json',
+                            success: function (reponse) {
+                                if (reponse.length == 0) {
+                                    $('#sugRech').hide();
+                                    $('#RechWarning').hide();
+                                    $('#Rechgo').show();
+                                }
+                                else {
+                                    $('#resultatRech').empty();
+                                    $('#Rechgo').hide();
+                                    $('#RechWarning').hide();
+                                    $.each(reponse, function (index, element) {
+                                        $('#resultatRech').append('<a href="#" class="list-group-item">' +
+                                                element.titre.substr(0, element.titre.indexOf($("#myapp_userbundle_discussion_titre").val())) + '<b>' +
+                                                keytext
+                                                + '</b>' + element.titre.substr((element.titre.indexOf($("#myapp_userbundle_discussion_titre").val()) + $("#myapp_userbundle_discussion_titre").val().length), element.titre.length) +
+                                                '<span class="fa fa-arrow-right" style="margin-left:10px"></span><span class="badge">' + element.nbrep + '</span></a>');
+
+                                    });
+                                    $('#sugRech').slideDown("slow");
+                                }
+                            },
+                            complete: function(){
+                                $('#loading').hide();
+                            }
+                        });
+                    }
+                    else {
+                        $('#sugRech').hide()
+                        $('#Rechgo').hide();
+                        $('#resultatRech').empty();
+                        $('#RechWarning').show();
+                    }
+                });
+            });
+        </script>
+        <div class="site__main">
+            <div class="widget js-widget widget--dashboard" style="padding-top: 10px;background-image: url('{{ asset('bundles/front/media-demo/banner/BackGForum.jpg') }}');">
+                <div class="container" style="margin: 30px;width: 1300px;">
+                    <div class="row">
+
+
+                            <!-- POST -->
+                            <div class="post" style="padding-bottom: 0px;box-shadow:0 0 1px 2px #c9cccd">
+                                    <div class="topwrap">
+                                        <div class="userinfo pull-left" style="padding-left: 30px">
+                                            <div class="avatar" >
+                                                <img src="{{ asset(app.user.photo) }}" alt="" style="height: 250%;width: 250%;" />
+                                                <div class="status green">&nbsp;</div>
+                                            </div>
+                                            <div class="icons" style="width: 125px">
+                                                <center> {{ app.user }}<br>
+                                                    {% if app.user.roles[0] == 'ROLE_ADMIN' %}
+                                                        <span style="color: #f44336;">Administrateur</span>
+                                                    {% else %}
+                                                        <span style="color: #009688;">Membre</span>
+                                                    {% endif %}
+                                                </center>
+                                            </div>
+                                        </div>
+
+                                        <div class="posttext pull-left">
+                                            <div>
+                                                {{ form_start(f) }}
+                                                <label>Titre</label>
+                                                {{ form_widget(f.titre, {'attr' : {'class':'form-control', 'placeholder': 'Entrez le titre de la discussion'}}) }}
+                                                <div id="cctitre" style="color: #9c3328" hidden>Vous devez indiquer un titre!<span class="fa fa-arrow-up" style="margin-left:10px"></span></div>
+                                                <div id="sugRech" hidden style="width:1100px;margin-left: 0px;box-shadow:0 0 1px 1px #c9cccd">
+                                                    <div class="alert alert-dismissable alert-warning" style="margin-bottom: 0px;background-color: #2c3e50;border-color: #2c3e50;color: #f5f5f5">
+                                                        <img src="{{ asset('bundles/Forum/magnify.svg') }}" style="width: 2%" id="loading" hidden/>Voilà quelques suggestions des discussions existantes qui pourrait contenir la réponse que vous chercher
+                                                    </div>
+                                                    <div style="margin-top: 0px" id="resultatRech" class="list-group">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12">
+                                                    <label>Categorie</label>
+                                                   {{ form_widget(f.idCategorie, {'attr' : {'class':'form-control', 'id': 'cat'}}) }}
+
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <label>Pour éviter les robots!</label>  Saissiez le texte ci-dessous dans le champs</br>
+                                            {{ form_widget(f.captcha, {'attr' : {'style': 'display:block;margin-top:20px;width:420px', 'class' : 'form-control'}}) }}
+                                            </br>
+
+                                            <div>
+                                                <label>Enfin.. la description</label>
+                                                {{ form_widget(f.description, {'attr' : {'class':'form-control'}}) }}
+                                                <div id="ccdes" style="color: #9c3328" hidden>Avez-vous oublié quelque chose?<br>Il faut remplir la description!<span class="fa fa-arrow-up" style="margin-left:10px"></span></div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="postinfobot">
+
+                                        <div class="pull-right postreply" style="margin-bottom: 10px">
+                                            <div class="pull-left">{{ form_widget(f.Lancer, {'attr' : {'class':'btn btn-primary' } , 'label': 'Lancer la dicussion'}) }}</div>
+                                            {{ form_end(f) }}
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+
+                            </div>
+                        <div class="alert alert-dismissable alert-danger" style="margin-left:0px;height:  75px;width:1332px;margin-bottom: 0px;box-shadow:0 0 1px 1px #c9cccd" id="RechWarning">
+                            <strong>Attention, les duplications sont à éviter.</strong>
+                            <p>Avant de lançer une discussion, il faut chercher sur le forum afin de vérifier si la discussion n'a pas été abordée et traitée. </p>
+                        </div>
+                        <div class="alert alert-dismissable alert-success" style="margin-left:0px;height:  50px;width:1332px;margin-bottom: 0px;box-shadow:0 0 1px 1px #c9cccd" id="Rechgo" hidden>
+                            <p><i class="fa fa-info-circle"></i> <b>Vous n'avez pas a vous souciez des duplications</b>, cette discussion n'a pas été abordée sur le forum </p>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    {% else %}
+        <div class="site__main" style="height: 450px">
+            <div class="widget js-widget widget--dashboard">
+                <div class="alert alert-dismissable alert-warning" style="display: inline-block;width:1200px;margin-top: 50px;margin-left: 70px" id="newrep">
+                    <h4>Bonjour visiteur!</h4>
+                    <p>Vous devez <a href="{{ path('fos_user_security_login') }}" class="alert-link">vous connecter</a> pour pouvoir lancer une disuccion</p>
+                    <br>
+                    <a href="{{ path('categorie', {'id' : categorie.id}) }}" >Retourner à la catégorie.</a>
+                </div>
+
+            </div>
+            </div>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'MyAppAdminBundle:Default:index.html.twig' %}
+
+{% block body %}
+    <h1>Lieuxavisiter</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Nom</th>
+                <td>{{ lieuxAVisiter.nom }}</td>
+            </tr>
+            <tr>
+                <th>Descriptif</th>
+                <td>{{ lieuxAVisiter.descriptif }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ lieuxAVisiter.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ lieuxAVisiter.image }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ lieuxAVisiter.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('lieuxavisiter_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('lieuxavisiter_edit', { 'id': lieuxAVisiter.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

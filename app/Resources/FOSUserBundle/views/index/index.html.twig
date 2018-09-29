@@ -1,0 +1,296 @@
+{% extends '@FOSUser/layout.html.twig' %}
+{% block contenu %}
+    <div class="container-fluid hero-header h-video transparent" style="height:50%;min-height:200px;">
+        <div class="header-centralizer">
+            <div class="content-centralized">
+                <div class="hero-search">
+                    <form>
+                        <fieldset> <input type="text" class="form-control" data-placeholder="Explore and Enjoy..."> <span class="typingEffect" data-title="Explore and Enjoy//Find New Places//Discover Tasty Goodies//Do Memorable Check-ins//Go Beyond Horizon"></span> </fieldset>
+                        <div class="search-cities-toggle"></div>
+                        <div class="search-cities">
+                            <div class="cities-list"> <a href="#" style="background-image:url('{{ asset('images/cities/thumbs/1.jpg') }}')" data-city-id="1"><span>Afrique</span></a>
+                                <a href="#" style="background-image:url('{{ asset('images/cities/thumbs/1.jpg') }}')" data-city-id="1"><span>Asie</span></a><a href="#" style="background-image:url('{{ asset('images/cities/thumbs/2.jpg') }}')" data-city-id="2"><span>Europe</span></a> <a href="#" style="background-image:url('{{ asset('images/cities/thumbs/3.jpg') }}')" data-city-id="0" class="current"><span>Amérique du Nord</span></a> <a href="#" style="background-image:url('{{ asset('images/cities/thumbs/4.jpg') }}')" data-city-id="3"><span>Amérique du Sud</span></a> <a href="#" style="background-image:url('{{ asset('images/cities/thumbs/5.jpg') }}')" data-city-id="4" class="go-more-cities"><span>Océanie</span></a> <input class="chosen-city" type="hidden" name="city" value="0">
+                            </div>
+                        </div>
+                        <div class="search-submit"> <input type="submit" value=" "> <i class="hero-search-icon"></i> </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid front-categories vertical">
+        <div class="row row-title" style="margin:30px">
+            <h1>Où souhaitez-vous aller ?</h1>
+            <h4>Visiter les logements offerts par les autres utilisateurs</h4>
+        </div>
+        <div class="row cat-itens">
+            <div class="cat-item" style="width:14%;">
+                <div class="cat-overlay"></div>
+                <div class="cat-image" style="background-image:url('{{ asset('images/categories/92.jpg') }}')"></div>
+                <div class="cat-counter">34</div>
+                <a href="#">
+                    <div class="cat-text">Afrique</div>
+                </a>
+            </div>
+            <div class="cat-item" style="width:14%;">
+                <div class="cat-overlay"></div>
+                <div class="cat-image" style="background-image:url('{{ asset('images/categories/112.jpg') }}')"></div>
+                <div class="cat-counter">7</div>
+                <a href="#">
+                    <div class="cat-text">Asie</div>
+                </a>
+            </div>
+            <div class="cat-item" style="width:14%;">
+                <div class="cat-overlay"></div>
+                <div class="cat-image" style="background-image:url('{{ asset('images/categories/302.jpg') }}')"></div>
+                <div class="cat-counter">47</div>
+                <a href="#">
+                    <div class="cat-text">Europe</div>
+                </a>
+            </div>
+            <div class="cat-item" style="width:14%;">
+                <div class="cat-overlay"></div>
+                <div class="cat-image" style="background-image:url('{{ asset('images/categories/202.jpg') }}')"></div>
+                <div class="cat-counter">29</div>
+                <a href="#">
+                    <div class="cat-text">Amérique du Nord</div>
+                </a>
+            </div>
+            <div class="cat-item" style="width:14%;">
+                <div class="cat-overlay"></div>
+                <div class="cat-image" style="background-image:url('{{ asset('images/categories/502.jpg') }}')"></div>
+                <div class="cat-counter">92</div>
+                <a href="#">
+                    <div class="cat-text">Amérique du Sud</div>
+                </a>
+            </div>
+            <div class="cat-item" style="width:14%;">
+                <div class="cat-overlay"></div>
+                <div class="cat-image" style="background-image:url('{{ asset('images/categories/402.jpg') }}')"></div>
+                <div class="cat-counter">34</div>
+                <a href="#">
+                    <div class="cat-text">Océanie</div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid trending"  style="margin-top:30px;padding:0px">
+        <div class="row row-title" style="margin-top:0px; padding:0px">
+            <h1>Annonces logement</h1>
+            <h4>Les annonces populaires</h4>
+        </div>
+        <div class="row listing">
+            <div class="col-sm-3">
+                <div class="listing-item">
+                    <a href="#" class="category-icon icon-teacup"></a>
+                    <div class="listing-item-rating">4.2</div>
+                    <a href="#" class="listing-item-link">
+                        <div class="listing-item-title-centralizer">
+                            <div class="listing-item-title">
+                                Sightglass Coffee
+                                <div class="ribbon">~ $20-$50</div>
+                            </div>
+                        </div>
+
+                        <img alt="" src="{{ asset('images/trending/2.jpg') }}"/>
+                    </a>
+                    <div class="listing-item-data">
+                        <a class="listing-item-address" href="#"> 3014 20th St San Francisco </a>
+                        <div class="listing-item-excerpt"> The love of coffee shines all the woody ambience </div>
+                    </div>
+                    <div class="listing-category-name"> <a href="#">Cafeteria</a> </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="listing-item">
+                    <a href="#" class="category-icon icon-library2"></a>
+                    <div class="listing-item-rating">4.9</div>
+                    <a href="#" class="listing-item-link">
+                        <div class="listing-item-title-centralizer">
+                            <div class="listing-item-title">
+                                N.O.M.A.
+                                <div class="ribbon">Admission $12</div>
+                            </div>
+                        </div>
+
+                        <img alt="" src="{{ asset('images/trending/3.jpg') }}"/>
+                    </a>
+                    <div class="listing-item-data">
+                        <a class="listing-item-address" href="#"> City Park, New Orleans, Louisiana 70124 </a>
+                        <div class="listing-item-excerpt"> The New Orleans Museum of Art </div>
+                    </div>
+                    <div class="listing-category-name"> <a href="#">Museum</a> </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="listing-item">
+                    <a href="#" class="category-icon icon-lotus"></a>
+                    <div class="listing-item-rating">4.7</div>
+                    <a href="#" class="listing-item-link">
+                        <div class="listing-item-title-centralizer">
+                            <div class="listing-item-title">
+                                Mead Botanical Garden
+                                <div class="ribbon">Free Entrance</div>
+                            </div>
+                        </div>
+                        <img alt="" src="{{ asset('images/trending/1.jpg') }}"/>
+                    </a>
+                    <div class="listing-item-data">
+                        <a class="listing-item-address" href="#"> 1500 S. Denning Drive Winter Park, FL 32789 </a>
+                        <div class="listing-item-excerpt"> 48-acre urban oasis located on Orange County </div>
+                    </div>
+                    <div class="listing-category-name"> <a href="#">Park and Garden</a> </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="listing-item">
+                    <a href="#" class="category-icon icon-glass"></a>
+                    <div class="listing-item-rating">3.9</div>
+                    <a href="#" class="listing-item-link">
+                        <div class="listing-item-title-centralizer">
+                            <div class="listing-item-title">
+                                Cave B Estate
+                                <div class="ribbon">Starting from $49</div>
+                            </div>
+                        </div>
+                        <img alt="" src="{{ asset('images/trending/4.jpg') }}"/>
+                    </a>
+                    <div class="listing-item-data">
+                        <a class="listing-item-address" href="#"> 348 Silica Rd NW Quincy, WA 98848 </a>
+                        <div class="listing-item-excerpt"> Fine Wines, Crafted with Artistry and Passion </div>
+                    </div>
+                    <div class="listing-category-name"> <a href="#">Winery</a> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid how color-bg">
+        <div class="row row-title">
+            <h1>Comment ça marche</h1>
+            <h4>Nouvelles expériences et opportunités pour les deux parties</h4>
+        </div>
+        <div class="row how-items">
+            <div class="col-sm-3">
+                <div class="how-item">
+                    <a href="#">
+                        <img alt="" src="{{ asset('images/miscellaneous/icon-1.png') }}"/>
+                        <h3 class="how-item-title">Annonceurs</h3>
+                        <div class="how-item-excerpt"> Publier une annonce pour montrer à tous quels sont les goodies de votre établissement. Ajoutez des équipements et des balises pour promouvoir chaque détail de votre annonce. </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="how-item">
+                    <a href="#">
+                        <img alt="" src="{{ asset('images/miscellaneous/icon-2.png') }}"/>
+                        <h3 class="how-item-title">Consommateurs</h3>
+                        <div class="how-item-excerpt"> Trouvez facilement des endroits intéressants cueillis à la main par des experts locaux. Économisez votre temps en organisant votre voyage en ligne, ne manquez aucun point. </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="how-item">
+                    <a href="#">
+                        <img alt="" src="{{ asset('images/miscellaneous/icon-3.png') }}"/>
+                        <h3 class="how-item-title">Tous le monde</h3>
+                        <div class="how-item-excerpt"> Echanger des expériences et des goûts, étendre votre réseau personnel et professionnel en créant des relations d'affaires à long terme et de nouvelles amitiés. </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="how-item">
+                    <a href="#">
+                        <img alt="" src="{{ asset('images/miscellaneous/icon-4.png') }}"/>
+                        <h3 class="how-item-title">Gratuit Vs Premium</h3>
+                        <div class="how-item-excerpt"> Vous pouvez le lancer gratuitement dès maintenant et migrer vers un compte premium à tout moment. Cliquez pour voir tous les plans et les ressources.</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid blog blog-home">
+        <div class="row row-title">
+            <h1>Les expériences</h1>
+            <h4>On a choisi quelque unes pour vous</h4>
+        </div>
+        <div class="row listing white">
+            <div class="col-sm-3">
+                <div class="listing-item">
+                    <a href="#" class="category-icon icon-news"></a>
+                    <div class="listing-item-date">
+                        <div class="day">12</div>
+                        <div class="month">Feb</div>
+                    </div>
+                    <a href="#" class="listing-item-link">
+                        <div class="listing-item-title-centralizer">
+                            <div class="listing-item-title"> From Beach Glitz to Urban Ritz, Miami's Hotels Shine </div>
+                        </div>
+
+                        <img alt="" src="{{ asset('images/blog/14.jpg') }}"/>
+                    </a>
+                    <div class="listing-item-data">
+                        <div class="listing-item-excerpt"> The best relaxing experience </div>
+                    </div>
+                    <div class="listing-category-name"> <a href="#">Relax</a> </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="listing-item">
+                    <a href="#" class="category-icon icon-paperclip"></a>
+                    <div class="listing-item-date">
+                        <div class="day">07</div>
+                        <div class="month">Feb</div>
+                    </div>
+                    <a href="#" class="listing-item-link">
+                        <div class="listing-item-title-centralizer">
+                            <div class="listing-item-title"> Fill Your Bags with Buys from Boston's Best Shopping Spots </div>
+                        </div>
+                        <img alt="" src="{{ asset('images/blog/15.jpg') }}"/>
+                    </a>
+                    <div class="listing-item-data">
+                        <div class="listing-item-excerpt"> Staple items, unique pieces </div>
+                    </div>
+                    <div class="listing-category-name"> <a href="#">Shop</a> </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="listing-item">
+                    <a href="#" class="category-icon icon-reminder"></a>
+                    <div class="listing-item-date">
+                        <div class="day">02</div>
+                        <div class="month">Feb</div>
+                    </div>
+                    <a href="#" class="listing-item-link">
+                        <div class="listing-item-title-centralizer">
+                            <div class="listing-item-title"> Fall In Love All Over Again During These Romantic Activities in NYC </div>
+                        </div>
+                        <img alt="" src="{{ asset('images/blog/16.jpg') }}"/>
+                    </a>
+                    <div class="listing-item-data">
+                        <div class="listing-item-excerpt"> Take romance to the next level </div>
+                    </div>
+                    <div class="listing-category-name"> <a href="#">Fun and Entertainment</a> </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="listing-item">
+                    <a href="#" class="category-icon icon-lamp"></a>
+                    <div class="listing-item-date">
+                        <div class="day">23</div>
+                        <div class="month">Jan</div>
+                    </div>
+                    <a href="#" class="listing-item-link">
+                        <div class="listing-item-title-centralizer">
+                            <div class="listing-item-title"> Get Your Sourdough On at Goat Hill Pizza </div>
+                        </div>
+                        <img alt="" src="{{ asset('images/blog/16.jpg') }}"/>
+                    </a>
+                    <div class="listing-item-data">
+                        <div class="listing-item-excerpt"> Spreading the joy to West Portal </div>
+                    </div>
+                    <div class="listing-category-name"> <a href="#">Food and Drink</a> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock contenu %}

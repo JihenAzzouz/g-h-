@@ -1,0 +1,9 @@
+send_proposition:
+    path:     /Envoit
+    defaults: { _controller: "MyAppUserBundle:Proposition:new" }
+    methods:  [GET, POST]
+
+proposition_show:
+    path:     /{id}/show
+    defaults: { _controller: "MyAppUserBundle:Proposition:show" }
+    methods:  [GET, POST]

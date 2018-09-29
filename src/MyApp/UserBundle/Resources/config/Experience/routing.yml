@@ -1,0 +1,115 @@
+guestandhost_experiences:
+    path:     /
+    defaults: { _controller: MyAppUserBundle:Experience:experiences }
+experiences_affichage_experience:
+    path:     /uneExperience/{id}/{idc}
+    defaults: { _controller: MyAppUserBundle:Experience:experience }
+experiences_affichage_continnet:
+    path:     /listExperience/{id}
+    defaults: { _controller: MyAppUserBundle:Experience:afficherContinentExperience }
+
+
+villes:
+    path: /villes/{idPays}
+    defaults: { _controller: MyAppUserBundle:Experience:villes }
+    options:
+        expose: true
+pays:
+    path: /pays/{idContinent}
+    defaults: { _controller: MyAppUserBundle:Experience:pays }
+    options:
+        expose: true
+villesaaa:
+    path: /exp/{nom}/{cont}
+    defaults: { _controller: MyAppUserBundle:Experience:rechercheExperience }
+    options:
+        expose: true
+afficherContinentExperienceJson:
+    path: /expJson/{id}
+    defaults: { _controller: MyAppUserBundle:Experience:afficherContinentExperienceJson }
+    options:
+        expose: true
+
+
+experiences_delete:
+     path:     /supprimer/{id}
+     defaults: { _controller: MyAppUserBundle:Experience:supprimerExperience }
+experiences_modifier:
+     path:     /modifier/{id}
+     defaults: { _controller: MyAppUserBundle:Experience:modifierExperience }
+experiences_ajouter:
+    path:     /ajouter
+    defaults: { _controller: MyAppUserBundle:Experience:ajouterExperience }
+experiences_affichage:
+    path:     /affichageUserExperience
+    defaults: { _controller: MyAppUserBundle:Experience:afficherUserExperience }
+experiences_affichage_Une_experience:
+    path:     /uneExperienceUser/{id}
+    defaults: { _controller: MyAppUserBundle:Experience:experienceUser }
+
+afficherUserExperiencePays:
+    path: /UserExperiencePays/{idPays}
+    defaults: { _controller: MyAppUserBundle:Experience:rechercheExperienceParPays }
+    options:
+        expose: true
+afficherUserExperienceVille:
+    path: /UserExperienceVille/{idVille}
+    defaults: { _controller: MyAppUserBundle:Experience:rechercheExperienceParVille }
+    options:
+        expose: true
+
+paysChart:
+    path: /pays/
+    defaults: { _controller: MyAppUserBundle:Experience:paysChart }
+    options:
+        expose: true
+dataChart:
+    path: /datachart/{idPays}
+    defaults: { _controller: MyAppUserBundle:Graphe:dataChart }
+    options:
+        expose: true
+
+grapheChartLine:
+    path: /chartLine
+    defaults: { _controller: MyAppUserBundle:Graphe:chartLine }
+grapheHistogramme:
+    path: /histogramme
+    defaults: { _controller: MyAppUserBundle:Graphe:chartHistogramme}
+graphePie:
+    path: /pie
+    defaults: { _controller: MyAppUserBundle:Graphe:chartPie}
+
+
+
+
+afficherUserExperienceMobil:
+    path: /UserMobile/{id}
+    defaults: { _controller: MyAppUserBundle:Experience:afficherUserJsonExperience }
+    options:
+        expose: true
+supprimerMobileExperienceAction:
+    path: /supMobile/{id}
+    defaults: { _controller: MyAppUserBundle:Experience:supprimerMobileExperience }
+    options:
+        expose: true
+experiences_ajouter_Mobile:
+    path:     /ajouterMobile/{id}
+    defaults: { _controller: MyAppUserBundle:Experience:ajouterExperienceMobil }
+experiences_Image_Mobile:
+    path:     /ImageMobile/{id}
+    defaults: { _controller: MyAppUserBundle:Experience:JsonExperienceImage }
+experiences_Nom_Mobile:
+    path:     /rechercheExperienceMobil/{id}/{nom}
+    defaults: { _controller: MyAppUserBundle:Experience:rechercheExperienceJson }
+experiences_Ville_Mobile:
+    path:     /villeMobile/{idPays}
+    defaults: { _controller: MyAppUserBundle:Experience:villesJson }
+experiences_Pays_Mobile:
+    path:     /paysExperienceMobil/
+    defaults: { _controller: MyAppUserBundle:Experience:paysJson }
+experiences_video_Mobile:
+    path:     /videoExperienceMobil/{id}
+    defaults: { _controller: MyAppUserBundle:Experience:VideoJson }
+exp:
+    path: /exp
+    defaults: { _controller: MyAppUserBundle:Experience:JsonExperience }

@@ -1,0 +1,219 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+{% block body %}
+    {% block bodyF %}
+        <script>
+            $(document).ready(function () {
+                $('#modifier').click()
+                {
+
+                }
+                $('.supp').click(function () {
+                    $('#idsup').html($(this).attr('name'));
+                });
+                $('#supprimerCat').click(function () {
+                    var idCat = $('#idsup').text();
+                    $.ajax({
+                        url: 'http://localhost/guest_andhost/guestandhost/web/app_dev.php/deletecat',
+                        type: 'POST',
+                        data: {
+                            id: idCat
+                        },
+                        dataType: 'json',
+                        success: function (reponse) {
+                            $("#supp"+idCat).fadeOut(600);
+                        }
+                    });
+                });
+            });
+        </script>
+    <nav class="breadcrumbs">
+        <div class="container">
+            <ul>
+                <li class="breadcrumbs__item"><a href="{{ path('my_app_user_homepage') }}" class="breadcrumbs__link">Accueil</a></li>
+                <li class="breadcrumbs__item"><a href="#" class="breadcrumbs__link">Forum </a></li>
+            </ul>
+        </div>
+    </nav>
+<div class="center"  style="background-image: url('{{ asset('bundles/front/media-demo/banner/BackGForum.jpg') }}');background-size: cover;">
+    <div class="container">
+        <div class="row">
+            <div class="site site--main">
+                <header class="site__header">
+                    <h2 style="color:white">Welcome !</h2>
+                    <p style="color:white">Discussion with other members</p>
+                </header>
+                <div class="site__main" style="width:1200px">
+                    <div class="widget js-widget widget--main widget--no-margin">
+                        <div class="widget__content">
+                            <div  style="width:1200px;padding:0px">
+                                <div class="navbar navbar-default" style="margin-top:10px;margin-bottom:10px;padding:0px">
+                                    <div class="navbar-collapse collapse navbar-responsive-collapse" style="padding-left: 0px;">
+                                        <ul class="nav navbar-nav" >
+                                            <li class="active"><a href="#" style="color:white">Forum</a></li>
+                                            {% if app.user.id is defined %}
+                                            <li><a href="{{ path('chat', {'id' : app.user.id}) }}" style="color:white">ChatRoom</a></li>
+                                            {% endif %}
+                                        </ul>
+                                        <ul class="nav navbar-nav navbar-right">
+                                            <li style="margin:5px">
+                                                <form action="{{ path("RechercheForum") }}" method="get">
+                                                    <input type="text" placeholder="Rechercher.." class="form-control" style="width:300px;font-family:Source Sans Pro, sans-serif;" name="search">
+                                                    <button type="submit" class="form__lens col-lg-2"><span class="glyphicon glyphicon-search" style="margin-left: 20px"></span></button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- /.nav-collapse-->
+
+
+                                </div>
+                                <!-- Forum -->
+
+                                <div class="widget js-widget widget--main" style="margin:0px">
+                                    <div class="widget__content">
+                                        <div class="datatable datatable--properties">
+                                            <div class="datatable__wrap">
+                                                <table class="js-properties-table datatable__table" style="border: 0px;margin-top: 5px">
+                                                    <thead id="cat">
+                                                    <tr>
+                                                        {% if app.user.id is defined %}
+                                                        {% if app.user.roles[0] == "ROLE_ADMIN" %}
+                                                        <th style="padding:20px;background-color: #007a87;color:white;border: 0px;width: 50px">Actions</th>
+                                                        {% endif %}
+                                                        {% endif %}
+                                                        <th class="datatable__head-1" style="padding:20px;background-color: #007a87;color:white;border: 0px;width: 720px"></th>
+                                                        <th class="datatable__head-2 datatable__head-sort" style="padding:20px;background-color: #007a87;color:white;border: 0px;width: 720px">Discussions</th>
+                                                        <th class="datatable__head-3 datatable__head-sort" style="padding:20px;background-color: #007a87;color:white;border: 0px;width: 720px">answer</th>
+                                                        <th class="datatable__head-4 datatable__head-sort" style="padding:20px;background-color: #007a87;color:white;border: 0px;width: 720px">last activity</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for i in c %}
+                                                    <tr id = "supp{{ i.id }}">
+                                                       {% if app.user.id is defined %}
+                                                        {% if app.user.roles[0] == "ROLE_ADMIN" %}
+                                                        <td>
+                                                            <a style="margin-right: 20px;color: #4CAF50;" href="{{ path('modifierC', {'id' : i.id }) }}" class="modifier" ><i class="fa fa-pencil"></i></a>
+                                                            <a style="color: #cd353a;" data-toggle="modal" href="#supprimerModal" name="{{ i.id }}" class="supp" ><i class="fa fa-trash"></i></a></td>
+                                                        {% endif %}
+                                                        {% endif %}
+                                                        <td class="datatable__cell-1"><a href="{{ path('categorie', {'id' : i.id}) }}">{{ i.titre }}</a></td>
+                                                        <td class="datatable__cell-2" style="padding-left: 30px"><strong>{{ i.nbdiss }}</strong></td>
+                                                        <td class="datatable__cell-3" style="padding-left: 30px">{{ i.nbmsg }}</td>
+
+                                                        <td class="datatable__cell-4" style="padding-left: 30px;padding-top:0px">
+                                                            {% if i.lastmodifdis.id is defined %}
+                                                            <a style="color: #ff6347;" href="{{ path('discussion', {'id' : i.lastmodifdis.id}) }}">{{ i.lastmodifdis }}<span class="fa fa-arrow-right" style="margin-left:10px"></span></a>
+                                                            </br>
+                                                            <span style="color:#2c3e50;"> {{ i.lastmodifdis.idUser }} </span> le {{ i.lastmodifdis.datepost|date('Y-m-d H:m') }}
+                                                            {% else %}
+                                                                <span style="color:#2c3e50"><span class="fa fa-frown-o" style="margin-left:10px"></span><br></span>
+                                                                <a style="border: 0px;color: #ff6347;" href="{{ path('newDiscussion',{'id' : i.id}) }}">be the first one who launch a discussion<span class="fa fa-arrow-right" style="margin-left:10px"></span></a>
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% if app.user.id is defined %}
+                                {% if app.user.roles[0] == "ROLE_ADMIN" %}
+        <div style="display: inline-block;float:right;margin-top: 5px;margin-bottom: 30px">
+        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#ajouterModal"><i class="fa fa-plus" style="margin-right: 10px;"></i>Ajouter une catégorie</button>
+        </div>
+        <div style="margin:17px"><br></div>
+                                {% endif %}
+                                {% endif %}
+        <!--Fin table-->
+        <!-- Modal Ajouter -->
+                                <div class="modal fade" id="ajouterModal" tabindex="-1" role="dialog" aria-labelledby="ajouterDModal">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="exampleModalLabel">Add a category</h4>
+                                            </di
+                                            <div class="modal-body" style="margin-left: 30px">
+                                               {{ form_start(f,{'attr' : {'id':'formulaire'}}) }}
+                                                <label>Title</label>
+                                                {{ form_widget(f.titre, {'attr' : {'class':'form-control'}}) }}
+
+                                            </div>
+                                            <div class="modal-footer" style="margin-left: 400px">
+                                                {{ form_widget(f.Ajouter, {'attr' : {'class':'btn btn-success'}}) }}
+                                                {{ form_end(f) }}
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">X</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal suppression -->
+                        <div class="modal fade" id="supprimerModal" tabindex="-1" role="dialog" aria-labelledby="supprimerModal">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="exampleModalLabel">Attention</h4>
+                                    </div>
+                                    <div class="modal-body" style="margin-left: 30px">
+                                        <b>Delete </b><br>
+                                        are you sure to proceed ?
+                                        <p id="idsup" hidden></p>
+                                    </div>
+                                    <div class="modal-footer" style="margin-left: 450px">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" id="supprimerCat">yes</button>
+                                        <button type="button" class="btn btn-sucess" data-dismiss="modal">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        {% endblock bodyF %}
+                                <div class="panel panel-primary" style="padding:0px;margin-top:10px;margin-bottom:10px;border-color:#00627e;">
+                                    <div class="panel-heading" style="background-color:#00627e;">
+                                        <h3 class="panel-title" style="margin:7px">who's online</h3>
+                                    </div>
+                                    <div class="panel-body" >
+                                        <p style="font-family:Source Sans Pro, sans-serif;font-size:15px;">there's<span style="color:#00AA00"> <strong>{{ users|length }}</strong> users online.</span>
+                                           <br />
+                                            {% if users|length  == 0  %}
+                                                <span style="color:#007a87">Users online : </span> 0
+                                            <br /><em><span style="color:#AA0000" href="#">Admin online: </span> 0
+                                                {% for i in users %}
+                                                    {% for role in i.roles %}
+                                                        {%   if role  == 'ROLE_ADMIN' %}
+                                                            {{ i.username }}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endfor %}</em></p>
+                                            {% else %}
+                                            <span style="color:#007a87">Users online :</span>
+                                            {{ users|join(', ') }}
+                                            <br /><em><span style="color:#AA0000" href="#">Admini  online: </span>
+                                                {% set testAdmin = 0 %}
+                                                {% for i in users %}
+                                                        {% for role in i.roles %}
+                                                            {%   if role  == 'ROLE_ADMIN' %}
+                                                                {% set testAdmin = i.username %}
+                                                                {% endif %}
+                                                        {% endfor %}
+                                                {% endfor %}
+                                                {{ testAdmin }}
+                                            </em></p>
+                                        {% endif %}
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

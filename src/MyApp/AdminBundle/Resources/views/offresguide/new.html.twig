@@ -1,0 +1,137 @@
+{% extends 'MyAppAdminBundle:Default:index.html.twig' %}
+
+{% block body %}
+  {% block stylesheet %}
+      <link rel="stylesheet" href="{{ asset('bundles/front/css/vendor.css') }}">
+      <link rel="stylesheet" href="{{ asset('bundles/front/css/bootstrap-datetimepicker.min.css') }}">
+      <link rel="stylesheet" href="{{ asset('bundles/front/css/font-awesome.css') }}">
+      <link rel="stylesheet" href="{{ asset('bundles/front/css/ui-panel.css') }}">
+      <link rel="stylesheet" href="{{ asset('bundles/front/css/custom.css') }}">
+      <link rel="stylesheet" href="{{ asset('bundles/front/css/theme-green_blue-red.css') }}">
+      <link rel="stylesheet" href="{{ asset('bundles/front/css/ie-fix.css') }}"><![endif]-->
+      <link rel="icon" href="{{ asset('bundles/front/img/gof.ico') }}" type="image/x-icon">
+
+  {% endblock %}
+    <div class="site-wrap js-site-wrap">
+    <div class="site__main" style="margin-right: 60px ; margin-left:60px ">
+        {{ form_start(form, {'attr': {'class': 'form form--flex form--property-add js-form js-form-property'}}) }}
+        <div class="row">
+
+            {{ form_widget(form.Valider,{'attr': {'class': 'form__submit'}}) }}
+
+
+
+        </div>
+        <div class="widget js-widget widget--main widget--no-margin widget--no-border widget--collapse">
+            </br>
+            </br>
+            <div class="widget__content">
+                <div class="row">
+                    <div class="form-group">
+                        <label for="in-1" class="control-label">Titre</label>
+                        {{ form_widget(form.titre,{'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="in-3" class="control-label">Langue</label>
+                        {{ form_widget(form.langue,{'attr': {'class': 'form-control'}})  }}                                        </div>
+                    <div class="form-group">
+                        <label for="in-5" class="control-label">Continent</label>
+                        {{ form_widget(form.continent,{'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    <div class="form-group">
+                        <label for="in-4" class="control-label">Pays</label>
+                        {{ form_widget(form.idPays,{'attr': {'class': 'form-control'}}) }}
+                        <!-- end of block .form-property__control-->
+                    </div>
+                    <div class="form-group">
+                        <label for="in-5" class="control-label">Ville</label>
+                        {{ form_widget(form.idVille,{'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="in-6" class="control-label">capitale</label>
+                        {{ form_widget(form.capitale,{'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="in-7" class="control-label">population</label>
+                        {{ form_widget(form.population,{'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="in-10" class="control-label">monnaie</label>
+                        {{ form_widget(form.monnaie,{'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="in-2" class="control-label">tension electrique</label>
+                        {{ form_widget(form.tensionElectricite,{'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="in-10" class="control-label">frequence electrique</label>
+                        {{ form_widget(form.frequenceElectricite,{'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget js-widget widget--main widget--no-margin widget--no-border widget--collapse">
+
+            <div class="widget__content">
+
+                <div class="row">
+
+                    <div class="form-group form-group--col-12">
+                        <label for="in-13" class="control-label">Description</label>
+                        {{ form_widget(form.descriptif,{'attr': {'class': 'form-control'}}) }} <br><br><br><br>
+                    <h4>Ajouter une image :</h4></div>
+                </div>
+
+            </div>
+        </div>
+        {{ form_end(form) }}
+
+    </div>
+</div>
+    {% block javascripts %}
+        <script src="{{ asset('bundles/front/js/jquery.js') }}"></script>
+
+        <script src="{{ asset('bundles/front/js/moment.js') }}"></script>
+        <script src="{{ asset('bundles/front/js/bootstrap-datepicker.js') }}"></script>
+        <script src="{{ asset('bundles/front/js/bootstrap-datetimepicker.min.js') }}"></script>
+
+        <script>
+
+            $(document).ready(function () {
+                $("#myapp_adminbundle_offresguide_idVille").html("");
+                $("#myapp_adminbundle_offresguide_idPays").change(
+                        function () {
+                            console.log($(this).val());
+                            $.ajax({
+                                type: 'get',
+                                dataType: 'json',
+                                url: 'http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/guide/ville/' + $(this).val(),
+
+                                success: function (data) {
+                                    $("#myapp_adminbundle_offresguide_idVille").html('');
+
+                                    for (i in data) {
+
+                                        x = data[i];
+
+                                        console.log(x);
+
+                                        $("#myapp_adminbundle_offresguide_idVille").append('<option value="' + x[1] + '"> ' + x[0] + ' </option>');
+
+                                    }
+
+                                }
+                            });
+
+                        });
+            });
+
+
+        </script>
+
+
+
+
+    {% endblock %}
+{% endblock %}

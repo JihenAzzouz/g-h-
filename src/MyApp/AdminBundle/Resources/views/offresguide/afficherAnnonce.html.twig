@@ -1,0 +1,200 @@
+
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+{% block body %}
+
+    <div class="box js-box">
+
+        <header class="header header--brand">
+
+                            <div role="menu" class="js-dropdown-menu navbar__dropdown navbar__dropdown--right">
+
+                                </button>
+                                <div class="navbar__submenu">
+                                    <div class="switch switch--menu">
+                                        <label>M <sup>2</sup>
+                                            <input type="checkbox" checked><span class="lever"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        </ul>
+
+                </div>
+            </div>
+    </div>
+    </nav>
+    <!-- END NAVBAR-->
+    <div class="site-wrap js-site-wrap">
+        <!-- BEGIN BREADCRUMBS-->
+
+        <!-- END BREADCRUMBS-->
+        <div class="center">
+            <div class="container">
+                <div class="row">
+                    <!-- BEGIN site-->
+                    <div class="site site--main">
+                        <header class="site__header">
+
+                        </header>
+
+
+
+
+
+
+
+                        {% for i in m %}
+
+                        <div class="site__main">
+
+                            <div class="widget js-widget widget--main">
+                                <div class="widget__content">
+                                    <div class="listing listing--list js-properties-list">
+                                        <div class="listing__item">
+                                            <div class="properties properties--list">
+                                                <div class="properties__thumb"><a href="property_details.html" class="item-photo"> <img src="http:\\localhost:9090\uprofils\{{ i.image|first }}">
+                                                        <figure class="item-photo__hover item-photo__hover--params"><span class="properties__params">{{ i.nombreVoyageur }} voyageurs </span><span class="properties__params"></span><span class="properties__time"></span>
+                                                        </figure></a><span class="properties__ribon">{{ i.typeMaison }}</span>
+                                                </div>
+                                                <!-- end of block .properties__thumb-->
+                                                <div class="properties__details">
+                                                    <div class="properties__info"><a href="property_details.html" class="properties__address"><span class="properties__address-street">{{ i.idPays }}</span><span class="properties__address-city">{{ i.ville }}</span></a>
+                                                        <div class="properties__offer">
+                                                            <div class="properties__offer-column">
+                                                                <div class="properties__offer-label">Prix</div>
+                                                               <div class="properties__offer-value"><strong> {{ i.prix }}</strong>
+
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="properties__offer-column">
+                                                                <div class="properties__offer-value"><strong>{{ i.typeLogement }}</strong><span class="properties__offer-period"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="properties__params--mob"><a href="#" class="properties__more">View details</a><span class="properties__params">Built-Up - 65 Sq Ft</span><span class="properties__params">Land Size - 110 Sq Ft</span></div>
+                                                    </div>
+                                                    <div class="properties__intro">
+                                    <p>{{ i.description }}</p>
+                                                    </div>
+                                                    <a href="{{ path('afficher Annonce',{'id':i.id}) }}">View details</a>
+
+
+
+
+                                                </div>
+
+                                            </div>
+                                                                         </div>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        {% endfor %}
+
+                    </div>
+
+
+                    <div class="sidebar">
+                        <div class="widget js-widget widget--sidebar">
+                            <div class="widget__header">
+                                <h2 class="widget__title">Recherche</h2>
+                                <h3 class="widget__headline">Trouvez exactement ce que vous cherchez</h3>
+                            </div>
+                            <div class="widget__content">
+                                {{ form_start(f,{'attr':{'class':'form form--flex form--search js-search-form form--sidebar'}}) }}
+
+                                    <div class="row">
+
+
+                                        <div class="form-group"><span class="control-label">Pays </span>
+
+
+
+                                            {{ form_widget(f.idPays,{'attr':{'required': false }}) }}
+
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="in-tenure-type" class="control-label">Ville</label>
+                                           {{ form_widget(f.ville,{'attr':{'required':false  }}) }}
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="in-bedrooms-type" class="control-label">Type de maison </label>
+                                           {{ form_widget(f.typeMaison,{'attr':{'required':false  }}) }}
+                                        </div>
+                                        <div class="form-group"><span class="control-label">Type de logement </span>
+                                            {{ form_widget(f.typeLogement,{'attr':{'required':false  }})}}
+                                        </div>
+                                        <div class="form-group"><span class="control-label">Nombre de voyageurs</span>
+                                            {{ form_widget(f.nombreVoyageur,{'attr':{'required': false }}) }}
+
+                                        </div>  <div class="form-group">
+                                            <label for="in-favorites-search-type" class="control-label">Nombre de lits</label>
+                                      {{ form_widget(f.nbreLit,{'attr':{'required': false }}) }}
+                                        </div>
+                                   <div class="form-group">
+                                    <label for="in-favorites-search-type" class="control-label">Date debut</label>
+                                    {{ form_widget(f.dateDebut,{'attr':{'required': false }}) }}
+                                </div>  </div>  <div class="form-group">
+                                <label for="in-favorites-search-type" class="control-label">Date fin</label>
+                                {{ form_widget(f.dateFin,{'attr':{'required': false }}) }}
+                            </div>
+                                        <div class="form-group">
+
+                                            <label for="range_price" class="control-label">prix</label>
+
+
+                                                {{ form_widget(f.prix,{'attr':{'required':false  }}) }}
+                                            </div>
+
+                                        <div class="form__buttons form__buttons--double">
+
+
+                                            {{ form_widget(f.recher,{'attr':{'class':'form__submit'}}) }}
+
+                                        </div>
+                                    </div>
+                                {{ form_end(f) }}
+
+
+                                <!-- end of block-->
+                                <!-- END SEARCH-->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END SIDEBAR-->
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    </div>
+    <button type="button" class="scrollup js-scrollup"></button>
+
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=places,drawing,geometry"></script>
+    <script type="text/javascript" src="http://cdn.ckeditor.com/4.5.6/standard/ckeditor.js"></script>
+
+    <script type="text/javascript" src="assets/js/vendor.js"></script>
+
+    <script type="text/javascript" src="assets/js/demodata.js"></script>
+
+    <script type="text/javascript" src="assets/js/app.js"></script>
+
+    <script type="text/javascript" src="assets/js/demo.js"></script>
+
+
+
+
+
+
+{% endblock %}

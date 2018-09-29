@@ -1,0 +1,286 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('bundles/front/css/bootstrap-datetimepicker.min.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<div class="dashboard_blog menu-default hover-default sidebar-left">
+<div id="header-nav-offset"></div>
+
+<!-- END NAVBAR-->
+<div class="site-wrap js-site-wrap">
+    <!-- BEGIN CENTER SECTION-->
+    <div class="center">
+        <div class="container">
+            <div class="row">
+                <header class="site__header">
+                    <h1 class="site__title site__title--center">Dashboard</h1>
+                </header>
+                <!-- BEGIN LISTING-->
+                <div class="site site--dashboard" style="background:white">
+                    <header class="site__header">
+                        <h2 class="widget__title">Ajouter une demande</h2>
+                    </header>
+
+                    <div class="site__main">
+                        {{ form_start(form, {'attr': {'class': 'form form--flex form--property-add js-form js-form-property'}}) }}
+                        <div class="row">
+
+                                {{ form_widget(form.Ajouter,{'attr': {'class': 'form__submit'}}) }}
+
+
+
+                            </div>
+                            <div class="widget js-widget widget--main widget--no-margin widget--no-border widget--collapse">
+                                </br>
+                                </br>
+                                <div class="widget__content">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="in-1" class="control-label">Type logement</label>
+                                            {{ form_widget(form.typeLogement,{'attr': {'class': 'form-control js-in-select'}}) }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="in-2" class="control-label">Type maison</label>
+                                            {{ form_widget(form.typeMaison,{'attr': {'class': 'form-control js-in-select'}}) }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="in-3" class="control-label">Nombre voyageurs</label>
+                                            {{ form_widget(form.nombreVoyageur,{'attr': {'class': 'form-control'}})  }}                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="in-4" class="control-label">Pays</label>
+                                            {{ form_widget(form.pays,{'attr': {'class': 'form-control js-in-select'}}) }}
+                                            <!-- end of block .form-property__control-->
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="in-5" class="control-label">Ville</label>
+                                            {{ form_widget(form.ville,{'attr': {'class': 'form-control js-in-select'}}) }}                                        </div>
+                                        <div class="form-group">
+                                            <label for="in-6" class="control-label">Nombre chambres</label>
+                                            {{ form_widget(form.nombreChambre,{'attr': {'class': 'form-control'}}) }}
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="in-7" class="control-label">Date salles de bain</label>
+                                            {{ form_widget(form.nombreSalleDebain,{'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="in-10" class="control-label">Prix moyen</label>
+                                            {{ form_widget(form.prix,{'attr': {'class': 'form-control'}}) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget js-widget widget--main widget--no-margin widget--no-border widget--collapse">
+
+                                <div class="widget__content">
+
+                                    <div class="row">
+
+                                      <div class="form-group">
+
+                                       <label for="in-8" class="control-label">Date debut<span data-container="body" data-toggle="popover" data-placement="top" data-content="You should fill all this fields. All this fields are mandatory. But think twice before you will indicate the price of the property type " class="form-property__information js-popover"><span class="glyphicon glyphicon-info-sign"></span></span></label>
+                                          {{ form_widget(form.dateDebut,{'attr': {'class': 'form-control'}}) }}
+                                          </div>
+                                        <div class="form-group">
+                                      <label for="in-9" class="control-label">Date fin</label>
+                                            {{ form_widget(form.dateFin,{'attr': {'class': 'form-control '}}) }}
+                                         </div>
+
+
+                                        <div class="form-group form-group--col-12">
+                                            <label for="in-13" class="control-label">Description</label>
+                                            {{ form_widget(form.description,{'attr': {'class': 'form-control'}}) }}                                            </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        {{ form_end(form) }}
+
+                        <!--
+                            <div class="widget js-widget widget--main widget--no-margin widget--no-border widget--collapse">
+                                <div class="widget__header">
+                                    <h2 class="widget__title">Location</h2>
+                                    <h5 class="widget__headline">Google Maps is a desktop and mobile web mapping service application and technology provided by Google.</h5>
+                                </div>
+                                <div class="widget__content">
+                                    <div class="map map--location map--dashboard map--submit js-map-location-dashboard-submit">
+                                        <div class="map__header">
+                                            <button type="button" class="btn--link js-remove-overlays">Delete selected shape</button>
+                                        </div>
+                                        <div class="map__block">
+                                            <div class="row map__autocomplete">
+                                                <div class="form-group form-group--autocomplete">
+                                                    <label for="autocomplete-dashboard submit" class="control-label">GPS Mapping</label>
+                                                    <input type="text" placeholder="" required="required" id="autocomplete-dashboard submit" class="form-control js-autocomplete"/>
+                                                </div>
+                                                <button type="button" class="map__geolocation js-geolocate">
+                                                    <svg>
+                                                        <use xlink:href="#icon-geolocation"></use>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            <div class="map__buttons">
+                                                <button type="button" class="map__change-map js-map-btn">Address Map</button>
+                                            </div>
+                                            <div class="map__wrap">
+                                                <div data-infobox-theme="white" class="map__view map__view--property-form js-map"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group form-group--coords">
+                                                <label for="location-lat-dashboard submit" class="control-label">Lat</label>
+                                                <input type="text" placeholder="" id="location-lat-dashboard submit" class="form-control js-location-coords"/>
+                                            </div>
+                                            <div class="form-group form-group--coords">
+                                                <label for="location-lng-dashboard submit" class="control-label">Lng</label>
+                                                <input type="text" placeholder="" id="location-lng-dashboard submit" class="form-control js-location-coords"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+-->
+
+                    </div>
+
+
+                </div>
+
+                <!-- END LISTING-->
+                <!-- BEGIN SIDEBAR-->
+                <div class="sidebar sidebar--dashboard">
+                    <div class="widget js-widget widget--sidebar-dashboard widget--collapsing">
+                        <div class="widget__header"><a class="widget__btn js-widget-btn widget__btn--toggle">Dashboard</a>
+                        </div>
+                        <div class="widget__content">
+                            <nav class="nav nav--sidebar">
+                                <ul class="nav__list">
+                                    <li class="nav__item"><a href="{{ path('Recharger Compte')}}"
+                                                             class="nav__link">
+                                            <svg class="nav__icon">
+                                                <use xlink:href="#icon-dashboard"></use>
+                                            </svg>
+                                            Profile</a></li>
+                                    <hr class="nav__separator">
+                                    <li class="nav__item"><a href="{{ path("afficherAnnonceUser") }}" class="nav__link">
+                                            <svg class="nav__icon">
+                                                <use xlink:href="#icon-add-listing"></use>
+                                            </svg>
+                                            Mes Annonces</a></li>
+                                    <li class="nav__item">
+
+                                    </li>
+                                    <li class="nav__item"><a href="{{ path("AllMydemande_show") }}" class="nav__link">
+                                            <svg class="nav__icon">
+                                                <use xlink:href="#icon-news"></use>
+                                            </svg>
+                                            Mes Demandes</a></li>
+                                    <li class="nav__item"><a href="{{ path("Afficher Favories") }}"
+                                                             class="nav__link">
+                                            <svg class="nav__icon">
+                                                <use xlink:href="#icon-user-admin"></use>
+                                            </svg>
+                                            Mes Favories</a></li>
+                                    <hr class="nav__separator">
+
+                                    <li class="nav__item"><a href="{{ url('experiences_affichage') }}" class="nav__link">
+                                            <svg class="nav__icon">
+                                                <use xlink:href="#icon-clock"></use>
+                                            </svg>
+                                            Mes Experiences</a></li>
+                                    <li class="nav__item">
+                                        <hr class="nav__separator">
+                                    </li>
+                                    <li class="nav__item"><a href="{{ path("Mes Reservations") }}" class="nav__link active">
+                                            <svg class="nav__icon">
+                                                <use xlink:href="#icon-favorite-listings"></use>
+                                            </svg>
+                                            Mes Reservations</a></li>
+                                    <hr class="nav__separator">
+
+                                    <li class="nav__item"><a href="{{ url('graphePie') }}" class="nav__link">
+                                            <svg class="nav__icon">
+                                                <use xlink:href="#icon-favorite-agents"></use>
+                                            </svg>
+                                            Statistiques</a></li>
+                                    <li class="nav__item"><a href="#" class="nav__link">
+                                            <svg class="nav__icon">
+                                                <use xlink:href="#icon-favorite-search"></use>
+                                            </svg>
+                                            Paramètres</a></li>
+                                    <li class="nav__item">
+                                        <hr class="nav__separator">
+                                    </li>
+                                    <li class="nav__item"><a href="http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/logout" class="nav__link">
+                                            <svg class="nav__icon">
+                                                <use xlink:href="#icon-financials"></use>
+                                            </svg>
+                                            Deconnèxion</a></li>
+
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <!-- END SIDEBAR-->
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+    {% block javascripts %}
+        <script src="{{ asset('bundles/front/js/jquery.js') }}"></script>
+
+        <script src="{{ asset('bundles/front/js/moment.js') }}"></script>
+        <script src="{{ asset('bundles/front/js/bootstrap-datepicker.js') }}"></script>
+        <script src="{{ asset('bundles/front/js/bootstrap-datetimepicker.min.js') }}"></script>
+
+        <script>
+
+            $(document).ready(function () {
+                $("#myapp_userbundle_demande_ville").html("");
+                $("#myapp_userbundle_demande_pays").change(
+                    function () {
+                        console.log($(this).val());
+                        $.ajax({
+                            type: 'get',
+                            dataType: 'json',
+                            url: 'http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/experience/villes/' + $(this).val(),
+
+                            success: function (data) {
+                                $("#myapp_userbundle_demande_ville").html('');
+
+                                for (i in data) {
+
+                                    x = data[i];
+
+                                    console.log(x);
+
+                                    $("#myapp_userbundle_demande_ville").append('<option value="' + x[1] + '"> ' + x[0] + ' </option>');
+
+                                }
+                                var first=data[Object.keys(data)[0]][0];
+                                $("#select2-myapp_userbundle_demande_ville-container").html(first);
+
+                            }
+                        });
+
+                    });
+            });
+
+
+        </script>
+
+
+
+
+    {% endblock %}
+{% endblock %}
+
+

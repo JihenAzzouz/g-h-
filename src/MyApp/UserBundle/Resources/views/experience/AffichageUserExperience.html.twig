@@ -1,0 +1,229 @@
+{% extends 'MyAppUserBundle:experience:layout.html.twig' %}
+{% block body %}
+    <style>.loading {
+            float: right;
+            width: 30px;
+            height: 30px;
+            background: url({{ asset('bundles/img/arrows32.gif') }});
+        }</style>
+    <nav class="breadcrumbs">
+        <div class="container">
+            <ul>
+                <li class="breadcrumbs__item"><a href="{{ url('my_app_user_homepage') }}" class="breadcrumbs__link">Accueil</a>
+                </li>
+                <li class="breadcrumbs__item"><a href="{{ url('experiences_affichage') }}" class="breadcrumbs__link">My
+                        Experiences</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="center" style="background-image: url('{{ asset('bundles/img/1.jpg') }}');background-size: cover;">
+        <div class="container">
+            <div class="row">
+                <div class="site site--main">
+                    <header class="site__header">
+                        <h1 class="site__title">MY EXPERIENCES</h1>
+                        <h2 class="site__headline">I have {{ v|length }} experience(s)</h2>
+                    </header>
+                    <div class="site__panel">
+
+                        <div class="listing__sort">
+                            <div class="form-group">
+                                <label for="in-listing-sort" class="control-label">Country:</label>
+                                {{ form_widget(fo.idPays) }}
+                            </div>
+                        </div>
+                        <div class="listing__sort">
+                            <div class="form-group">
+                                <div id="ll"></div>
+                                <label for="in-listing-sort" class="control-label">City:</label>
+                                {{ form_widget(fo.idVille) }}
+                            </div>
+                        </div>
+                        <div class="listing__add"><a href="{{ url('experiences_ajouter') }}" class="btn--action">Add
+                                Experiences</a></div>
+                    </div>
+                    <div class="site__main">
+                        <div class="widget js-widget widget--main">
+                            <div class="widget__content">
+                                <div class="listing listing--grid" id="exp">
+                                    {% for i in v %}
+                                        <div class="listing__item">
+                                            <div class="properties properties--grid">
+                                                <div class="properties__header">
+                                                    <div class="properties__right">
+                                                        <div class="properties__state properties__state--hidden">
+                                                            <a href="{{ url('experiences_modifier',{ 'id': i.id }) }}">Edit</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="properties__state properties__state--highlight">
+                                                        <a href="{{ url('experiences_delete',{ 'id': i.id }) }}"
+                                                           data-confirm="Are you sure yu wan to delete this?">Delete</a>
+                                                    </div>
+                                                </div>
+                                                <div class="properties__thumb">
+                                                    <a href="{{ url('experiences_affichage_Une_experience',{ 'id': i.id}) }}"
+                                                       class="item-photo item-photo--static">
+                                                        <img src="http://localhost/uprofils/{{ i.images|first }}"
+                                                             style="height: 220px;" alt="">
+                                                        <figure class="item-photo__hover"><span
+                                                                    class="item-photo__more">View Details</span>
+                                                        </figure>
+                                                    </a>
+                                                </div>
+                                                <div class="properties__info">
+                                                    <a href="" class="properties__address properties__address--simple">
+                                                        <span class="properties__address-street">  {{ i.titre }}</span>
+                                                    </a>
+                                                    <span class="properties__address-city">{{ i.idPays }}
+                                                        ,{{ i.idVille }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+
+
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script src="{{ asset('bundles/main/jquery.min.js') }}"></script>
+    <script src="{{ asset('bundles/main/m.js') }}"></script>
+    <SCRIPT LANGUAGE="JavaScript">
+        $(function () {
+            $('a[data-confirm]').click(function (ev) {
+                var href = $(this).attr('href');
+
+                if (!$('#dataConfirmModal').length) {
+                    $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Merci de confirmer</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Non</button><a class="btn btn-danger" id="dataConfirmOK">Oui</a></div></div></div></div>');
+                }
+                $('#dataConfirmModal').find('.modal-body').text($(this).attr('data-confirm'));
+                $('#dataConfirmOK').attr('href', href);
+                $('#dataConfirmModal').modal({show: true});
+
+                return false;
+            });
+        });
+    </SCRIPT>
+    <script type="text/javascript">
+        $("document").ready(function () {
+            $("#guestandhost_guestandhostbundle_experience_idPays").click(
+                function () {
+                    var a = $(this).val();
+                    $.ajax({
+                        type: 'get',
+                        dataType: 'json',
+                        url: 'http://localhost/guestandhost/web/app_dev.php/experience/UserExperiencePays/' + $(this).val(),
+                        success: function (data) {
+                            if (data === null) {
+                                $("#exp").html('');
+                                $("#exp").html('<h4>null</h4>');
+                            } else {
+                                $("#exp").html('');
+                                if (Number.isInteger(a)) {
+                                    alert("eeeee");
+                                }
+                                for (i in data) {
+                                    x = data[i];
+                                    if (x[6] ==={{ app.user.id }}) {
+                                        $('#exp').append(
+                                            ' <div class="listing__item">' +
+                                            '<div class="properties properties--grid"> ' +
+                                            '<div class="properties__header">' +
+                                            '<div class="properties__right">' +
+                                            '<div class="properties__state properties__state--hidden">' +
+                                            '<a href="http://localhost/guestandhost/web/app_dev.php/experience/modifier/' + x[1] + '">Modifier</a>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '<div class="properties__state properties__state--highlight">' +
+                                            '<a href="http://localhost/guestandhost/web/app_dev.php/experience/supprimer/' + x[1] + '" data-confirm="Etes-vous certain de vouloir supprimer?"> Supprimer </a>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '<div class="properties__thumb">' +
+                                            '<a href="http://localhost/guestandhost/web/app_dev.php/experience/uneExperienceUser/' + x[1] + '" class="item-photo item-photo--static">' +
+                                            '<img src="http://localhost/uprofils/' + x[3][0] + '" alt=""style="height: 220px;">' +
+                                            '<figure class="item-photo__hover"><span class="item-photo__more">View Details</span></figure>' +
+                                            '</a></div>' +
+                                            '<div class="properties__info">' +
+                                            '<a href="" class="properties__address properties__address--simple">' +
+                                            '<span class="properties__address-street">' + x[0] + '</span>' +
+                                            '</a>' +
+                                            '<span class="properties__address-city">' + x[4] + ' , ' + x[5] + '</span>' +
+                                            '</div></div></div>'
+                                        );
+                                    }
+                                }
+                            }
+                        }
+                    });
+                })
+        })
+    </script>
+    <script type="text/javascript">
+        $("document").ready(function () {
+            $("#guestandhost_guestandhostbundle_experience_idVille").click(
+                function () {
+                    $.ajax({
+                        type: 'get',
+                        dataType: 'json',
+
+                        url: 'http://localhost/guestandhost/web/app_dev.php/experience/UserExperienceVille/' + $(this).val(),
+                        success: function (data) {
+                            if (data === null) {
+                                $("#exp").html('');
+                                $("#exp").html('<h4>null</h4>');
+                            } else {
+                                $("#exp").html('');
+                                for (i in data) {
+                                    x = data[i];
+                                    if (x[6] ==={{ app.user.id }}) {
+                                        $('#exp').append(
+                                            ' <div class="listing__item">' +
+                                            '<div class="properties properties--grid"> ' +
+                                            '<div class="properties__header">' +
+                                            '<div class="properties__right">' +
+                                            '<div class="properties__state properties__state--hidden">' +
+                                            '<a href="http://localhost/guestandhost/web/app_dev.php/experience/modifier/' + x[1] + '">Modifier</a>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '<div class="properties__state properties__state--highlight">' +
+                                            '<a href="http://localhost/guestandhost/web/app_dev.php/experience/supprimer/' + x[1] + '" data-confirm="Etes-vous certain de vouloir supprimer?"> Supprimer </a>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '<div class="properties__thumb">' +
+                                            '<a href="http://localhost/guestandhost/web/app_dev.php/experience/uneExperienceUser/' + x[1] + '" class="item-photo item-photo--static">' +
+                                            '<img src="http://localhost:9090/uprofils/' + x[3][0] + '" style="height: 220px;"alt="">' +
+                                            '<figure class="item-photo__hover"><span class="item-photo__more">View Details</span></figure>' +
+                                            '</a></div>' +
+                                            '<div class="properties__info">' +
+                                            '<a href="" class="properties__address properties__address--simple">' +
+                                            '<span class="properties__address-street">' + x[0] + '</span>' +
+                                            '</a>' +
+                                            '<span class="properties__address-city">' + x[4] + ' , ' + x[5] + '</span>' +
+                                            '</div></div></div>'
+                                        );
+                                    }
+                                }
+                            }
+                        }
+                    });
+                })
+        })
+    </script>
+
+
+
+
+
+{% endblock %}

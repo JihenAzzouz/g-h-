@@ -1,0 +1,221 @@
+{% extends 'MyAppUserBundle:forum:indexForum.html.twig' %}
+
+{% block bodyF %}
+    <nav class="breadcrumbs">
+        <div class="container">
+            <ul>
+                <li class="breadcrumbs__item"><a href="{{ path('my_app_user_homepage') }}" class="breadcrumbs__link">Accueil</a></li>
+                <li class="breadcrumbs__item"><a href="{{ path('my_app_user_forumIndex') }}" class="breadcrumbs__link">Forum index</a></li>
+                <li class="breadcrumbs__item"><a href="#" class="breadcrumbs__link">{{ categorie.titre }}</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- END BREADCRUMBS-->
+    <div class="center" style="background-image: url('{{ asset('bundles/front/media-demo/banner/BackGForum.jpg') }}');background-size: cover;">
+        <div class="container">
+            <div class="row">
+                <div class="site site--main">
+                    <header class="site__header">
+                        <h2 style="color:white">Bienvenue sur Guest&Host Forum</h2>
+                        <p style="color:white">C'est votre espace pour discuter avec les autres membres</p>
+                    </header>
+
+
+                    <div class="site__main" style="width:1200px">
+                        <div class="widget js-widget widget--main widget--no-margin">
+                            <div class="widget__content">
+                                <div  style="width:1200px;padding:0px">
+                                    <div class="navbar navbar-default" style="margin-top:10px;margin-bottom:10px;padding:0px">
+                                        <div class="navbar-collapse collapse navbar-responsive-collapse" style="padding-left: 0px;">
+                                            <ul class="nav navbar-nav" >
+                                                <li class="active"><a href="#" style="color:white">Forum</a></li>
+                                                {% if app.user.id is defined %}
+                                                    <li><a href="{{ path('chat', {'id' : app.user.id}) }}" style="color:white">ChatRoom</a></li>
+                                                {% endif %}
+                                                <li><a href="{{ path('newDiscussion', {'id':  categorie.id }) }}" style="color:white;background-color:#cd353a">Lancer une discussion</a></li>
+                                            </ul>
+                                            <ul class="nav navbar-nav navbar-right">
+                                                <li style="margin:5px">
+                                                    <form action="{{ path("RechercheForum") }}" method="get">
+                                                        <input type="text" placeholder="Rechercher.." class="form-control" style="width:300px;font-family:Source Sans Pro, sans-serif;" name="search">
+                                                        <button type="submit" class="form__lens col-lg-2"><span class="glyphicon glyphicon-search" style="margin-left: 20px"></span></button>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- /.nav-collapse-->
+                                    </div>
+                                    <!-- pagination -->
+                                    <div class="navigation" style="display: inline-block;margin-bottom: 1px">
+                                        {{ knp_pagination_render(pagination) }}
+                                    </div>
+                                    <!-- Discussion -->
+
+                                    <div class="widget js-widget widget--main" style="margin:0px">
+                                        <div class="widget__content">
+
+                                                            {% for i in pagination %}
+                                                        <tr {% if loop.index is odd %}class="color"{% endif %}>
+                                                            <div class="post" style="padding: 0px;margin-bottom: 10px">
+                                                        <div class="wrap-ut pull-left">
+                                                            <div class="userinfo pull-left">
+                                                                <div class="avatar" >
+                                                                    <img src="{{ asset(i.idUser.photo) }}" alt="" style="height: 250%;width: 250%;" />
+                                                                    {% set testco = 'Hors ligne' %}
+                                                                    {% for j in users %}
+                                                                        {%   if j.id  == i.idUser.id %}
+                                                                            {% set testco = 'En ligne' %}
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                    {% if testco ==  'Hors ligne' %}
+                                                                        <div class="status red">&nbsp;</div>
+                                                                    {% else %}
+                                                                        <div class="status green">&nbsp;</div>
+                                                                    {% endif %}
+                                                                </div>
+
+                                                                <div class="icons" style="width: 100px">
+                                                                    <center> {{ i.idUser }}<br>
+                                                                        {% if i.idUser.roles[0] == 'ROLE_ADMIN' %}
+                                                                            <span style="color: #f44336;">Administrateur</span>
+                                                                        {% else %}
+                                                                            <span style="color: #009688;">Membre</span>
+                                                                        {% endif %}
+                                                                    </center>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="posttext pull-left" style="border-left: 1px solid #ddd; height: 210px;padding: 15px">
+                                                                <h2><a href="{{ path('discussion',{'id':i.id}) }}">{{ i.titre }}</a></h2>
+                                                                <hr>
+                                                                <div style="padding-left: 20px">
+                                                                {% if i.lastrep.id is defined %}
+                                                                    <a style="border: 0px;color: #2c3e50;;" href="{{ path('discussion', {'id': i.id, 'idR' : i.lastrep.id }) }}">{{ i.lastrep }}<span class="fa fa-arrow-right" style="margin-left:10px"></span></a>
+                                                                    <br>par {{ i.lastrep.idUser }}
+                                                                    le {{ i.lastrep.datepost|date('Y-m-d H:m')}}
+                                                                {% else %}
+                                                                    <span style="color:#2c3e50;">Personne n'a répondu à cette discussion<span class="fa fa-frown-o" style="margin-left:10px"></span><br></span>
+                                                                    <a style="border: 0px;color: #ff6347;" href="{{ path('discussion', {'id' : i.id ,'idR': 'newrep'}) }}">Soyez le premier a répondre <span class="fa fa-arrow-right" style="margin-left:10px"></span></a>
+                                                                {% endif %}
+                                                                </div>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                        <div class="postinfo pull-left" style="height:210px;">
+                                                            <div class="comments" style="margin-top:20px">
+                                                                <div class="commentbg">
+                                                                    {{ i.nbrep }}
+                                                                    <div class="mark"></div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="views"><i class="fa fa-eye"></i> {{ i.nbvues }} </div>
+                                                            <div class="views"><i class="fa fa-heart"></i> {{ i.nblikes }} </div>
+                                                            <div class="time"><i class="fa fa-clock-o"></i>&nbsp;{{ i.datepost|date('Y-m-d H:m') }}</div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                        {% endfor %}
+
+
+                                        </div>
+                                    </div>
+                                    <!--Fin table-->
+                                    <!-- pagination -->
+                                    <div class="navigation">
+                                        {{ knp_pagination_render(pagination) }}
+                                    </div>
+
+                                    <div class="panel panel-default"  style="padding:0px;display:inline-block;margin-top: 5px">
+                                        <div class="panel-body" style="margin-left:5px">
+                                            <form action="{{ path("categorie") }}" method="get">
+                                                <input type="text" hidden value="{{ categorie.id }}" name="id"/>
+                                                {% if pagination.params.range is defined %}
+                                                Afficher les discussions depuis&nbsp;
+                                                <div class="btn-group"  style="width: 150px">
+                                                    <select id="select" class="form-control" name="range" >
+                                                        <option value="all" {% if pagination.params.range == 'all' %} selected="selected" {% endif %}>Toute</option>
+                                                        <option value="1" {% if pagination.params.range == '1' %} selected="selected" {% endif %}>Un jour</option>
+                                                        <option value="7" {% if pagination.params.range == '7' %} selected="selected" {% endif %}>Une semaine</option>
+                                                        <option value="30" {% if pagination.params.range == '30' %} selected="selected" {% endif %}>Un mois</option>
+                                                    </select>
+                                                </div>
+                                                &nbsp;ordon&eacute;es par&nbsp;
+                                                <div class="btn-group"  style="width: 200px">
+                                                <select id="select" class="form-control" name="order">
+                                                    <option value="d.datelastrep" {% if pagination.params.order == 'd.datelastrep' %} selected="selected" {% endif %}>date derni&eacute;re activit&eacute;</option>
+                                                    <option value="d.datepost" {% if pagination.params.order == 'd.datepost' %} selected="selected" {% endif %}>date post</option>
+                                                    <option value="d.nbrep" {% if pagination.params.order == 'd.nbrep' %} selected="selected" {% endif %}>nombre r&eacute;ponses</option>
+                                                    <option value="d.nbvues" {% if pagination.params.order == 'd.nbvues' %} selected="selected" {% endif %}>nombre de vues</option>
+                                                </select>
+                                                    </div>
+                                                &nbsp;en ordre&nbsp;
+                                                <div class="btn-group" style="width: 150px" >
+                                                    <select id="select" class="form-control" name="direction">
+                                                        <option value="ASC" {% if pagination.params.direction == 'ASC' %} selected="selected" {% endif %}>croissant</option>
+                                                        <option value="DESC" {% if pagination.params.direction == 'DESC' %} selected="selected" {% endif %}>décroissant</option>
+                                                    </select>
+                                                </div>
+                                                    &nbsp;
+                                                    <div class="btn-group" style="width: 80px" >
+                                                        <select id="select" class="form-control" name="nbitem">
+                                                            <option value="5" {% if pagination.params.nbitem == '5' %} selected="selected" {% endif %}>5</option>
+                                                            <option value="10" {% if pagination.params.nbitem == '10' %} selected="selected" {% endif %}>10</option>
+                                                            <option value="15" {% if pagination.params.nbitem == '15' %} selected="selected" {% endif %}>15</option>
+                                                            <option value="20" {% if pagination.params.nbitem == '20' %} selected="selected" {% endif %}>20</option>
+                                                        </select>
+                                                    </div>
+                                                    &nbsp;&nbsp;discussions/page
+                                                {% else %}
+                                                    Afficher les discussions depuis&nbsp;
+                                                    <div class="btn-group"  style="width: 130px">
+                                                        <select id="select" class="form-control" name="range" >
+                                                            <option value="all">Toute</option>
+                                                            <option value="1">Un jour</option>
+                                                            <option value="7">Une semaine</option>
+                                                            <option value="30">Un mois</option>
+                                                        </select>
+                                                    </div>
+                                                    &nbsp;ordon&eacute;es par&nbsp;
+                                                    <div class="btn-group"  style="width: 200px">
+                                                        <select id="select" class="form-control" name="order">
+                                                            <option value="d.datelastrep">date derni&eacute;re activit&eacute;</option>
+                                                            <option value="d.datepost">date post</option>
+                                                            <option value="d.nbrep">nombre r&eacute;ponses</option>
+                                                            <option value="d.nbvues"}>nombre de vues</option>
+                                                        </select>
+                                                    </div>
+                                                    &nbsp;en ordre&nbsp;
+                                                    <div class="btn-group" style="width: 150px" >
+                                                        <select id="select" class="form-control" name="direction">
+                                                            <option value="ASC">croissant</option>
+                                                            <option value="DESC">décroissant</option>
+                                                        </select>
+                                                    </div>
+                                                    &nbsp;
+                                                    <div class="btn-group" style="width: 80px" >
+                                                        <select id="select" class="form-control" name="nbitem">
+                                                            <option value="5">5</option>
+                                                            <option value="10">10</option>
+                                                            <option value="15">15</option>
+                                                            <option value="20">20</option>
+                                                        </select>
+                                                    </div>
+                                                    &nbsp;discussions/page
+                                                {% endif %}
+                                                <input type="submit" class="btn" name="trie" value="Go" style="border: 2px;border-radius: 10px;background-color:#cd353a;color:white;margin-left: 25px">
+                                            </form>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <div class="btn-group" style="margin-left:1085px">
+                                            <button type="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle">Aller a&nbsp;&nbsp;<span class="caret"></span></button>
+                                            <ul class="dropdown-menu">
+                                                {% for c in categories %}
+                                                    <li><a href="{{ path('categorie', {'id': c.id}) }}">{{ c.titre }} </a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+{% endblock bodyF %}

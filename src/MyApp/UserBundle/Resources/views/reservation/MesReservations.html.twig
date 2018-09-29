@@ -1,0 +1,621 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+{% block body %}
+    <style>
+
+        .checkbox label:after,
+        .radio label:after {
+            content: '';
+            display: table;
+            clear: both;
+        }
+
+        .checkbox .cr,
+        .radio .cr {
+            position: relative;
+            display: inline-block;
+            border: 1px solid #a9a9a9;
+            border-radius: .25em;
+            width: 1.3em;
+            height: 1.3em;
+            float: left;
+            margin-right: .5em;
+        }
+
+        .radio .cr {
+            border-radius: 50%;
+        }
+
+        .checkbox .cr .cr-icon,
+        .radio .cr .cr-icon {
+            position: absolute;
+            font-size: .8em;
+            line-height: 0;
+            top: 50%;
+            left: 20%;
+        }
+
+        .radio .cr .cr-icon {
+            margin-left: 0.04em;
+        }
+
+        .checkbox label input[type="checkbox"],
+        .radio label input[type="radio"] {
+            display: none;
+        }
+
+        .checkbox label input[type="checkbox"] + .cr > .cr-icon,
+        .radio label input[type="radio"] + .cr > .cr-icon {
+            transform: scale(3) rotateZ(-20deg);
+            opacity: 0;
+            transition: all .3s ease-in;
+        }
+
+        .checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
+        .radio label input[type="radio"]:checked + .cr > .cr-icon {
+            transform: scale(1) rotateZ(0deg);
+            opacity: 1;
+        }
+
+        .checkbox label input[type="checkbox"]:disabled + .cr,
+        .radio label input[type="radio"]:disabled + .cr {
+            opacity: .5;
+        }
+    </style>
+
+
+    <!-- <link rel="stylesheet" href="{{ asset('bundles/front/css/theme-default.css') }}">-->
+    <div class="dashboard menu-default hover-default sidebar-left">
+        <div class="site-wrap js-site-wrap">
+            <div class="center">
+                <div class="container">
+                    <div class="row">
+                        <header class="site__header">
+                            <h1 class="site__title site__title--center">Mes réservations</h1>
+
+                        </header>
+                        <!-- BEGIN LISTING-->
+
+                        <div class="site site--dashboard" style="background:white">
+                            <header class="site__header">
+
+
+                            </header>
+
+
+                            <div class="site__main">
+
+
+                                <div class="navbar navbar-default"
+                                     style="margin-top:20px;margin-bottom:10px;padding-left:0px;padding-right:0px;width: 880px;height: 80px ">
+                                    <div class="navbar-collapse collapse navbar-responsive-collapse"
+                                         style="padding-left: 0px;margin-top:10px">
+                                        <ul class="nav navbar-nav navbar-left">
+                                            <li class="navbar__item js-dropdown active"><a class="navbar__link"
+                                                                                           style="color:white;font-size: 14px"
+                                                                                           href="{{ path('Mes Reservations') }}">Mes
+                                                    Reservations
+                                                    <svg class="navbar__arrow">
+                                                        <use xlink:href="#icon-arrow-right"></use>
+                                                    </svg>
+                                                </a>
+
+                                            </li>
+
+                                            <li class="navbar__item js-dropdown"><a class="navbar__link"
+                                                                                    style="color:white;font-size: 14px"
+                                                                                    href="{{ path('Res des visiteurs') }}">Les
+                                                    réservations de mes visiteurs
+                                                    <svg class="navbar__arrow">
+                                                        <use xlink:href="#icon-arrow-right"></use>
+                                                    </svg>
+                                                </a>
+
+                                            </li>
+
+                                            <li class="navbar__item js-dropdown"><a class="navbar__link"
+                                                                                    style="color:white;font-size: 15px">Paiment
+                                                    <svg class="navbar__arrow">
+                                                        <use xlink:href="#icon-arrow-right"></use>
+                                                    </svg>
+                                                </a>
+                                                <div role="menu"
+                                                     class="js-dropdown-menu navbar__dropdown navbar__dropdown--colls-1">
+                                                    <button class="navbar__back js-navbar-submenu-back">
+                                                        <svg class="navbar__arrow">
+                                                            <use xlink:href="#icon-arrow-left"></use>
+                                                        </svg>
+                                                        Back
+                                                    </button>
+                                                    <div class="navbar__submenu" style="width: 400px">
+                                                        <ul class="navbar__subnav">
+                                                            <li class="navbar__subitem"><a
+                                                                        href="{{ path('Mes reservations a payer') }}"
+                                                                        class="navbar__sublink js-navbar-sublink"
+                                                                        style="color:white">Mes réservations à payer</a>
+                                                            </li>
+                                                            <li class="navbar__subitem"><a
+                                                                        href="{{ path('Historique Paiment')}}"
+                                                                        class="navbar__sublink js-navbar-sublink"
+                                                                        style="color:white">Mon historique paiment</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <ul class="nav navbar-nav navbar-right"
+                                            style="margin-top: -20px;width: 190px;height: 100px">
+                                            <ul class="form-property__params">
+                                                <li style="width: 100px">
+                                                    <div class="checkbox" style="width: 150px;margin-top: -3px">
+                                                        <label style="font-size: 14px;padding-left: 0px">
+                                                            <input id="E" type="checkbox" value="" checked>
+                                                            <span class="cr"><i
+                                                                        class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                                            En Attente
+                                                        </label>
+                                                    </div>
+
+                                                </li>
+                                                <li>
+                                                    <div class="checkbox" style="width: 150px;margin-top: -3px">
+                                                        <label style="font-size: 14px;padding-left: 0px">
+                                                            <input id="A" type="checkbox" value="" checked>
+                                                            <span class="cr"><i
+                                                                        class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                                            Acceptee
+                                                        </label>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <ul class="form-property__params">
+
+                                                <li style="width: 100px">
+                                                    <div class="checkbox" style="width: 150px;margin-top: -3px">
+                                                        <label style="font-size: 14px;padding-left: 0px">
+                                                            <input id="R" type="checkbox" value="" checked>
+                                                            <span class="cr"><i
+                                                                        class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                                            Refusee
+                                                        </label>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="checkbox" style="width: 150px;margin-top: -3px">
+                                                        <label style="font-size: 14px;padding-left: 0px">
+                                                            <input id="P" type="checkbox" value="" checked>
+                                                            <span class="cr"><i
+                                                                        class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                                            Payee
+                                                        </label>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+
+                                        </ul>
+                                    </div>
+                                    <!-- /.nav-collapse-->
+
+
+                                </div>
+
+
+
+                                <div class="widget js-widget widget--main widget--no-margin">
+
+                                    <div class="widget__content">
+                                        {% if r|length == 0 %}
+                                            <h1 class="site__headline" style="color: #8b211e;font-size: 20px"><center>Vous n'avez aucune réservations</center></h1>
+                                        {% else %}
+                                            <h2 class="site__headline">J'ai effectué {{ r|length }} réservation(s)</h2>
+                                        {% endif %}
+
+                                        <div class="listing listing--grid">
+                                            <div id="ContentRes">
+                                                {% for i in pagination %}
+
+
+                                                    {% if i.etat == "En Attente" %}
+                                                        <div class="listing__item EnAttente">
+                                                            <div class="properties properties--grid">
+                                                                <div class="properties__header">
+                                                                    {% if i.etat  == 'En Attente' %}
+                                                                        <span class="properties__state properties__state--hidden">{{ i.etat }}</span>
+                                                                    {% endif %}
+                                                                    {% if i.etat  == 'Acceptee' %}
+                                                                        <span class="properties__state properties__state--default">{{ i.etat }}</span>
+                                                                    {% endif %}
+                                                                    {% if i.etat  == 'Refusee' %}
+                                                                        <span class="properties__state properties__state--highlight">{{ i.etat }}</span>
+                                                                    {% endif %}
+
+
+                                                                    <div class="properties__right">
+                                                                        <button class="properties__link">Edit
+                                                                        </button>
+                                                                        <button class="properties__link">Delete
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="properties__thumb"><a
+                                                                            href="{{ path('afficher Annonce',{'id':i.idAnnonce.id}) }}"
+                                                                            class="item-photo item-photo--static"><img
+                                                                                src="http://localhost:9090/uprofils/{{ img[i.id]|first }}"
+                                                                                alt="">
+                                                                        <figure class="item-photo__hover"><span
+                                                                                    class="item-photo__more">Voir Détails</span>
+                                                                        </figure>
+                                                                    </a></div>
+
+                                                                <div class="properties__info"><a
+                                                                            href="{{ path('afficher Annonce',{'id':i.idAnnonce.id}) }}"
+                                                                            class="properties__address properties__address--simple"><span
+                                                                                class="properties__address-street">{{ i.idAnnonce.adresse }}</span><span
+                                                                                class="properties__time">Du: {{ i.dateDebut|date('d-m-Y') }}
+                                                                            <br> jusqu'au: {{ i.dateFin|date('d-m-Y') }}</span></a>
+                                                                    <span class="properties__price-period">Prix nuité: {{ i.prixNuite }}
+                                                                        <br> Nombre nuités: {{ i.nbNuite }}
+                                                                        <br></span>
+                                                                    <span class="properties__right"
+                                                                          style="font-size: 20px;padding: 0px">Total: {{ i.prix }}</span>
+                                                                    {% if i.etat  == 'Payee' %}
+                                                                        <div class="properties__ribon"
+                                                                             style="margin-top: 15px">{{ i.etat }}</div>
+                                                                        <div class="property__ribon property__ribon--status property__ribon--done"
+                                                                             style="font-size: 12px;margin-top: -35px;color:#2c3e50;">
+                                                                            <a
+                                                                                    class="navbar__link"
+                                                                                    style="color:#2c3e50;font-size: 14px"
+                                                                                    href="{{ path('Generer PDF',{'id':i.id}) }}">Extraire
+                                                                                PDF</a></div>
+                                                                    {% endif %}
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+
+
+
+                                                    {% if i.etat == "Acceptee" %}
+                                                        <div class="listing__item Acceptee">
+                                                            <div class="properties properties--grid">
+                                                                <div class="properties__header">
+                                                                    {% if i.etat  == 'En Attente' %}
+                                                                        <span class="properties__state properties__state--hidden">{{ i.etat }}</span>
+                                                                    {% endif %}
+                                                                    {% if i.etat  == 'Acceptee' %}
+                                                                        <span class="properties__state properties__state--default">{{ i.etat }}</span>
+                                                                    {% endif %}
+                                                                    {% if i.etat  == 'Refusee' %}
+                                                                        <span class="properties__state properties__state--highlight">{{ i.etat }}</span>
+                                                                    {% endif %}
+
+
+                                                                    <div class="properties__right">
+                                                                        <button class="properties__link">Edit
+                                                                        </button>
+                                                                        <button class="properties__link">Delete
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="properties__thumb"><a
+                                                                            href="{{ path('afficher Annonce',{'id':i.idAnnonce.id}) }}"
+                                                                            class="item-photo item-photo--static"><img
+                                                                                src="http://localhost:9090/uprofils/{{ img[i.id]|first }}"
+                                                                                alt="">
+                                                                        <figure class="item-photo__hover"><span
+                                                                                    class="item-photo__more">View Details</span>
+                                                                        </figure>
+                                                                    </a></div>
+
+                                                                <div class="properties__info"><a
+                                                                            href="{{ path('afficher Annonce',{'id':i.idAnnonce.id}) }}"
+                                                                            class="properties__address properties__address--simple"><span
+                                                                                class="properties__address-street">{{ i.idAnnonce.adresse }}</span><span
+                                                                                class="properties__time">Du: {{ i.dateDebut|date('d-m-Y') }}
+                                                                            <br> jusqu'au: {{ i.dateFin|date('d-m-Y') }}</span></a>
+                                                                    <span class="properties__price-period">Prix nuité: {{ i.prixNuite }}
+                                                                        <br> Nombre nuités: {{ i.nbNuite }}
+                                                                        <br></span>
+                                                                    <span class="properties__right"
+                                                                          style="font-size: 20px;padding: 0px">Total: {{ i.prix }}</span>
+                                                                    {% if i.etat  == 'Payee' %}
+                                                                        <div class="properties__ribon"
+                                                                             style="margin-top: 15px">{{ i.etat }}</div>
+                                                                        <div class="property__ribon property__ribon--status property__ribon--done"
+                                                                             style="font-size: 12px;margin-top: -35px">
+                                                                            <a
+                                                                                    class="navbar__link"
+                                                                                    style="color:#2c3e50;font-size: 14px"
+                                                                                    href="{{ path('Generer PDF',{'id':i.id}) }}">Extraire
+                                                                                PDF</a></div>
+                                                                    {% endif %}
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+
+
+                                                    {% if i.etat == "Refusee" %}
+                                                        <div class="listing__item Refusee">
+                                                            <div class="properties properties--grid">
+                                                                <div class="properties__header">
+                                                                    {% if i.etat  == 'En Attente' %}
+                                                                        <span class="properties__state properties__state--hidden">{{ i.etat }}</span>
+                                                                    {% endif %}
+                                                                    {% if i.etat  == 'Acceptee' %}
+                                                                        <span class="properties__state properties__state--default">{{ i.etat }}</span>
+                                                                    {% endif %}
+                                                                    {% if i.etat  == 'Refusee' %}
+                                                                        <span class="properties__state properties__state--highlight">{{ i.etat }}</span>
+                                                                    {% endif %}
+
+
+                                                                    <div class="properties__right">
+                                                                        <button class="properties__link">Edit
+                                                                        </button>
+                                                                        <button class="properties__link">Delete
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="properties__thumb"><a
+                                                                            href="{{ path('afficher Annonce',{'id':i.idAnnonce.id}) }}"
+                                                                            class="item-photo item-photo--static"><img
+                                                                                src="http://localhost:9090/uprofils/{{ img[i.id]|first }}"
+                                                                                alt="">
+                                                                        <figure class="item-photo__hover"><span
+                                                                                    class="item-photo__more">View Details</span>
+                                                                        </figure>
+                                                                    </a></div>
+
+                                                                <div class="properties__info"><a
+                                                                            href="{{ path('afficher Annonce',{'id':i.idAnnonce.id}) }}"
+                                                                            class="properties__address properties__address--simple"><span
+                                                                                class="properties__address-street">{{ i.idAnnonce.adresse }}</span><span
+                                                                                class="properties__time">Du: {{ i.dateDebut|date('d-m-Y') }}
+                                                                            <br> jusqu'au: {{ i.dateFin|date('d-m-Y') }}</span></a>
+                                                                    <span class="properties__price-period">Prix nuité: {{ i.prixNuite }}
+                                                                        <br> Nombre nuités: {{ i.nbNuite }}
+                                                                        <br></span>
+                                                                    <span class="properties__right"
+                                                                          style="font-size: 20px;padding: 0px">Total: {{ i.prix }}</span>
+                                                                    {% if i.etat  == 'Payee' %}
+                                                                        <div class="properties__ribon"
+                                                                             style="margin-top: 15px">{{ i.etat }}</div>
+                                                                        <div class="property__ribon property__ribon--status property__ribon--done"
+                                                                             style="font-size: 12px;margin-top: -35px">
+                                                                            <a
+                                                                                    class="navbar__link"
+                                                                                    style="color:#2c3e50;font-size: 14px"
+                                                                                    href="{{ path('Generer PDF',{'id':i.id}) }}">Extraire
+                                                                                PDF</a></div>
+                                                                    {% endif %}
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+
+
+
+
+
+                                                    {% if i.etat == "Payee" %}
+
+                                                        <div class="listing__item Payee">
+                                                            <div class="properties properties--grid">
+                                                                <div class="properties__header">
+                                                                    {% if i.etat  == 'En Attente' %}
+                                                                        <span class="properties__state properties__state--hidden">{{ i.etat }}</span>
+                                                                    {% endif %}
+                                                                    {% if i.etat  == 'Acceptee' %}
+                                                                        <span class="properties__state properties__state--default">{{ i.etat }}</span>
+                                                                    {% endif %}
+                                                                    {% if i.etat  == 'Refusee' %}
+                                                                        <span class="properties__state properties__state--highlight">{{ i.etat }}</span>
+                                                                    {% endif %}
+
+
+                                                                    <div class="properties__right">
+                                                                        <button class="properties__link">Edit
+                                                                        </button>
+                                                                        <button class="properties__link">Delete
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="properties__thumb"><a
+                                                                            href="{{ path('afficher Annonce',{'id':i.idAnnonce.id}) }}"
+                                                                            class="item-photo item-photo--static"><img
+                                                                                src="http://localhost:9090/uprofils/{{ img[i.id]|first }}"
+                                                                                alt="">
+                                                                        <figure class="item-photo__hover"><span
+                                                                                    class="item-photo__more">View Details</span>
+                                                                        </figure>
+                                                                    </a></div>
+
+                                                                <div class="properties__info"><a
+                                                                            href="{{ path('afficher Annonce',{'id':i.idAnnonce.id}) }}"
+                                                                            class="properties__address properties__address--simple"><span
+                                                                                class="properties__address-street">{{ i.idAnnonce.adresse }}</span><span
+                                                                                class="properties__time">Du: {{ i.dateDebut|date('d-m-Y') }}
+                                                                            <br> jusqu'au: {{ i.dateFin|date('d-m-Y') }}</span></a>
+                                                                    <span class="properties__price-period">Prix nuité: {{ i.prixNuite }}
+                                                                        <br> Nombre nuités: {{ i.nbNuite }}
+                                                                        <br></span>
+                                                                    <span class="properties__right"
+                                                                          style="font-size: 20px;padding: 0px">Total: {{ i.prix }}</span>
+                                                                    {% if i.etat  == 'Payee' %}
+                                                                        <div class="properties__ribon"
+                                                                             style="margin-top: 15px">{{ i.etat }}</div>
+                                                                        <div class="property__ribon property__ribon--status property__ribon--done"
+                                                                             style="font-size: 12px;margin-top: -35px">
+                                                                            <a
+                                                                                    class="navbar__link"
+                                                                                    style="color:#2c3e50;font-size: 14px"
+                                                                                    href="{{ path('Generer PDF',{'id':i.id}) }}">Extraire
+                                                                                PDF</a></div>
+                                                                    {% endif %}
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+
+
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="navigation">
+                                    {{ knp_pagination_render(pagination) }}
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- END LISTING-->
+                        <!-- BEGIN SIDEBAR-->
+                        <div class="sidebar sidebar--dashboard">
+                            <div class="widget js-widget widget--sidebar-dashboard widget--collapsing">
+                                <div class="widget__header"><a class="widget__btn js-widget-btn widget__btn--toggle">Annonces</a>
+                                </div>
+                                <div class="widget__content">
+                                    <nav class="nav nav--sidebar">
+                                        <ul class="nav__list">
+                                            <li class="nav__item"><a href="{{ path('Recharger Compte')}}"
+                                                                     class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-dashboard"></use>
+                                                    </svg>
+                                                    Profile</a></li>
+                                            <hr class="nav__separator">
+                                            <li class="nav__item"><a href="{{ path("afficherAnnonceUser") }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-add-listing"></use>
+                                                    </svg>
+                                                    Mes Annonces</a></li>
+                                            <li class="nav__item">
+
+                                            </li>
+                                            <li class="nav__item"><a href="{{ path("AllMydemande_show") }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-news"></use>
+                                                    </svg>
+                                                    Mes Demandes</a></li>
+                                            <li class="nav__item"><a href="{{ path("Afficher Favories") }}"
+                                                                     class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-user-admin"></use>
+                                                    </svg>
+                                                    Mes Favories</a></li>
+                                            <hr class="nav__separator">
+
+                                            <li class="nav__item"><a href="{{ url('experiences_affichage') }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-clock"></use>
+                                                    </svg>
+                                                    Mes Experiences</a></li>
+                                            <li class="nav__item">
+                                                <hr class="nav__separator">
+                                            </li>
+                                            <li class="nav__item"><a href="{{ path("Mes Reservations") }}" class="nav__link active">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-favorite-listings"></use>
+                                                    </svg>
+                                                    Mes Reservations</a></li>
+                                            <hr class="nav__separator">
+
+                                            <li class="nav__item"><a href="{{ url('graphePie') }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-favorite-agents"></use>
+                                                    </svg>
+                                                    Statistiques</a></li>
+                                            <li class="nav__item"><a href="#" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-favorite-search"></use>
+                                                    </svg>
+                                                    Paramètres</a></li>
+                                            <li class="nav__item">
+                                                <hr class="nav__separator">
+                                            </li>
+                                            <li class="nav__item"><a href="http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/logout" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-financials"></use>
+                                                    </svg>
+                                                    Deconnèxion</a></li>
+
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END SIDEBAR-->
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ asset('bundles/vendor/clockpicker/assets/js/jquery.js') }}"></script>
+    <script src="{{ asset('bundles/js/recherchedyn.js') }}"></script>
+    <script>
+
+
+        $('#P').change(
+                function () {
+                    var p = $('#P').prop('checked');
+                    if (p == true) {
+                        $('.Payee').show();
+                    } else {
+                        $('.Payee').hide();
+                    }
+
+                }
+        )
+        $('#R').change(
+                function () {
+                    var r = $('#R').prop('checked');
+                    if (r == true) {
+                        $('.Refusee').show();
+                    } else {
+                        $('.Refusee').hide();
+                    }
+
+                }
+        )
+        $('#A').change(
+                function () {
+                    var r = $('#A').prop('checked');
+                    if (r == true) {
+                        $('.Acceptee').show();
+                    } else {
+                        $('.Acceptee').hide();
+                    }
+
+                }
+        )
+        $('#E').change(
+                function () {
+                    var r = $('#E').prop('checked');
+                    if (r == true) {
+                        $('.EnAttente').show();
+                    } else {
+                        $('.EnAttente').hide();
+                    }
+
+                }
+        )
+
+
+    </script>
+{% endblock %}

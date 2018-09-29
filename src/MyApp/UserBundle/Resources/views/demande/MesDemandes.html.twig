@@ -1,0 +1,206 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+
+
+{% block body %}
+    <style>
+
+        #url{
+            visibility: hidden;
+        }
+    </style>
+<script src="{{ asset('bundles/front/js/jquery.js') }}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#confirm-delete').on('show.bs.modal', function(e) {
+
+                $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+
+                $('.debug-url').html('<strong id="url">' + $(this).find('.btn-ok').attr('href') + '</strong>');
+            });
+        });
+
+    </script>
+
+<div class="dashboard_blog menu-default hover-default sidebar-left">
+    <div id="header-nav-offset"></div>
+
+    <!-- END NAVBAR-->
+    <div class="site-wrap js-site-wrap">
+        <!-- BEGIN CENTER SECTION-->
+        <div class="center">
+            <div class="container">
+                <div class="row">
+                    <header class="site__header">
+                        <h1 class="site__title site__title--center">Dashboard</h1>
+                    </header>
+                    <!-- BEGIN LISTING-->
+                    <div class="site site--dashboard" style="background:white">
+                        <header class="site__header">
+                            {% set size = d | length %}
+                            <h2 class="widget__title">Mes demandes ({{size}})</h2>
+
+                        </header>
+
+                        <div class="site__main">
+                            <div class="widget js-widget widget--dashboard">
+                                <div class="widget__header">
+                                    <a href="{{ path('demande_new') }}" class="widget__btn js-widget-btn widget__btn--action">Ajouter une Demande</a>
+
+                                <div class="navigation">
+                                    {{ knp_pagination_render(demandes) }}
+                                </div>
+                                </div>
+                            <div class="widget__content">
+                            <div class="listing listing--grid">
+                                {% for demande in demandes %}
+
+
+                                        <div class="listing__item">
+
+                                <article class="article article--grid article--management">
+                                    <div class="article__item-header">
+                                        <div></div>
+                                        <div class="article__actions">
+
+                                           <a href="{{ path('demande_edit',{'id':demande.id}) }}"> <button class="article__link">Modifier</button></a>
+                                           <a href="#"> <button  class="article__link" data-href="{{ path('demande_delete',{'id':demande.id}) }}" data-toggle="modal" data-target="#confirm-delete">
+                                                Supprimer
+                                            </button></a>
+
+                                        </div>
+                                        <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                        <h4 class="modal-title" id="myModalLabel">Confirmation</h4>
+                                                    </div>
+
+                                                    <div class="modal-body">
+                                                        <p>Vous etes sur le point de supprimer cette annonce</p>
+                                                        <p>Vous voulez continuer?</p>
+                                                        <p class="debug-url"></p>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                                        <a class="btn btn-danger btn-ok">Supprimer</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </div><a href="{{ path('demande_show',{'id':demande.id}) }}" class="article__photo"><img src="{{ asset('bundles/img/photos-1/'~demande.ville.libelleville~'.jpg') }}" class="article__photo" style="height: 150px">
+                                        <time datetime="2009-08-29" class="article__time">{{ demande.dateDebut|date('M')}}<strong>{{ demande.dateDebut|date('d') }}</strong></time></a>
+                                    <div class="article__details"><a href="{{ path('demande_show',{'id':demande.id}) }}" class="article__item-title">{{ demande.typeLogement }} <br>  {{ demande.pays.libelle }}-{{ demande.ville.libelleville }}</a>
+                                        <div  class="article__intro">
+                                           <p style="color: black;"> {{ demande.description }}</p>
+                                        </div><a href="{{ path('proposition_show',{'id':demande.id}) }}" class="article__more">Voir les propositions</a>
+
+
+                                    </div>
+
+                                </article>
+
+                                <!-- end of block .article__item-->
+                            </div>
+
+                                {% endfor %}
+                            </div>
+                            </div>
+
+                        </div>
+                        </div>
+                    </div>
+
+                    <!-- END LISTING-->
+                    <!-- BEGIN SIDEBAR-->
+                    <div class="sidebar sidebar--dashboard">
+                        <div class="widget js-widget widget--sidebar-dashboard widget--collapsing">
+                            <div class="widget__header"><a class="widget__btn js-widget-btn widget__btn--toggle">Dashboard</a>
+                            </div>
+                            <div class="widget__content">
+                                <nav class="nav nav--sidebar">
+                                    <ul class="nav__list">
+                                        <li class="nav__item"><a href="{{ path('Recharger Compte')}}"
+                                                                 class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-dashboard"></use>
+                                                </svg>
+                                                Profile</a></li>
+                                        <hr class="nav__separator">
+                                        <li class="nav__item"><a href="{{ path("afficherAnnonceUser") }}" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-add-listing"></use>
+                                                </svg>
+                                                Mes Annonces</a></li>
+                                        <li class="nav__item">
+
+                                        </li>
+                                        <li class="nav__item"><a href="{{ path("AllMydemande_show") }}" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-news"></use>
+                                                </svg>
+                                                Mes Demandes</a></li>
+                                        <li class="nav__item"><a href="{{ path("Afficher Favories") }}"
+                                                                 class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-user-admin"></use>
+                                                </svg>
+                                                Mes Favories</a></li>
+                                        <hr class="nav__separator">
+
+                                        <li class="nav__item"><a href="{{ url('experiences_affichage') }}" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-clock"></use>
+                                                </svg>
+                                                Mes Experiences</a></li>
+                                        <li class="nav__item">
+                                            <hr class="nav__separator">
+                                        </li>
+                                        <li class="nav__item"><a href="{{ path("Mes Reservations") }}" class="nav__link active">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-favorite-listings"></use>
+                                                </svg>
+                                                Mes Reservations</a></li>
+                                        <hr class="nav__separator">
+
+                                        <li class="nav__item"><a href="{{ url('graphePie') }}" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-favorite-agents"></use>
+                                                </svg>
+                                                Statistiques</a></li>
+                                        <li class="nav__item"><a href="#" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-favorite-search"></use>
+                                                </svg>
+                                                Paramètres</a></li>
+                                        <li class="nav__item">
+                                            <hr class="nav__separator">
+                                        </li>
+                                        <li class="nav__item"><a href="http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/logout" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-financials"></use>
+                                                </svg>
+                                                Deconnèxion</a></li>
+
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END SIDEBAR-->
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,190 @@
+{% extends 'MyAppAdminBundle:Default:index.html.twig' %}
+
+{% block body %}
+
+   
+
+
+    <!-- End Google Tag Manager -->
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCNri45iEybP7oOz7TT9EDLboSQaPqk0Hw"></script>
+
+    <style>
+        #map_canvas { margin: 0; padding: 0; height: 100% }
+    </style>
+    <script>
+
+        function initMap() {
+
+            var myLatLng = {lat: {{ offre.idVille.laltitude }} , lng:{{ offre.idVille.longitude }}};
+
+            var map = new google.maps.Map(document.getElementById('googleMap'), {
+                zoom: 10,
+                center: myLatLng
+            });
+
+
+            var myLatLng = {lat: {{ offre.idVille.laltitude }}, lng: {{ offre.idVille.longitude }} };
+
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                animation:google.maps.Animation.BOUNCE,
+                map: map
+            });
+            var marker = new google.maps.Marker({
+                position: event.latLng,
+                map: map
+            });
+            marker.setMap(map);
+
+        }
+        google.maps.event.addDomListener(window, 'load', initMap);
+
+    </script>
+
+    <div style="height: 100%;
+    background-color: #ffffff" id="pd-wrapper" class="wrapper">
+        <div  class="pd-content">
+
+            <div  id="pd-main-full"><br><br>
+
+                    <h6 style="font-style: italic; font-size: 30px; margin-left: 10px; font-family: Georgia; font-weight: normal;">  Informations utiles sur {{ offre.idVille.libelleVille }} :</h6><br><br><br>
+
+                    <div  class="pd-guide-large-top"></div>
+                    <div class="pd-guide-large-middle pd-guide-infos">
+
+                        <table style="margin-left: 50px" border="0" class="pd-layout">
+                            <tbody><tr>
+                                <td style=" margin-left: 30px;" >
+                                    <h3 style="font-style: italic;  font-size: 20px; font-family: Georgia ; font-weight: inherit; "> A propos du Pays : </h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3">
+                                    <img src="{{ asset('bundles/img/espagne.jpg') }}"   width="170" height="80" >
+                                </td>
+                                <td>
+                                <table style="margin-left: 20px" border="0">
+                                    <tbody>
+                                   <tr>
+                                       <td>
+
+                                           <strong>Nom du pays</strong>:  {{ offre.idPays.libelle }}
+                                       </td>
+                                       </tr>
+                                   <tr>
+                                       <td>
+
+                                           <strong>Langue</strong>: {{ offre.langue }}
+                                       </td>
+                                   </tr>
+                                       <tr>
+                                           <td>
+                                               <strong>Capitale</strong>: {{ offre.capitale }}
+                                           </td>
+                                       </tr>
+                                       <tr>
+                                           <td>
+                                               <strong>Population</strong>: {{ offre.population }}
+                                           </td>
+                                       </tr>
+                                       <tr>
+                                           <td>
+                                           <strong>Monnaie utilisé</strong>: {{ offre.monnaie }}
+                                           </td>
+                                       </tr>
+
+                                    </tbody>
+                                </table>
+                                </td>
+                                <td><div id="googleMap" style="width: 500px;height: 250px; margin-top: 50px"></div></td>
+
+                            </tr>
+
+
+                            </tbody>
+</table>
+                        <br><br>
+                        <table style="margin-left: 50px" border="0" class="pd-layout">
+                            <tbody>
+                            <tr>
+                                <td  style="width: 650px ; height: 30px ; text-align: start ">
+
+                                    <h5 style="font-style: italic; font-size: 20px; font-family: Georgia; font-weight: inherit;">Présentation de {{ offre.idVille.libelleVille }} :</h5><br>
+                                    <p style="text-indent: 30px ;margin-right: 7px" >{{ offre.descriptif }}</p>
+                                </td>
+                                <td  rowspan="2" style="border-left: 1px solid lightgray; padding-left: 5px; margin-left: 50px"> </td>
+                                <td valign="top">
+                                    <table border="0" class="pd-layout">
+                                        <tbody>
+                                        <br><br><h3 style="font-style: italic; font-size: 20px; font-family: Georgia; margin-left: 5px; font-weight: inherit;">L'électricité :</h3><br><p class="pd-legend">Tension ou voltage : {{ offre.tensionElectricite }} volts </p><p class="pd-legend">Fréquence du courant : {{ offre.tensionElectricite }} Hz</p></td>
+
+                                        </tbody></table>
+                                </td>
+                            </tr>
+
+                            </tbody></table>
+
+                        <div style="width:670px; margin-left: 60px">
+
+                            <center style="margin: 10px 0;"><iframe src="./Guide Barcelone _ infos pratiques, itinéraires, météo, que faire à Barcelone_files/oas-rg-468x60.html" frameborder="0" width="468" height="60" scrolling="no" style="display: none !important;"></iframe></center>
+                            <h3 style="font-style: italic; font-size: 20px; font-family: Georgia; font-weight: inherit;">Les plats à ne pas rater à {{ offre.idVille.libelleVille }} :</h3><br>
+                            {% for cuisine in cuisine %}
+                            <table class="pd-listing pd-guide-infos" border="0"><tbody><tr><td class="pd-image" width="119"><img src="{{ asset('uploads/cuisine/'~cuisine.path) }}"   width="140" height="140" alt="" align="absmiddle"></td><td class="pd-name" colspan="2"><h4><span style="float:right;"></span><a style="margin-left: 20px" href="">  {{ cuisine.nom }}</a></h4><p style="margin-left: 30px" class="pd-description">  {{ cuisine.descriptif }}</p><p class="pd-goto"><a class="pd-tinybutton fright" href="http://www.partirdemain.com/visiter/sagrada-familia-584.htm" style="width:110px;margin-top:0px;"></a></p></td></tr>
+                                <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody></table><div class="pd-box-bestoffer" style="width:630px;font-size:12px;height:95px; text-align:justify;margin-bottom:12px;">
+                                <span style="float:right;position:relative;top:12px;right:8px;">
+
+                                </span>
+                                {% endfor %}
+
+
+                            </div>
+
+                        </div><br><br><br><br>
+
+
+
+                        <div style="width:670px; ">
+
+                            <center style="margin: 10px 0;"><iframe src="./Guide Barcelone _ infos pratiques, itinéraires, météo, que faire à Barcelone_files/oas-rg-468x60.html" frameborder="0" width="468" height="60" scrolling="no" style="display: none !important;"></iframe></center>
+                            <h3 style="font-style: italic; font-size: 20px; font-family: Georgia; font-weight: inherit;">Les lieux à voir absolument à {{ offre.idVille.libelleVille }} :</h3><br>
+                            {% for lieu in lieu %}
+                            <table class="pd-listing pd-guide-infos" border="0"><tbody><tr><td class="pd-image" width="119"><img src="{{ asset('uploads/lieu/'~lieu.path) }}"   width="140" height="140" alt="" align="absmiddle"></td><td class="pd-name" colspan="2"><h4><span style="float:right;"></span><a style="margin-left: 20px" href="">  {{ lieu.nom }}</a></h4><p style="margin-left: 30px" class="pd-description">  {{ lieu.descriptif }}</p><p class="pd-goto"><a class="pd-tinybutton fright" href="http://www.partirdemain.com/visiter/sagrada-familia-584.htm" style="width:110px;margin-top:0px;"></a></p></td></tr>
+                                <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody></table><div class="pd-box-bestoffer" style="width:630px;font-size:12px;height:95px; text-align:justify;margin-bottom:12px;">
+                                <span style="float:right;position:relative;top:12px;right:8px;">
+
+                                </span>
+                                {% endfor %}
+
+
+                            </div>
+
+                        </div>
+
+
+                    <div class="pd-guide-large-bottom"></div>
+
+                    <p class="pd-credits"></p><img src="./Guide Barcelone _ infos pratiques, itinéraires, météo, que faire à Barcelone_files/counter.php" width="1" height="1" alt="">
+                </div><!-- end of pd-box-guide pd-box-guide-large -->
+
+            </div> <!-- end of main -->
+
+            <hr class="clear">
+            <br>
+        </div> <!-- end of content -->
+    </div> <!-- end of wrapper -->
+
+
+
+
+
+    <!-- add xiti -->
+    <p style="text-align:center;">
+        <!-- xiti -->	</p>
+
+    <!-- load javascript -->
+    </body></html>
+
+
+
+
+{% endblock %}

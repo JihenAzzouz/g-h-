@@ -1,0 +1,30 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+{% block body %}
+            <div class="center"  style="background-image: url('{{ asset('bundles/front/media-demo/banner/3.jpg') }}');">
+                <div class="container"  >
+                    <div class="row">
+                        <section class="site">
+                            <header class="site__header" style="color:blue">
+                                <h1 class="site__title"style="color:white" >Log In</h1>
+                            </header>
+                            <div class="site__main">
+                                {{ render_flash_alerts() }}
+                                <div class="widget js-widget widget--main widget--no-border">
+                                    <div class="widget__content">
+                                        <div class="auth auth--inline">
+                                            <div class="auth__wrap auth__wrap--login" style="margin-right:100px;margin-left:250px;margin-bottom:100px;width:700px">
+                                                <!-- BEGIN AUTH LOGIN-->
+                                                <h2 class="site__headline">Enter your username and password</h2>
+                                                {% block fos_user_content %}
+                                                    {{ include('@FOSUser/Security/login_content.html.twig') }}
+                                                {% endblock fos_user_content %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+{% endblock body %}

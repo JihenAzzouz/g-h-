@@ -1,0 +1,44 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+{% block body %}
+        <!-- END NAVBAR-->
+        <div class="site-wrap js-site-wrap" style="background:#222">
+            <!-- BEGIN BREADCRUMBS-->
+            <nav class="breadcrumbs">
+                <div class="container">
+                    <ul>
+                        <li class="breadcrumbs__item"><a href="" class="breadcrumbs__link">Home</a></li>
+                        <li class="breadcrumbs__item"><a href="" class="breadcrumbs__link">Register</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- END BREADCRUMBS-->
+
+            <div class="center"  style="background-image: url('{{ asset('bundles/front/media-demo/banner/8.jpg') }}');background-size:cover">
+                <div class="container"  >
+                    <div class="row">
+                        <section class="site">
+                            <header class="site__header" style="color:blue">
+                                <h1 class="site__title"style="color:white" >Create an account</h1>
+                            </header>
+                            <div class="site__main">
+                                <div class="widget js-widget widget--main widget--no-border">
+                                    <div class="widget__content">
+                                        <div class="auth auth--inline">
+                                            <div class="auth__wrap auth__wrap--login" style="margin-right:100px;margin-left:250px;margin-bottom:100px;width:700px">
+                                                <!-- BEGIN AUTH LOGIN-->
+                                                <h2 class="site__headline">Enter your informations correctly</h2>
+                                                {% block fos_user_content %}
+                                                    {% include "@FOSUser/Registration/register_content.html.twig" %}
+                                                {% endblock fos_user_content %}
+                                                <!-- end of block .auth__form-->
+                                                <!-- END AUTH LOGIN-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+{% endblock body %}

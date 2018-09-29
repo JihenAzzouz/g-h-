@@ -1,0 +1,79 @@
+show_Afrique:
+    path:     /showAfrique
+    defaults: { _controller: "MyAppUserBundle:Offresguide:showAfrique" }
+    methods:  GET
+show_Asie:
+    path:     /showAsie
+    defaults: { _controller: "MyAppUserBundle:Offresguide:showAsie" }
+    methods:  GET
+show_Europe:
+    path:     /showEurope
+    defaults: { _controller: "MyAppUserBundle:Offresguide:showEurope" }
+    methods:  GET
+show_AmN:
+    path:     /showAmeriqueNord
+    defaults: { _controller: "MyAppUserBundle:Offresguide:showAmeriqueNord" }
+    methods:  GET
+show_AmS:
+    path:     /showAmeriqueSud
+    defaults: { _controller: "MyAppUserBundle:Offresguide:showAmeriqueSud" }
+    methods:  GET
+show_Océanie:
+    path:     /showOcéanie
+    defaults: { _controller: "MyAppUserBundle:Offresguide:showOcéanie" }
+    methods:  GET
+offre_detail1:
+    path:     /{id}/offreDetail1
+    defaults: { _controller: "MyAppUserBundle:Offresguide:affichageFront" }
+    methods:  GET
+
+offreParPays:
+    path:     /{pays}/offreparPays
+    defaults: { _controller: "MyAppUserBundle:Offresguide:OffreParPays" }
+    methods:  [GET, POST]
+
+ville:
+    path:     /ville/{idpays}
+    defaults: { _controller: "MyAppUserBundle:Offresguide:ville" }
+    methods:  [GET, POST]
+
+AfficherSansFiltre:
+    path:     /{im}/AfficherSansFiltre
+    defaults: { _controller: "MyAppUserBundle:Offresguide:AfficherSansFiltre" }
+    methods:  [GET, POST]
+
+cuisinef:
+    path:     /{id}/cuisinef
+    defaults: { _controller: "MyAppUserBundle:Offresguide:CuisineDetailOffre" }
+    methods:  [GET, POST]
+
+
+lieuxf:
+    path:     /{id}/lieuxf
+    defaults: { _controller: "MyAppUserBundle:Offresguide:lieuxDetailOffre" }
+    methods:  [GET, POST]
+
+
+AfficherSansFiltref:
+    path:     /AfficherSansFiltre/{im}
+    defaults: { _controller: "MyAppUserBundle:Offresguide:AfficherSansFiltre" }
+    methods:  [GET, POST]
+
+
+map:
+    path:     /{id}/mapx
+    defaults: { _controller: "MyAppUserBundle:Offresguide:VisiterMap" }
+    methods:  [GET, POST]
+
+showAllGuides:
+    path:     /showAllGuides
+    defaults: { _controller: "MyAppUserBundle:Offresguide:showAll" }
+    methods:  GET
+
+hotel:
+    path:     /hotelmap
+    defaults: { _controller: "MyAppUserBundle:Offresguide:ShowMap" }
+    methods:  GET
+
+
+

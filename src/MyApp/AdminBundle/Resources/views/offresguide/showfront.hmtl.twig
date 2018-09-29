@@ -1,0 +1,268 @@
+{% extends '@MyAppUser/layout.html.twig' %}
+
+{% block body %}
+    {% block stylesheet %}
+        <link rel="stylesheet" href="{{ asset('bundles/front/css/vendor.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/front/css/bootstrap-datetimepicker.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/front/css/font-awesome.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/front/css/ui-panel.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/front/css/custom.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/front/css/theme-green_blue-red.css') }}">
+
+        <link rel="stylesheet" href="{{ asset('bundles/front/css/npm.js') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/front/css/bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/front/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/front/css/font-awesome.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/front/css/font-awesome.min.css') }}">
+
+
+
+
+
+        <link rel="stylesheet" href="{{ asset('bundles/front/css/ie-fix.css') }}"><![endif]-->
+        <link rel="icon" href="{{ asset('bundles/front/img/gof.ico') }}" type="image/x-icon">
+
+    {% endblock %}
+
+    <style>
+
+        #url{
+            visibility: hidden;
+        }
+    </style>
+    <script src="{{ asset('bundles/front/js/jquery.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#confirm-delete').on('show.bs.modal', function(e) {
+
+                $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+
+                $('.debug-url').html('<strong id="url">' + $(this).find('.btn-ok').attr('href') + '</strong>');
+            });
+        });
+
+    </script>
+
+    <div class="site-wrap js-site-wrap">
+        <div class="site__main" style="margin-right: 60px ; margin-left:60px ">
+            <div class="widget js-widget widget--main">
+                <div class="widget__content"><br><br>
+                    {{ form_start(form) }}
+                    <table>
+                        <tr>
+                            <td style="width: 180px">
+                                Continent :  {{  form_widget(form.continent)  }}
+                            </td>
+                            <td style="width: 180px">
+                                Pays : {{  form_widget(form.idPays) }}
+                            </td>
+                            <td style="width: 180px">
+                                Ville :  {{  form_widget(form.idVille)  }}
+                            </td>
+
+                        </tr>
+
+                    </table><br>
+
+                    {{ form_end(form) }}<br><br>
+                    <div  class="listing listing--list js-prope  rties-list">
+
+                        {% for offre in offresguides %}
+                            {% set size = cuisine | length %}
+                            <div  class="listing__item">
+                                <div class="properties properties--list">
+                                    <div class="properties__thumb"><a href="{{ path('offre_detail',{'id':offre.id}) }}" class="item-photo"><img src="{{ asset('uploads/guide/'~offre.path) }}" style="width:280px; height: 150px"  />
+                                        </a>
+                                    </div>
+
+                                    <!-- end of block .properties__thumb-->
+                                    <div class="properties__details">
+                                        <div class="properties__info"><a href="{{ path('demande_detail',{'id':offre.id}) }}" class="properties__address"><span class="properties__address-street"> {{ offre.titre  }}</span><span class="properties__address-city">{{ offre.idPays.libelle }}, {{ offre.idVille.libelleVille }}</span></a>
+                                            <div class="properties__offer">
+
+                                                <div style="float:right" class="properties__offer-column">
+                                                    <div style="float:right" class="properties__offer-value"><strong></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div   >
+                                            <p>{{ offre.descriptif }}</p>
+                                        </div>
+                                        <a href="{{path('offresguide_edit',{'id':offre.id })}}" class="properties__more">Modifier</a>
+                                        <a href="#" data-href="{{path('offresguide_delete',{'id':offre.id })}}" class="properties__more"data-toggle="modal" data-target="#confirm-delete">Supprimer</a>
+
+                                        <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                        <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                                                    </div>
+
+                                                    <div class="modal-body">
+                                                        <p>You are about to delete one track, this procedure is irreversible.</p>
+                                                        <p>Do you want to proceed?</p>
+                                                        <p class="debug-url"></p>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                        <a class="btn btn-danger btn-ok">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <a href="{{path('cuisine',{'id':offre.id })}}" class="properties__more">cuisine({{ size }})</a>
+
+                                        <a href="{{path('lieux',{'id':offre.id })}}" class="properties__more">lieux a visiter</a>
+                                    </div>
+                                    <!-- end of block .properties__info-->
+                                </div>
+                                <!-- end of block .properties__item-->
+                            </div>
+
+                        {% endfor %}
+
+
+
+                    </div>
+                    <center><button  id="loadmorebtn">
+                            Load More
+                        </button>
+                    </center>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% block javascript %}
+        <script src="{{ asset('bundles/front/js/jquery.js') }}"></script>
+
+        <script>
+            $(document).ready(function () {
+
+                $("#myapp_adminbundle_offresguide_idPays").change(function () {
+
+
+                    $.ajax({
+                        type: 'get',
+                        dataType: 'json',
+                        url: 'http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/admin/guide/offreparPays/'+ $(this).val(),
+                        success: function(data) {
+                            $(".listing--list").html('');
+                            for (i in data) {
+                                x = data[i];
+
+
+                                $('.listing--list').append(
+                                        '<div class="listing__item">'+
+                                        '<div class="properties properties--list">'+
+                                        '<div class="properties__thumb">'+
+                                        '<a href="#" class="item-photo">'+
+                                        ' </figure></a>'+'<img src="http://localhost:9090/GnH/GuestAndHost/guestandhost/web/uploads/guide/'+ x[4] +'" style="width:200px; height: 170px"  alt=""/>'+
+                                        '<figure class="item-photo__hover item-photo__hover--params">'+
+                                        ' </div>'+
+
+                                        ' <div class="properties__details">'+
+                                        ' <div class="properties__info"><a href="#" class="properties__address"><span class="properties__address-street"></span><span class="properties__address-city">'+x[1]+', '+x[2]+'</span></a>'+
+                                        '<div class="properties__offer">'+
+                                        '<div class="properties__offer-column">'+
+                                        '<div class="properties__offer-label"></div>'+
+                                        '<div class="properties__offer-value"><strong></strong>'+
+                                        ' </div>'+
+                                        '</div>'+
+                                        ' <div class="properties__offer-column">'+
+                                        '<div class="properties__offer-value"><strong>'+x[3]+'</strong>'+
+                                        ' </div>'+
+                                        ' </div>'+
+                                        ' </div>'+
+                                        '</div>'+
+                                        ' <div>'+
+                                        '<p>'+x[0]+'</p>'+
+                                        '</div>'+
+                                        '<a href="#" class="properties__more">Modifier</a>'+
+                                        '<a href="#" class="properties__more">Supprimer</a>'+
+                                        ' <a href="#" class="properties__more">cuisine</a>'+
+                                        ' <a href="#" class="properties__more">lieux a visiter</a>'+
+                                        ' </div>'+
+
+                                        ' </div>'+
+
+                                        '</div>');
+
+
+                            }
+                        }
+                    });
+
+                });
+            });
+
+
+        </script>
+        <script>
+            var im=0;
+            $("#loadmorebtn").click(function () {
+
+                im=im+2;
+                $.ajax({
+
+                    type: 'get',
+                    dataType: 'json',
+                    url: 'http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/admin/guide/AfficherSansFiltre/'+im,
+                    success: function (data) {
+
+                        for (i in data) {
+                            x = data[i];
+
+                            $('.listing--list').append(
+                                    '<div class="listing__item">'+
+                                    '<div class="properties properties--list">'+
+                                    '<div class="properties__thumb">'+
+                                    '<a href="#" class="item-photo"><img src="http://localhost:9090/GnH/GuestAndHost/guestandhost/web/uploads/guide/'+ x[4] +'" style="width:300px; height: 150px"  />'+
+                                    '<figure class="item-photo__hover item-photo__hover--params">'+
+                                    ' </figure></a>'+
+                                    ' </div>'+
+
+                                    ' <div class="properties__details">'+
+                                    ' <div class="properties__info"><a href="#" class="properties__address"><span class="properties__address-street">'+x[0]+'</span><span class="properties__address-city">'+x[2]+', '+x[3]+'</span></a>'+
+                                    '<div class="properties__offer">'+
+                                    '<div class="properties__offer-column">'+
+                                    '<div class="properties__offer-label"></div>'+
+                                    '<div class="properties__offer-value"><strong></strong>'+
+                                    ' </div>'+
+                                    '</div>'+
+                                    ' <div class="properties__offer-column">'+
+                                    '<div class="properties__offer-value"><strong></strong>'+
+                                    ' </div>'+
+                                    ' </div>'+
+                                    ' </div>'+
+                                    '<div class="properties__params--mob"><a href="#" class="properties__more">View details</a><span class="properties__params">Built-Up - 65 Sq Ft</span><span class="properties__params">Land Size - 110 Sq Ft</span></div>'+
+                                    '</div>'+
+                                    ' <div>'+
+                                    '<p>'+x[1]+'</p>'+
+                                    '</div>'+
+                                    '<a href="#" class="properties__more">Modifier</a>'+
+                                    '<a href="#" class="properties__more">Supprimer</a>'+
+                                    ' <a href="#" class="properties__more">cuisine</a>'+
+                                    ' <a href="#" class="properties__more">lieux a visiter</a>'+
+                                    ' </div>'+
+
+                                    ' </div>'+
+
+                                    '</div>');
+                        }
+                    }
+
+                })
+            })
+        </script>
+
+
+    {% endblock %}
+
+{% endblock %}

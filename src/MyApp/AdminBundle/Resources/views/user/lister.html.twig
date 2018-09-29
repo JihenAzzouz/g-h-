@@ -1,0 +1,45 @@
+{% extends 'MyAppAdminBundle:Default:index.html.twig' %}
+
+{% block body %}
+    <h1>users list</h1>
+
+    <table style="margin-left: 50px" border="0" class="pd-layout">
+        <thead>
+        <tr>
+            <th>nom</th>
+            <th>Email</th>
+            <th>Etat</th>
+            <th>derniére connexion</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    {% if user.enabled == 0 %}
+                        Desactive
+                    {% else  %}
+                        Active
+                    {% endif %}
+                </td>
+                <td>
+                    {{user.lastLogin|date('d-m-Y H:m:s')}}
+                </td>
+
+                <td>
+                    <a href="{{path('laf_user_delete',{'id':user.id})}}">Supprimer</a>
+
+
+                </td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

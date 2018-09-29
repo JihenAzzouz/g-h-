@@ -1,0 +1,410 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+{% block body %}
+    <script src="{{ asset('bundles/front/js/jquery-3.2.0.js') }}"></script>
+    <script>
+        // This example displays an address form, using the autocomplete feature
+        // of the Google Places API to help users fill in the information.
+        $(document).ready(function () {
+            $("#autocomplete").focus(function () {
+                geolocate();
+            });
+        });
+        var placeSearch, autocomplete;
+        var componentForm = {
+            street_number: 'short_name',
+            route: 'long_name',
+            locality: 'long_name',
+            administrative_area_level_1: 'short_name',
+            country: 'long_name',
+            postal_code: 'short_name'
+        };
+
+        function initAutocomplete() {
+            // Create the autocomplete object, restricting the search to geographical
+            // location types.
+            autocomplete = new google.maps.places.Autocomplete(
+                /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+                {types: ['geocode']});
+
+            // When the user selects an address from the dropdown, populate the address
+            // fields in the form.
+            autocomplete.addListener('place_changed', fillInAddress);
+        }
+
+        // [START region_fillform]
+        function fillInAddress() {
+            // Get the place details from the autocomplete object.
+            var place = autocomplete.getPlace();
+
+            for (var component in componentForm) {
+                document.getElementById(component).value = '';
+                document.getElementById(component).disabled = false;
+            }
+
+            // Get each component of the address from the place details
+            // and fill the corresponding field on the form.
+            for (var i = 0; i < place.address_components.length; i++) {
+                var addressType = place.address_components[i].types[0];
+                if (componentForm[addressType]) {
+                    var val = place.address_components[i][componentForm[addressType]];
+                    document.getElementById(addressType).value = val;
+                }
+            }
+        }
+        // [END region_fillform]
+
+        // [START region_geolocation]
+        // Bias the autocomplete object to the user's geographical location,
+        // as supplied by the browser's 'navigator.geolocation' object.
+        function geolocate() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var geolocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    var circle = new google.maps.Circle({
+                        center: geolocation,
+                        radius: position.coords.accuracy
+                    });
+                    autocomplete.setBounds(circle.getBounds());
+                });
+            }
+        }
+
+        // [END region_geolocation]
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCh3CYvqOO28AXwwVqkVpBCz29XxluGIU&signed_in=true&libraries=places&callback=initAutocomplete"
+            async defer></script>
+    <div class="box js-box">
+        <!-- BEGIN HEADER-->
+        <header class="header header--brand">
+            <div class="container">
+
+
+                <div class="auth auth--header">
+                    <ul class="auth__nav">
+                        <li class="dropdown auth__nav-item">
+
+                            <div class="dropdown__menu auth__dropdown--logged-in js-user-logged-in">
+                                <nav class="nav nav--auth">
+                                    <ul class="nav__list">
+                                        <li class="nav__item"><a href="{{ path('Recharger Compte')}}"
+                                                                 class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-dashboard"></use>
+                                                </svg>
+                                                Profile</a></li>
+                                        <hr class="nav__separator">
+                                        <li class="nav__item"><a href="{{ path("afficherAnnonceUser") }}" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-add-listing"></use>
+                                                </svg>
+                                                My Ads</a></li>
+                                        <li class="nav__item">
+
+                                        </li>
+                                        <li class="nav__item"><a href="{{ path("AllMydemande_show") }}" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-news"></use>
+                                                </svg>
+                                                My Requests</a></li>
+                                        <li class="nav__item"><a href="{{ path("Afficher Favories") }}"
+                                                                 class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-user-admin"></use>
+                                                </svg>
+                                                My Favorites</a></li>
+                                        <hr class="nav__separator">
+
+                                        <li class="nav__item"><a href="{{ url('experiences_affichage') }}" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-clock"></use>
+                                                </svg>
+                                                My Experiences</a></li>
+                                        <li class="nav__item">
+                                            <hr class="nav__separator">
+                                        </li>
+                                        <li class="nav__item"><a href="{{ path("Mes Reservations") }}" class="nav__link active">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-favorite-listings"></use>
+                                                </svg>
+                                                My Reservations</a></li>
+                                        <hr class="nav__separator">
+
+                                        <li class="nav__item"><a href="{{ url('graphePie') }}" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-favorite-agents"></use>
+                                                </svg>
+                                                Statistics</a></li>
+                                        <li class="nav__item"><a href="#" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-favorite-search"></use>
+                                                </svg>
+                                                Parameters</a></li>
+                                        <li class="nav__item">
+                                            <hr class="nav__separator">
+                                        </li>
+                                        <li class="nav__item"><a href="http://localhost/guestandhost/web/app_dev.php/logout" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-financials"></use>
+                                                </svg>
+                                                Logout</a></li>
+
+                                    </ul>
+                                </nav>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- end of block .auth header-->
+                </div>
+                <button type="button" class="header__navbar-toggle js-navbar-toggle">
+                    <svg class="header__navbar-show">
+                        <use xlink:href="#icon-menu"></use>
+                    </svg>
+                    <svg class="header__navbar-hide">
+                        <use xlink:href="#icon-menu-close"></use>
+                    </svg>
+                </button>
+                <!-- end of block .header__navbar-toggle-->
+            </div>
+    </div>
+    </header>
+    <!-- END HEADER-->
+    <!-- BEGIN NAVBAR-->
+    <div id="header-nav-offset"></div>
+
+    <!-- END NAVBAR-->
+    <div class="site-wrap js-site-wrap">
+        <!-- BEGIN CENTER SECTION-->
+        <div class="center">
+            <div class="container">
+                <div class="row">
+                    <header class="site__header">
+                        <h1 class="site__title site__title--center">My ads</h1>
+                    </header>
+                    <!-- BEGIN LISTING-->
+                    <div class="site site--dashboard" style="background:white">
+                        <header class="site__header">
+                            <h1 class="site__title">Edit the ad </h1>
+                            <h2 class="site__headline"></h2>
+                        </header>
+                        <div class="site__panel"><span class="site__header-text">Let's begin with basics then add address and pictures</span></div>
+                        <div class="site__main">
+                            {{ form_start(form,{'attr':{'class':'form form--flex form--property-add js-form js-form-property'}}) }}
+
+                            <div class="widget js-widget widget--main widget--no-margin widget--no-border widget--collapse">
+                                <div class="widget__header">
+                                    <h2 class="widget__title">The details</h2>
+                                    <h5 class="widget__headline"></h5>
+                                </div>
+                                <div class="widget__content">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="in-1" class="control-label">Local </label>
+
+                                            {{ form_widget(form.typeMaison) }}
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="in-2" class="control-label">Type of housing</label>
+                                            {{ form_widget(form.typeLogement) }}
+                                        </div>
+                                        <div class="form-group">
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="in-4" class="control-label">Number of travelers</label>
+                                            {{ form_widget(form.nombreVoyageur) }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="in-5" class="control-label">Number of beds </label>
+                                            {{ form_widget(form.nbreLit) }}
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="in-6" class="control-label">Number dof bathrooms</label>
+                                            {{ form_widget(form.nombreSalleDebain) }}                                            </div>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget js-widget widget--main widget--no-margin widget--no-border widget--collapse">
+                                <div class="widget__header">
+                                    <h2 class="widget__title">Localisation</h2>
+                                </div>
+                                <div class="widget__content">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="in-10" class="control-label">Address<span data-container="body" data-toggle="popover" data-placement="top" data-content="You should fill all this fields. All this fields are mandatory. But think twice before you will indicate the price of the property type " class="form-property__information js-popover"><span class="glyphicon glyphicon-info-sign"></span></span></label>
+                                            <div id="locationField">
+                                                {{ form_widget(form.adresse,{'id':'autocomplete'},{'attr':{'placeholder': 'Enter your address', 'style':'background:black'}}) }}
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="in-11" class="control-label">Postal Code</label>
+                                            <div class="form-group form-group--col-6">
+                                                <input class="field"
+                                                       id="administrative_area_level_1" disabled="true" hidden></input>
+
+
+                                                {{ form_widget(form.codePostal,{'id':'postal_code'},{'attr':{'class':'field','disabled':'true'}}) }}
+                                                <div class="row">
+                                                    <div class="form-group form-group--col-6">
+
+
+                                                        <input class="field" id="street_number"
+                                                               disabled="true" hidden></input>
+                                                        <input class="field" id="route"
+                                                               hidden      disabled="true"></input>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="in-12" class="control-label">City</label>
+                                            {{ form_widget(form.ville,{'id':'locality'},{'attr':{'class':'field','disabled':'true'}}) }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="in-50" class="control-label">Country</label>
+                                            {{ form_widget(form.idPays,{'id':'country'},{'attr':{'class':'field','disabled':'true'}}) }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="in-50" class="control-label">Building</label>
+                                            {{ form_widget(form.batiment) }}                                            </div>
+                                        <div class="form-group form-group--col-12">
+                                            <label for="in-13" class="control-label">Description</label>
+                                            {{ form_widget(form.description,{'attr':{'id':'in-13','class':'form-control'}}) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="widget js-widget widget--main widget--no-margin widget--no-border widget--collapse">
+                                <div class="widget__header">
+                                    <h2 class="widget__title">Extra</h2>
+                                </div>
+                                <div class="widget__content">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="in-14" class="control-label">Start Date </label>
+                                            {{ form_widget(form.dateDebut) }}
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="in-15" class="control-label">End Date </label>
+                                            {{ form_widget(form.dateFin) }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="in-16" class="control-label">Price</label>
+                                            {{ form_widget(form.prix) }}                                            </div>
+
+
+
+
+
+
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="widget js-widget widget--main widget--no-margin widget--no-border widget--collapse">
+                                <div class="widget__header">
+
+
+                                </div>
+                            </div>
+                            <h5 class="form-property__condition"></h5>
+                            <div class="row">
+                                {{ form_widget(form.ajouter,{'attr':{'style':'background-color: #ff574c;border:none;border-radius: 2px;position:relative;left:80%;width:100px;height: 40px;color:white'}}) }}
+
+                                {{ form_end(form) }}
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="sidebar sidebar--dashboard">
+                        <div class="widget js-widget widget--sidebar-dashboard widget--collapsing">
+                            <div class="widget__header"><a class="widget__btn js-widget-btn widget__btn--toggle">Dashboard</a>
+                            </div>
+                            <div class="widget__content">
+                                <nav class="nav nav--sidebar">
+                                    <ul class="nav__list">
+                                        <li class="nav__item"><a href="dashboard_profile.html" class="nav__link active">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-dashboard"></use>
+                                                </svg>Profile</a></li>
+                                        <hr class="nav__separator">
+                                        <li class="nav__item"><a href="annonce.html" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-add-listing"></use>
+                                                </svg>My Ads</a></li>
+                                        <li class="nav__item">
+
+                                        </li>
+                                        <li class="nav__item"><a href="offre.html" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-news"></use>
+                                                </svg>My Offers</a></li>
+                                        <li class="nav__item"><a href="dashboard_favorites_listings.html" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-user-admin"></use>
+                                                </svg>My Favorites</a></li>
+                                        <hr class="nav__separator">
+
+                                        <li class="nav__item"><a href="experience.html" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-clock"></use>
+                                                </svg>My Experiences</a></li>
+                                        <li class="nav__item">
+                                            <hr class="nav__separator">
+                                        </li>
+                                        <li class="nav__item"><a href="reservation.html" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-favorite-listings"></use>
+                                                </svg>My Reservations</a></li>
+                                        <hr class="nav__separator">
+
+                                        <li class="nav__item"><a href="dashboard_statistics.html" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-favorite-agents"></use>
+                                                </svg> Statistics</a></li>
+                                        <li class="nav__item"><a href="#.html" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-favorite-search"></use>
+                                                </svg>Parameters</a></li>
+                                        <li class="nav__item">
+                                            <hr class="nav__separator">
+                                        </li>
+                                        <li class="nav__item"><a href="#.html" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-financials"></use>
+                                                </svg>Logout</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

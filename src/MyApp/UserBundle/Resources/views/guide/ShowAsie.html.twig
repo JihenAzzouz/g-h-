@@ -1,0 +1,242 @@
+{% extends '@MyAppUser/layout.html.twig' %}
+
+{% block body %}
+    <style>
+
+        #url{
+            visibility: hidden;
+        }
+    </style>
+    <script src="{{ asset('bundles/front/js/jquery.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#confirm-delete').on('show.bs.modal', function(e) {
+
+                $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+
+                $('.debug-url').html('<strong id="url">' + $(this).find('.btn-ok').attr('href') + '</strong>');
+            });
+        });
+
+    </script>
+
+
+
+    <div class="site-wrap js-site-wrap">
+        <!-- BEGIN CENTER SECTION-->
+        <div class="center">
+            <div class="container">
+                <div class="row">
+
+                    <!-- BEGIN LISTING-->
+                    <div class="site site--dashboard1" style="background:white"style=" width:100px">
+
+                        <div class="site__main">
+                            <div class="widget js-widget widget--dashboard">
+                                <div class="widget__header">
+                                    <div class="navigation">
+                                    </div>
+                                </div>
+
+                                {{ form_start(form) }}
+                                <table>
+                                    <tr>
+
+                                        <td style="width: 180px">
+                                            Pays : {{  form_widget(form.idPays) }}
+                                        </td>
+                                        <td style="width: 180px">
+                                            Ville :  {{  form_widget(form.idVille)  }}
+                                        </td>
+
+                                    </tr>
+
+                                </table><br>
+
+                                {{ form_end(form) }}<br><br>
+                                <div  class="listing listing--list js-prope  rties-list">
+
+                                    {% for offre in offresguides %}
+                                        <div  class="listing__item">
+                                            <div class="properties properties--list">
+                                                <div class="properties__thumb"><a href="{{ path('offre_detail1',{'id':offre.id}) }}" class="item-photo"><img src="{{ asset('uploads/guide/'~offre.path) }}" style="width:280px; height: 150px"  />
+                                                    </a>
+                                                </div>
+
+                                                <!-- end of block .properties__thumb-->
+                                                <div class="properties__details">
+                                                    <div class="properties__info"><a href="{{ path('offre_detail1',{'id':offre.id}) }}" class="properties__address"><span class="properties__address-street"> {{ offre.titre  }}</span><span class="properties__address-city">{{ offre.idPays.libelle }}, {{ offre.idVille.libelleVille }}</span></a>
+                                                        <div class="properties__offer">
+
+                                                            <div style="float:right" class="properties__offer-column">
+                                                                <div style="float:right" class="properties__offer-value"><strong></strong>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div   >
+                                                        <p>{{ offre.descriptif }}</p>
+                                                    </div>
+                                                    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                    <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                                                                </div>
+
+                                                                <div class="modal-body">
+                                                                    <p>You are about to delete one track, this procedure is irreversible.</p>
+                                                                    <p>Do you want to proceed?</p>
+                                                                    <p class="debug-url"></p>
+                                                                </div>
+
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                                    <a class="btn btn-danger btn-ok">Delete</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                </div>
+                                                <!-- end of block .properties__info-->
+                                            </div>
+                                            <!-- end of block .properties__item-->
+                                        </div>
+
+                                    {% endfor %}
+
+
+
+                                </div>
+                                <center><button  id="loadmorebtn">
+                                        Load More
+                                    </button>
+                                </center>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div></div></div>
+    {% block javascript %}
+        <script src="{{ asset('bundles/front/js/jquery.js') }}"></script>
+
+        <script>
+            $(document).ready(function () {
+
+                $("#myapp_adminbundle_offresguide_idPays").change(function () {
+
+
+                    $.ajax({
+                        type: 'get',
+                        dataType: 'json',
+                        url: 'http://localhost/guestandhost/web/app_dev.php/guide/offreparPays/'+ $(this).val(),
+                        success: function(data) {
+                            $(".listing--list").html('');
+                            for (i in data) {
+                                x = data[i];
+
+
+                                $('.listing--list').append(
+                                        '<div  class="listing__item">'+
+                                        '<div class="properties properties--list">'+
+                                        '<div class="properties__thumb"><a href="#" class="item-photo"><img src="http://localhost/guestandhost/web/uploads/guide/'+x[4]+'" style="width:280px; height: 150px"  />'+
+                                        '</a>'+
+                                        '</div>'+
+
+                                        <!-- end of block .properties__thumb-->
+                                        '<div class="properties__details">'+
+                                        ' <div class="properties__info"><a href="#" class="properties__address"><span class="properties__address-street">'+x[5]+'</span><span class="properties__address-city">'+x[1]+', '+x[2]+'</span></a>'+
+                                        ' <div class="properties__offer">'+
+
+                                        '<div style="float:right" class="properties__offer-column">'+
+                                        ' <div style="float:right" class="properties__offer-value"><strong></strong>'+
+                                        '</div>'+
+                                        '</div>'+
+                                        '</div>'+
+                                        '</div>'+
+                                        '<div>'+
+                                        '<p>'+ x[0] +'}}</p>'+
+                                        ' </div>'+
+
+
+
+                                        ' </div>'+
+                                        <!-- end of block .properties__info-->
+                                        ' </div>'+
+                                        <!-- end of block .properties__item-->
+                                        '   </div>');
+
+
+                            }
+                        }
+                    });
+
+                });
+            });
+
+
+        </script>
+        <script>
+            var im=0;
+            $("#loadmorebtn").click(function () {
+
+                im=im+2;
+                $.ajax({
+
+                    type: 'get',
+                    dataType: 'json',
+                    url: 'http://localhost/guestandhost/web/app_dev.php/guide/AfficherSansFiltre/'+im,
+                    success: function (data) {
+
+                        for (i in data) {
+                            x = data[i];
+
+                            $('.listing--list').append(
+                                    '<div  class="listing__item">'+
+                                    '<div class="properties properties--list">'+
+                                    '<div class="properties__thumb"><a href="#" class="item-photo"><img src="http://localhost/guestandhost/web/uploads/guide/'+x[4]+'" style="width:280px; height: 150px"  />'+
+                                    '</a>'+
+                                    '</div>'+
+
+                                    <!-- end of block .properties__thumb-->
+                                    '<div class="properties__details">'+
+                                    ' <div class="properties__info"><a href="#" class="properties__address"><span class="properties__address-street">'+x[5]+'</span><span class="properties__address-city">'+x[1]+', '+x[2]+'</span></a>'+
+                                    ' <div class="properties__offer">'+
+
+                                    '<div style="float:right" class="properties__offer-column">'+
+                                    ' <div style="float:right" class="properties__offer-value"><strong></strong>'+
+                                    '</div>'+
+                                    '</div>'+
+                                    '</div>'+
+                                    '</div>'+
+                                    '<div>'+
+                                    '<p>'+ x[0] +'}}</p>'+
+                                    ' </div>'+
+
+                                    ' </div>'+
+                                    <!-- end of block .properties__info-->
+                                    ' </div>'+
+                                    <!-- end of block .properties__item-->
+                                    '   </div>');
+
+
+                        }
+                    }
+                });
+
+            });
+
+
+
+        </script>
+
+
+    {% endblock %}
+
+{% endblock %}

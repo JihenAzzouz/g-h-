@@ -1,0 +1,45 @@
+{% extends 'MyAppAdminBundle:Default:index.html.twig' %}
+
+{% block body %}
+    <h1>Lieuxavisiters list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Descriptif</th>
+                <th>Adresse</th>
+                <th>Image</th>
+                <th>Id</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for lieuxAVisiter in lieuxAVisiters %}
+            <tr>
+                <td><a href="{{ path('lieuxavisiter_show', { 'id': lieuxAVisiter.id }) }}">{{ lieuxAVisiter.nom }}</a></td>
+                <td>{{ lieuxAVisiter.descriptif }}</td>
+                <td>{{ lieuxAVisiter.adresse }}</td>
+                <td>{{ lieuxAVisiter.image }}</td>
+                <td>{{ lieuxAVisiter.id }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('lieuxavisiter_show', { 'id': lieuxAVisiter.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('lieuxavisiter_edit', { 'id': lieuxAVisiter.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('lieuxavisiter_new') }}">Create a new lieuxAVisiter</a>
+        </li>
+    </ul>
+{% endblock %}

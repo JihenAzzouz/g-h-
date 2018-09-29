@@ -1,0 +1,263 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+
+{% block body %}
+
+        <!-- END NAVBAR-->
+        <div class="site-wrap js-site-wrap" >
+            <!-- BEGIN CENTER SECTION-->
+            <div class="center">
+                <div class="container">
+                    <div class="row">
+
+                        <!-- BEGIN LISTING-->
+                        <div class="site site--dashboard1" style="background:white"style=" width:100px">
+
+                            <div class="site__main">
+                                <div class="widget js-widget widget--dashboard">
+                                    <div class="widget__header">
+                                        <div class="navigation">
+
+                                        </div>
+                                    </div>
+                                    {{ form_start(form, {'attr': {'class': 'form form--flex form--property-add js-form js-form-property'}}) }}
+                                    <div class="row">
+                                    <div class="form-group">
+                                        {{ form_widget( form.pays,{'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_widget( form.ville,{'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                   </div>
+                                    {{ form_end(form) }}
+                                </br>
+                                    {% set size = nbdemande | length %}
+                                    <h3>Nombre de demande ({{ size }})</h3>
+                                </br>
+
+                                    <div class="widget__content">
+                                        <div class="listing listing--grid ">
+                                            {% for demande in demandes %}
+
+
+                                                <div class="listing__item ">
+
+                                                    <article class="article article--grid article--management " >
+                                                        <div class="article__item-header">
+                                                            <div>
+
+                                                            </div>
+
+                                                        </div><a href="{{ path('demande_detail',{'id':demande.id}) }}" class="article__photo"><img src="{{ asset('bundles/img/photos-1/'~demande.ville.libelleville~'.jpg') }}" class="article__photo" style="height: 150px">
+                                                            <time datetime="2009-08-29" class="article__time">{{ demande.dateDebut|date('m')}}<strong>{{ demande.dateDebut|date('d') }}</strong></time></a>
+                                                        <div class="article__details"><a href="#" class="article__item-title">{{ demande.typeLogement }} <br>  {{ demande.pays.libelle }}-{{ demande.ville.libelleville }} '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prix: {{ demande.prix }}</span> </a>
+                                                            <div  class="article__intro">
+                                                                <p> {{ demande.description }}</p>
+                                                            </div><a href="{{ path('afficherAnnonceProposition',{'id_demande':demande.id}) }}" class="article__more">Poroposer un logement</a>
+
+
+                                                        </div>
+
+                                                    </article>
+
+                                                    <!-- end of block .article__item-->
+                                                </div>
+
+                                            {% endfor %}
+
+                                        </div>
+                                    </br>
+                                        <div class="widget__footer"><a href="#" class="widget__more" id="loadmore">Voir plus</a></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- END LISTING-->
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% block javascript %}
+        <script src="{{ asset('bundles/front/js/jquery.js') }}"></script>
+        <script>
+
+            $(document).ready(function () {
+                $("#myapp_userbundle_demande_ville").html("");
+                $("#myapp_userbundle_demande_pays").change(
+                    function () {
+                        $.ajax({
+                            type: 'get',
+                            dataType: 'json',
+                            url: 'http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/experience/villes/' + $(this).val(),
+
+                            success: function (data) {
+                                $("#myapp_userbundle_demande_ville").html('');
+                                $("#myapp_userbundle_demande_ville").append('<option value="noville">  choisissez une ville </option>');
+                                for (i in data) {
+
+                                    x = data[i];
+                                    $("#myapp_userbundle_demande_ville").append('<option value="' + x[1] + '"> ' + x[0] + ' </option>');
+
+                                }
+                                var first='';
+                                $("#select2-myapp_userbundle_demande_ville-container").html(first);
+
+                            }
+                        });
+
+                    });
+            });
+
+
+        </script>
+
+        <script>
+            $(document).ready(function () {
+
+                $("#myapp_userbundle_demande_pays").change(function () {
+                    im=0;
+                    if(( $("#myapp_userbundle_demande_pays").val()=='')&& $("#myapp_userbundle_demande_ville").val()=='noville')
+                    {
+
+                        $.ajax({
+                            type: 'get',
+                            dataType: 'json',
+                            url: 'http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/demande/demandeSansfiltre/'+im,
+                            success: resultat
+                        });
+
+                    }
+                    else
+                    {
+                        $.ajax({
+                            type: 'get',
+                            dataType: 'json',
+                            url: 'http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/demande/demandefiltrePays/'+ $("#myapp_userbundle_demande_pays").val()+'/'+im,
+                            success: resultat
+                        });
+
+                    }
+
+                });
+
+                $("#myapp_userbundle_demande_ville").change(function () {
+                     im=0;
+                    if(($(this).val()!='noville')&& $("#myapp_userbundle_demande_pays").val()!='') {
+                        $.ajax({
+                            type: 'get',
+                            dataType: 'json',
+                            url: 'http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/demande/demandefiltrePaysVille/'+$(this).val()+'/'+im,
+                            success: resultat
+                        })
+                    }
+                    else if(($(this).val()=='noville')&& $("#myapp_userbundle_demande_pays").val()!='') {
+                        $.ajax({
+                            type: 'get',
+                            dataType: 'json',
+                            url: 'http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/demande/demandefiltrePays/'+$("#myapp_userbundle_demande_pays").val()+'/'+im,
+                            success: resultat
+                        });
+                    }
+                });
+
+
+
+
+                function resultat (data) {
+                    $(".listing--grid").html('');
+
+                    for (i in data) {
+                        x = data[i];
+                        var mois=x[2].date.substr(5,2);
+                        var jour=x[2].date.substr(8,2);
+
+                        $('.listing--grid').append(
+                            '<div class="listing__item ">'+
+
+                            '<article class="article article--grid article--management" >'+
+                            ' <div class="article__item-header"><div></div>'+
+
+                            ' </div>'+
+                            ' <a href="'+ x[6]+'/detailDemande" class="article__photo">'+
+                            '<img src="http://localhost:9090/GnH/GuestAndHost/guestandhost/web/bundles/img/photos-1/' + x[4] + '.jpg"class="article__photo" style="height: 150px">'+
+                            ' <time datetime="2009-08-29" class="article__time">'+mois+'<strong>'+jour+'</strong></time></a>'+
+                            '<div class="article__details"><a href="#" class="article__item-title">'+x[0]+' <br>  '+x[5]+'-'+x[4]+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prix:'+ x[7]+'</a>'+
+                            '<div  class="article__intro">'+
+                            '<p>'+x[3]+'</p>'+
+                            ' </div><a href="'+x[6]+'/Myannonce" class="article__more">Poroposer un logement</a>'+
+
+
+                            '</div>'+
+
+                            '</article>'+
+                            '</div>'+
+                            '</div>');
+                    }
+                }
+
+                var im=0;    var s;
+                    $("#loadmore").click(function () {
+
+                        if (( $("#myapp_userbundle_demande_pays").val()=='')&& $("#myapp_userbundle_demande_ville").val()=='noville')
+                        {  s='http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/demande/demandeSansfiltre/';}
+                        else if(( $("#myapp_userbundle_demande_pays").val()!='')&& $("#myapp_userbundle_demande_ville").val()=='noville')
+                        {  s='http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/demande/demandefiltrePays/'+ $("#myapp_userbundle_demande_pays").val()+'/';}
+                        else if(($(this).val()!='noville')&& $("#myapp_userbundle_demande_pays").val()!='')
+                        { s='http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/demande/demandefiltrePaysVille/'+$("#myapp_userbundle_demande_ville").val()+'/';}
+
+                     else   {  s='http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/demande/afficheplus/';}
+                        im=im+2;
+                        $.ajax({
+
+                            type: 'get',
+                            dataType: 'json',
+                            url: s+im,
+                            success: function (data) {
+
+                                for (i in data) {
+
+                                    x = data[i];
+
+                                    if(x==null) {
+                                        $("#loadmore").prop('disabled', true);
+                                    }
+                                    else
+                                    {
+                                        var mois=x[2].date.substr(5,2);
+                                        var jour=x[2].date.substr(8,2);
+
+                                    $('.listing--grid').append(
+                                        '<div class="listing__item ">' +
+
+                                        '<article class="article article--grid article--management" >' +
+                                        ' <div class="article__item-header"><div></div>' +
+
+                                        ' </div>' +
+                                        ' <a href="'+ x[6]+'/detailDemande" class="article__photo">' +
+                                        '<img src="http://localhost:9090/GnH/GuestAndHost/guestandhost/web/bundles/img/photos-1/' + x[4] + '.jpg" class="article__photo-img" style="height: 150px">' +
+                                        ' <time datetime="2009-08-29" class="article__time">'+mois+'<strong>'+jour+'</strong></time></a>'+
+                                        '<div class="article__details"><a href="#" class="article__item-title">' + x[0] + ' <br>  ' + x[5] + '-' + x[4] + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prix:'+ x[7]+'</a>' +
+                                        '<div  class="article__intro">' +
+                                        '<p>' + x[3] + '</p>' +
+                                        ' </div><a href="'+x[6]+'/Myannonce" class="article__more">Poroposer un logement</a>' +
+
+
+                                        '</div>' +
+
+                                        '</article>' +
+                                        '</div>' +
+                                        '</div>');}
+                                }
+                            }
+
+                        })
+                    })
+
+            });
+
+        </script>
+    {% endblock %}
+{% endblock %}

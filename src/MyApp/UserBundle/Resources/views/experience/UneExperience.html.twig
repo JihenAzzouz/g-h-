@@ -1,0 +1,144 @@
+{% extends 'MyAppUserBundle:experience:layout.html.twig' %}
+
+
+{% block body %}
+
+
+    <nav class="breadcrumbs">
+        <div class="container">
+            <ul>
+                <li class="breadcrumbs__item"><a href="{{ url('my_app_user_homepage') }}" class="breadcrumbs__link">Home</a>
+                </li>
+                <li class="breadcrumbs__item"><a href="{{ url('guestandhost_experiences') }}" class="breadcrumbs__link">Experiences</a>
+                </li>
+                <li class="breadcrumbs__item"><a href="{{ url('experiences_affichage_continnet',{ 'id': c.id }) }}" class="breadcrumbs__link">Experiences {{ c.nom }}</a>
+
+            </ul>
+        </div>
+    </nav>
+
+    <div class="box js-box">
+        <div class="site-wrap js-site-wrap">
+            <div class="center" style="background-image: url('{{ asset('bundles/img/1.jpg') }}');background-size: cover;">
+                <div class="container">
+                    <div class="row">
+                        <header class="site__header">
+                            <h1 class="site__title">Experiences in {{ c.nom }} :</h1>
+                            <h2>{{ v.titre|upper }}</h2>
+                            <h2 class="site__headline">My list has {{ v|length }} experience(s)</h2>
+                        </header>
+                        <div class="site site--main">
+                            <div class="property">
+                                <div class="property__header">
+                                    <div class="property__actions">
+                                        <button type="button" class="btn--default"><i class="fa fa-star"></i>Add to
+                                            favorites
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="property__slider">
+                                    <div class="property__ribon">{{ v.idPays }}</div>
+                                    <div class="property__ribon property__ribon--status property__ribon--done">
+                                        {{ v.idVille }}
+                                    </div>
+                                    <div id="properties-thumbs" class="slider slider--small js-slider-thumbs">
+                                        <div class="slider__block js-slick-slider">
+                                            <div class="slider__item slider__item--0">
+                                                <a href="http://localhost/Video/{{ v.images['0'] }}" data-size="1640x960"
+                                                   data-gallery-index='0' class="slider__img js-gallery-item">
+                                                    <img data-lazy="http://localhost/Video/{{ v.images['0'] }}"
+                                                         src="http://localhost/Video/{{ v.images['0']|first }}" alt=""
+                                                         style="height:400px;width: 1000px;"
+                                                    >
+
+                                                </a>
+                                            </div>
+
+
+                                            <div class="slider__item slider__item--1"><a
+                                                        href="http://localhost/Video/{{ v.images['1'] }}"
+                                                        data-size="1740x960" data-gallery-index='1'
+                                                        class="slider__img js-gallery-item"><img
+                                                            data-lazy="http://localhost/Video/{{ v.images['1'] }}"
+                                                            src="http://localhost/Video/{{ v.images['1'] }}" alt=""
+                                                            style="height:400px;width: 1000px;"
+                                                    ></a>
+                                            </div>
+
+                                            <div class="slider__item slider__item--2"><a
+                                                        href="http://localhost/Video/{{ v.images['2'] }}"
+                                                        data-size="1740x960" data-gallery-index='2'
+                                                        class="slider__img js-gallery-item"><img
+                                                            data-lazy="http://localhost/Video/{{ v.images['2'] }}"
+                                                            src="http://localhost/Video/{{ v.images['2'] }}" alt=""
+                                                            style="height:400px;width: 1000px;"
+                                                    ></a>
+                                            </div>
+
+                                            <div class="slider__item slider__item--3"><a
+                                                        href="http://localhost/Video/{{ v.images['3'] }}"
+                                                        data-size="1740x960" data-gallery-index='3'
+                                                        class="slider__img js-gallery-item"><img
+                                                            data-lazy="http://localhost/Video/{{ v.images['3'] }}"
+                                                            src="http://localhost/Video/{{ v.images['3'] }}"
+                                                            alt=""
+                                                            style="height:400px;width: 1000px;"
+                                                    ></a></div>
+
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="slider slider--thumbs">
+                                        <div class="slider__wrap">
+                                            <div class="slider__block js-slick-slider">
+
+                                                <div data-slide-rel='0' class="slider__item slider__item--0">
+                                                    <div class="slider__img" ><img
+                                                                data-lazy="http://localhost/Video/{{ v.images['0'] }}"
+                                                                src="http://localhost/Video/{{ v.images['0'] }}"
+                                                                alt=""style="height:100px;width: 160px;"></div>
+                                                </div>
+                                                <div data-slide-rel='1' class="slider__item slider__item--1">
+                                                    <div class="slider__img"><img
+                                                                data-lazy="http://localhost/Video/{{ v.images['1'] }}"
+                                                                src=http://localhost/Video/{{ v.images['1'] }}"
+                                                                alt=""style="height:100px;width: 160px;"></div>
+                                                </div>
+                                                <div data-slide-rel='2' class="slider__item slider__item--2">
+                                                    <div class="slider__img"><img
+                                                                data-lazy="http://localhost/Video/{{ v.images['2'] }}"
+                                                                src="http://localhost/Video/{{ v.images['2'] }}"
+                                                                alt=""style="height:100px;width: 160px;"></div>
+                                                </div>
+                                                <div data-slide-rel='3' class="slider__item slider__item--3">
+                                                    <div class="slider__img"><img
+                                                                data-lazy="http://localhost/Video/{{ v.images['3'] }}"
+                                                                src="http://localhost/Video/{{ v.images['3'] }}"
+                                                                alt=""style="height:100px;width: 160px;"></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <p>{{ v.description }} .</p>
+
+                                    <div class="player">
+                                        <video poster="http://localhost/Video/{{ v.videos|first}}"
+                                               controls crossorigin>
+                                            <source src="http://localhost/Video/{{ v.videos|first}}">
+
+                                        </video>
+                                        <!--button.article__preview-play.js-player-play-->
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div></div>
+{% endblock %}

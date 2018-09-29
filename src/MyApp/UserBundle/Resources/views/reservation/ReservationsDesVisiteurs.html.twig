@@ -1,0 +1,218 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+{% block body %}
+    <!-- <link rel="stylesheet" href="{{ asset('bundles/front/css/theme-default.css') }}">-->
+    <div class="dashboard menu-default hover-default sidebar-left">
+        <div class="site-wrap js-site-wrap" >
+            <div class="center">
+                <div class="container">
+                    <div class="row">
+                        <header class="site__header">
+                            <h1 class="site__title site__title--center">Mes réservations</h1>
+
+                        </header>
+                        <!-- BEGIN LISTING-->
+
+                        <div class="site site--dashboard" style="background:white">
+                            <header class="site__header">
+
+
+                            </header>
+
+
+                            <div class="site__main">
+
+
+                                <div class="navbar navbar-default" style="margin-top:20px;margin-bottom:10px;padding-left:0px;padding-right:0px;width: 880px;height: 80px ">
+                                    <div class="navbar-collapse collapse navbar-responsive-collapse" style="padding-left: 0px;margin-top:10px">
+                                        <ul class="nav navbar-nav navbar-left" >
+                                            <li class="navbar__item js-dropdown"><a class="navbar__link" style="color:white;font-size: 14px" href="{{ path('Mes Reservations')}}">Mes Reservations
+                                                    <svg class="navbar__arrow">
+                                                        <use xlink:href="#icon-arrow-right"></use>
+                                                    </svg></a>
+
+                                            </li>
+
+                                            <li class="navbar__item js-dropdown active"><a class="navbar__link" style="color:white;font-size: 14px" href="{{ path('Res des visiteurs')}}">Les réservations de mes visiteurs
+                                                    <svg class="navbar__arrow">
+                                                        <use xlink:href="#icon-arrow-right"></use>
+                                                    </svg></a>
+
+                                            </li>
+
+                                            <li class="navbar__item js-dropdown"><a class="navbar__link" style="color:white;font-size: 15px">Paiment
+                                                    <svg class="navbar__arrow">
+                                                        <use xlink:href="#icon-arrow-right"></use>
+                                                    </svg></a>
+                                                <div role="menu" class="js-dropdown-menu navbar__dropdown navbar__dropdown--colls-1">
+                                                    <button class="navbar__back js-navbar-submenu-back">
+                                                        <svg class="navbar__arrow">
+                                                            <use xlink:href="#icon-arrow-left"></use>
+                                                        </svg>Back
+                                                    </button>
+                                                    <div class="navbar__submenu" style="width: 400px">
+                                                        <ul class="navbar__subnav">
+                                                            <li class="navbar__subitem" ><a href="{{ path('Mes reservations a payer')}}" class="navbar__sublink js-navbar-sublink" style="color:white">Mes réservations à payer</a></li>
+                                                            <li class="navbar__subitem"><a href="{{ path('Historique Paiment')}}" class="navbar__sublink js-navbar-sublink" style="color:white">Mon historique paiment</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <ul class="nav navbar-nav navbar-right" style="margin-top: 5px; width: 100px;margin-right: 75px">
+                                            <li>
+                                                <form class="navbar-form navbar-left">
+                                                    <input type="text" placeholder="Rechercher.." class="form-control" style="width:170px;font-family:Source Sans Pro, sans-serif;" id="RechercheDyn">
+                                                    <button type="submit" class="form__lens col-lg-3"><span class="glyphicon glyphicon-search"></span></button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- /.nav-collapse-->
+
+
+                                </div>
+
+
+
+                                <div class="widget js-widget widget--main widget--no-margin">
+
+                                    <div class="widget__content">
+                                        <h2 class="site__headline">J'ai publié {{ a|length }} annonce(s)</h2>
+
+                                        <div class="listing listing--grid">
+                                            <div id="ContentRes">
+                                            {% for i in a %}
+
+
+                                                <div class="listing__item" style="height: 1000px">
+                                                    <div class="properties properties--grid">
+                                                        <div class="properties__thumb"><a href="{{ path('afficher Annonce',{'id':i.id}) }}" class="item-photo"><img  src="http://localhost:9090/uprofils/{{ img[i.id]|first }}" alt=""/>
+
+                                                                <figure class="item-photo__hover item-photo__hover--params"><span class="properties__time" style="color: #ffcc00;font-size: 18px">Du: {{ i.dateDebut|date('d-m-Y') }}</span><span class="properties__time" style="color: #ffcc00;font-size: 18px">Au: {{ i.dateFin|date('d-m-Y') }}</span>
+
+                                                                    {% if(date("now")< i.dateFin ) %}
+                                                                    <span class="properties__time" style="font-size: 14px; color: #24ebe1">Expire dans: {{ (date("now").diff(i.dateFin)).format('%m moi(s) et %d jour(s)') }} </span>
+                                                                 {% endif %}
+                                                                    <figure class="item-photo__hover"><span class="item-photo__more" style="margin-left: 30px;margin-top: 10px">Voir détails</span></figure>
+
+                                                                    {% if(date("now")> i.dateFin ) %}
+                                                                </figure></a><span class="properties__ribon">A expirer</span>
+                                                            {% endif %}
+
+                                                        </div>
+                                                        <!-- end of block .properties__thumb-->
+                                                        <div class="properties__details">
+                                                            <div class="properties__info"><a href="property_details.html" class="properties__address"><span class="properties__address-street">{{ i.adresse }}</span><span class="properties__address-city">{{ i.batiment}},{{ i.codePostal }}</span></a>
+                                                                <div class="properties__offer">
+                                                                    <div class="properties__offer-column">
+                                                                        <div class="properties__offer-value" style="margin-left: -22px">
+                                                                             <button class="button__default" style="font-size: 13px "><a  href="{{ path('Reservations des visiteurs acceptee',{'id':i.id})  }}" />  Réservation visiteur Acceptées</button>
+                                                                            <br><br>
+                                                                            <button class="button__default" style="font-size: 14px;width: 255px"><a   href="{{ path('Reservations des visiteurs a Traiter',{'id':i.id})  }}" /> Réservation visiteur à traité</button>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="properties__params--mob"><a href="#" class="properties__more">View details</a><span class="properties__params">Built-Up - 65 Sq Ft</span><span class="properties__params">Land Size - 120 Sq Ft</span></div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- end of block .properties__info-->
+                                                    </div>
+                                                    <!-- end of block .properties__item-->
+                                                </div>
+
+                                            {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- END LISTING-->
+                        <!-- BEGIN SIDEBAR-->
+                        <div class="sidebar sidebar--dashboard">
+                            <div class="widget js-widget widget--sidebar-dashboard widget--collapsing">
+                                <div class="widget__header"><a class="widget__btn js-widget-btn widget__btn--toggle">Annonces</a>
+                                </div>
+                                <div class="widget__content">
+                                    <nav class="nav nav--sidebar">
+                                        <ul class="nav__list">
+                                            <li class="nav__item"><a href="{{ path('Recharger Compte')}}"
+                                                                     class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-dashboard"></use>
+                                                    </svg>
+                                                    Profile</a></li>
+                                            <hr class="nav__separator">
+                                            <li class="nav__item"><a href="{{ path("afficherAnnonceUser") }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-add-listing"></use>
+                                                    </svg>
+                                                    Mes Annonces</a></li>
+                                            <li class="nav__item">
+
+                                            </li>
+                                            <li class="nav__item"><a href="{{ path("AllMydemande_show") }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-news"></use>
+                                                    </svg>
+                                                    Mes Demandes</a></li>
+                                            <li class="nav__item"><a href="{{ path("Afficher Favories") }}"
+                                                                     class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-user-admin"></use>
+                                                    </svg>
+                                                    Mes Favories</a></li>
+                                            <hr class="nav__separator">
+
+                                            <li class="nav__item"><a href="{{ url('experiences_affichage') }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-clock"></use>
+                                                    </svg>
+                                                    Mes Experiences</a></li>
+                                            <li class="nav__item">
+                                                <hr class="nav__separator">
+                                            </li>
+                                            <li class="nav__item"><a href="{{ path("Mes Reservations") }}" class="nav__link active">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-favorite-listings"></use>
+                                                    </svg>
+                                                    Mes Reservations</a></li>
+                                            <hr class="nav__separator">
+
+                                            <li class="nav__item"><a href="{{ url('graphePie') }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-favorite-agents"></use>
+                                                    </svg>
+                                                    Statistiques</a></li>
+                                            <li class="nav__item"><a href="#" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-favorite-search"></use>
+                                                    </svg>
+                                                    Paramètres</a></li>
+                                            <li class="nav__item">
+                                                <hr class="nav__separator">
+                                            </li>
+                                            <li class="nav__item"><a href="http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/logout" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-financials"></use>
+                                                    </svg>
+                                                    Deconnèxion</a></li>
+
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END SIDEBAR-->
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ asset('bundles/vendor/clockpicker/assets/js/jquery.js') }}"></script>
+    <script src="{{ asset('bundles/js/recherchedyn.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register class="form form--flex form--auth js-register-form js-parsley"'}}) }}
+<div class="form-group">
+    <div class="row">
+        <div class="form-group form-group--col-6">
+            <label for="register-name-inline" class="control-label">Email</label>
+    {{ form_widget(form.email,{'attr':{'class':'form-control', 'id':'register-name-inline'}})  }}
+    {{ form_errors(form.email) }}
+</div>
+        <div class="form-group form-group--col-6">
+            <label for="register-lastname-inline" class="control-label">Username</label>
+    {{ form_widget(form.username,{'attr':{'class':'form-control','id':'register-lastname-inline'}})  }}
+    {{ form_errors(form.username) }}
+            </div>
+</div>
+    <div class="row">
+<div class="form-group form-group--col-6">
+    <label for="register-pwd-inline" class="control-label">Password</label>
+    {{ form_widget(form.plainPassword.first,{'attr':{'class':'form-control','id':'register-pwd2-inline'}})  }}
+    {{ form_errors(form.plainPassword.first) }}
+</div>
+<div class="form-group form-group--col-6">
+    <label for="register-pwd2-inline" class="control-label">Confirmation</label>
+    {{ form_widget(form.plainPassword.second,{'attr':{'class':'form-control','id':"register-pwd2-inline"}})  }}
+    {{ form_errors(form.plainPassword.second) }}
+</div>
+ </div>
+<div class="row">
+    <input type="submit" value="{{ 'registration.submit'|trans }}" id="register-submit" class="form__submit" style="margin-left: 450px" />
+</div >
+{{ form_end(form) }}
+

@@ -1,0 +1,417 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+{% block body %}
+    <script src="{{ asset('bundles/front/js/jquery-3.2.0.js') }}"></script>
+    <script>
+        // This example displays an address form, using the autocomplete feature
+        // of the Google Places API to help users fill in the information.
+        $(document).ready(function () {
+            $("#autocomplete").focus(function () {
+                geolocate();
+            });
+        });
+        var placeSearch, autocomplete;
+        var componentForm = {
+            street_number: 'short_name',
+            route: 'long_name',
+            locality: 'long_name',
+            administrative_area_level_1: 'short_name',
+            country: 'long_name',
+            postal_code: 'short_name'
+        };
+
+        function initAutocomplete() {
+            // Create the autocomplete object, restricting the search to geographical
+            // location types.
+            autocomplete = new google.maps.places.Autocomplete(
+                /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+                {types: ['geocode']});
+
+            // When the user selects an address from the dropdown, populate the address
+            // fields in the form.
+            autocomplete.addListener('place_changed', fillInAddress);
+        }
+
+        // [START region_fillform]
+        function fillInAddress() {
+            // Get the place details from the autocomplete object.
+            var place = autocomplete.getPlace();
+
+            for (var component in componentForm) {
+                document.getElementById(component).value = '';
+                document.getElementById(component).disabled = false;
+            }
+
+            // Get each component of the address from the place details
+            // and fill the corresponding field on the form.
+            for (var i = 0; i < place.address_components.length; i++) {
+                var addressType = place.address_components[i].types[0];
+                if (componentForm[addressType]) {
+                    var val = place.address_components[i][componentForm[addressType]];
+                    document.getElementById(addressType).value = val;
+                }
+            }
+        }
+        // [END region_fillform]
+
+        // [START region_geolocation]
+        // Bias the autocomplete object to the user's geographical location,
+        // as supplied by the browser's 'navigator.geolocation' object.
+        function geolocate() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var geolocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    var circle = new google.maps.Circle({
+                        center: geolocation,
+                        radius: position.coords.accuracy
+                    });
+                    autocomplete.setBounds(circle.getBounds());
+                });
+            }
+        }
+
+        // [END region_geolocation]
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCh3CYvqOO28AXwwVqkVpBCz29XxluGIU&signed_in=true&libraries=places&callback=initAutocomplete"
+            async defer></script>
+    <div class="dashboard menu-default hover-default sidebar-left">
+        <div class="site-wrap js-site-wrap">
+            <div class="center">
+                <div class="container">
+                    <div class="row">
+                        <header class="site__header">
+                            <h1 class="site__title site__title--center">Ads</h1>
+
+                        </header>
+                        <!-- BEGIN LISTING-->
+                        <div class="site site--dashboard">
+                            <div class="site__main">
+                                <div class="widget js-widget widget--dashboard">
+                                    <div class="widget__header">
+                                        <h2 class="widget__title">Add an ad </h2>
+                                    </div>
+                                    <div class="widget__content">
+                                        <!-- BEGIN Favorites-->
+                                        <section class="form-property form-property--dashboard">
+                                            <!-- Nav tabs-->
+
+
+                                            <div class="site__panel" style="margin-bottom: 30px"><span class="site__header-text">
+
+
+
+                                </span></div>
+                                            <div class="tab-content form-property__content">
+                                                <div id="basic" role="tabpanel" class="tab-pane active">
+
+                                                    <div class="row">
+
+
+
+                                                        {{ form_start(form) }}
+
+                                                        <div class="row">
+                                                            <div class="form-group form-group--col-6">
+                                                                <label for="in-15" class="control-label">Local</label>
+                                                                {{ form_widget(f.longitude,{'id':'lng'}) }}
+                                                            </div>
+                                                            <div class="form-group form-group--col-6">
+                                                                <label for="in-15" class="control-label">Type of housing</label>
+                                                                {{ form_widget(form.typeLogement) }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="form-group form-group--col-6">
+                                                                <label for="in-15" class="control-label">number of rooms</label>
+                                                                {{ form_widget(form.nombreChambre)  }}
+                                                            </div>
+
+                                                            <div class="form-group form-group--col-6">
+                                                                <label for="in-14" class="control-label">number of bathrooms</label>
+                                                                {{ form_widget(form.nombreSalleDebain) }}
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="form-group form-group--col-6">
+                                                                <label for="in-13" class="control-label">number of travelers</label>
+                                                                {{ form_widget(form.nombreVoyageur) }}
+                                                            </div>
+                                                            <div class="form-group form-group--col-6">
+                                                                <label for="in-12" class="control-label">number of beds</label>
+                                                                {{ form_widget(form.nbreLit) }}
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="row">
+                                                            <div class="form-group form-group--col-6">
+
+                                                                <label for="in-15" class="control-label">Address</label>
+                                                                <div id="locationField">
+                                                                    {{ form_widget(form.adresse,{'id':'autocomplete'},{'attr':{'placeholder': 'Enter your address'}}) }}
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group form-group--col-6">
+                                                                <input class="field"
+                                                                       id="administrative_area_level_1" disabled="true" hidden></input>
+
+                                                                <label for="in-15" class="control-label">Postal Code</label>
+                                                                {{ form_widget(form.codePostal,{'id':'postal_code'},{'attr':{'class':'field','disabled':'true'}}) }}
+
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="row">
+                                                            <div class="form-group form-group--col-6">
+
+
+                                                                <input class="field" id="street_number"
+                                                                       disabled="true" hidden></input>
+                                                                <input class="field" id="route"
+                                                                       hidden      disabled="true"></input>
+
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="row">
+                                                            <div class="form-group form-group--col-6">
+
+                                                                <label for="in-15" class="control-label">City</label>
+                                                                {{ form_widget(form.ville,{'id':'locality'},{'attr':{'class':'field','disabled':'true'}}) }}
+
+
+
+                                                            </div>
+
+                                                            <div class="form-group form-group--col-6">
+
+                                                                <label for="in-15" class="control-label">Country</label>
+                                                                {{ form_widget(form.idPays,{'id':'country'},{'attr':{'class':'field','disabled':'true'}}) }}
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="form-group form-group--col-6">
+                                                                <label for="in-15" class="control-label">Building</label>
+                                                                {{ form_widget(form.batiment) }}
+                                                            </div>
+                                                            <div class="form-group form-group--col-6">
+                                                                <label for="in-15" class="control-label">Price</label>
+                                                                {{ form_widget(form.prix) }}
+                                                            </div>
+
+                                                        </div>
+
+
+
+
+
+
+                                                        <div class="row">
+                                                            <div class="form-group form-group--col-6">
+                                                                <label for="in-datetime" class="control-label">Start Date </label>
+                                                                {{ form_widget(form.dateDebut) }}
+                                                            </div>
+
+
+                                                            <div class="form-group form-group--col-6">
+                                                                <label for="in-15" class="control-label">End Date </label>
+                                                                {{ form_widget(form.dateFin) }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row"> <div class="form-group form-group--col-6">
+
+                                                                <label for="in-15" class="control-label">Description</label>
+                                                                {{ form_widget(form.description) }}
+
+                                                            </div>
+
+                                                        </div>
+
+
+                                                        {#{{ form_widget(form.file1) }}
+                                                        {{ form_widget(form.file2) }}#}
+
+
+                                                        <div class="row"> <div class="form-group form-group--col-6">
+
+
+
+                                                                <div class="input-group image-preview">
+                                                                    <!-- don't give a name === doesn't send on POST/GET -->
+                                                                    <span class="input-group-btn">
+                    <!-- image-preview-clear button -->
+                    <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+                        <span class="glyphicon glyphicon-remove"></span> Clear
+                    </button>
+                                                                        <!-- image-preview-input -->
+                    <div class="btn btn-default image-preview-input">
+                        <span class="glyphicon glyphicon-folder-open"></span>
+                        <span class="image-preview-input-title">Upload a picture</span>
+                        {{ form_widget(form.file1,{'attr':{'type':'file','accept':'image/png, image/jpeg, image/gif',
+                            'name':'input-file-preview'}}) }}
+                    </div>
+                                            </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group form-group--col-6">
+
+                                                                <div class="btn btn-default image-preview-input">
+                                                                    <span class="glyphicon glyphicon-folder-open"></span>
+                                                                    <span class="image-preview-input-title">Choose a File</span>
+                                                                    {{ form_widget(form.file2,{'attr':{'type':'file','accept':'image/png, image/jpeg, image/gif',
+                                                                        'name':'input-file-preview'}}) }}
+                                                                </div>
+                                                                </span>
+
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row"> <div class="form-group form-group--col-6">
+
+                                                                <div class="btn btn-default image-preview-input">
+                                                                    <span class="glyphicon glyphicon-folder-open"></span>
+                                                                    <span class="image-preview-input-title">Choose a File</span>
+                                                                    {{ form_widget(form.file3,{'attr':{'type':'file','accept':'image/png, image/jpeg, image/gif',
+                                                                        'name':'input-file-preview'}}) }}
+                                                                </div>
+                                                                </span>
+
+                                                            </div>
+
+                                                            <div class="form-group form-group--col-6">
+
+                                                                <div class="btn btn-default image-preview-input">
+                                                                    <span class="glyphicon glyphicon-folder-open"></span>
+                                                                    <span class="image-preview-input-title">Choose a File</span>
+                                                                    {{ form_widget(form.file4,{'attr':{'type':'file','accept':'image/png, image/jpeg, image/gif',
+                                                                        'name':'input-file-preview'}}) }}
+                                                                </div>
+                                                                </span>
+
+                                                            </div>
+
+
+
+
+
+
+
+
+                                                        </div>
+
+
+
+
+
+                                                        {{ form_widget(form.ajouter) }}
+
+
+
+                                                        {{ form_end(form) }}
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="sidebar sidebar--dashboard">
+                            <div class="widget js-widget widget--sidebar-dashboard widget--collapsing">
+                                <div class="widget__header"><a class="widget__btn js-widget-btn widget__btn--toggle">Dashboard</a>
+                                </div>
+                                <div class="widget__content">
+                                    <nav class="nav nav--sidebar">
+                                        <ul class="nav__list">
+                                            <li class="nav__item"><a href="{{ path('Recharger Compte')}}"
+                                                                     class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-dashboard"></use>
+                                                    </svg>
+                                                    Profile</a></li>
+                                            <hr class="nav__separator">
+                                            <li class="nav__item"><a href="{{ path("afficherAnnonceUser") }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-add-listing"></use>
+                                                    </svg>
+                                                    My Ads</a></li>
+                                            <li class="nav__item">
+
+                                            </li>
+                                            <li class="nav__item"><a href="{{ path("AllMydemande_show") }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-news"></use>
+                                                    </svg>
+                                                    My Requests</a></li>
+                                            <li class="nav__item"><a href="{{ path("Afficher Favories") }}"
+                                                                     class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-user-admin"></use>
+                                                    </svg>
+                                                    Mes Favorties</a></li>
+                                            <hr class="nav__separator">
+
+                                            <li class="nav__item"><a href="{{ url('experiences_affichage') }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-clock"></use>
+                                                    </svg>
+                                                    My Experiences</a></li>
+                                            <li class="nav__item">
+                                                <hr class="nav__separator">
+                                            </li>
+                                            <li class="nav__item"><a href="{{ path("Mes Reservations") }}" class="nav__link active">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-favorite-listings"></use>
+                                                    </svg>
+                                                    My Reservations</a></li>
+                                            <hr class="nav__separator">
+
+                                            <li class="nav__item"><a href="{{ url('graphePie') }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-favorite-agents"></use>
+                                                    </svg>
+                                                    Statistics</a></li>
+                                            <li class="nav__item"><a href="#" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-favorite-search"></use>
+                                                    </svg>
+                                                    Parameters</a></li>
+                                            <li class="nav__item">
+                                                <hr class="nav__separator">
+                                            </li>
+                                            <li class="nav__item"><a href="http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/logout" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-financials"></use>
+                                                    </svg>
+                                                    Logout</a></li>
+
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}
+
+
+
+
+

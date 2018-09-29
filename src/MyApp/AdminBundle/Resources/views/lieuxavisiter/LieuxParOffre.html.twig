@@ -1,0 +1,114 @@
+{% extends 'MyAppAdminBundle:Default:index.html.twig' %}
+{% block body %}
+    {% block stylesheet %}
+        <link rel="stylesheet" href="{{ asset('bundles/front/css/vendor.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/front/css/bootstrap-datetimepicker.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/front/css/font-awesome.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/front/css/ui-panel.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/front/css/custom.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/front/css/theme-green_blue-red.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/front/css/ie-fix.css') }}"><![endif]-->
+        <link rel="icon" href="{{ asset('bundles/front/img/gof.ico') }}" type="image/x-icon">
+
+    {% endblock %}
+
+
+    <style>
+
+        #url{
+            visibility: hidden;
+        }
+    </style>
+    <script src="{{ asset('bundles/front/js/jquery.js') }}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#confirm-delete').on('show.bs.modal', function(e) {
+
+                $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+
+                $('.debug-url').html('<strong id="url">' + $(this).find('.btn-ok').attr('href') + '</strong>');
+            });
+        });
+
+    </script>
+
+
+
+
+    <div class="site-wrap js-site-wrap">
+
+        <a href="{{ path('lieuxavisiter_new',{'id': id_guide })}}"> <button class="btn btn-link glyphicon glyphicon-plus pull-right"  ></button></a>
+
+        <div class="site__main" style="margin-right: 60px ; margin-left:60px ">
+            <div class="widget js-widget widget--main">
+                <div class="widget__content">
+                    <div class="listing listing--list js-prope  rties-list">
+
+                        {% for l in lieux %}
+                            <div class="listing__item">
+                                <div class="properties properties--list">
+                                    <div class="properties__thumb"><a href="#" class="item-photo"><img src="{{ asset('uploads/lieu/'~l.path) }}" style="width:200px; height: 170px"  alt=""/>
+                                            <figure class="item-photo__hover item-photo__hover--params">
+                                            </figure></a>
+                                    </div>
+
+                                    <!-- end of block .properties__thumb-->
+                                    <div class="properties__details">
+                                        <div class="properties__info"><a href="{{ path('demande_detail',{'id':l.id}) }}" class="properties__address"><span class="properties__address-street">{{ l.nom  }}</span><span class="properties__address-city">{{ l.adresse }}</span></a>
+                                            <div class="properties__offer">
+                                                <div class="properties__offer-column">
+                                                    <div class="properties__offer-label"></div>
+                                                    <div class="properties__offer-value"><strong></strong>
+                                                    </div>
+                                                </div>
+                                                <div class="properties__offer-column">
+                                                    <div class="properties__offer-value"><strong></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="properties__params--mob"><a href="#" class="properties__more">Voir Detail</a><span class="properties__params"></span><span class="properties__params"></span></div>
+                                        </div>
+                                        <div  >
+                                            <p>{{ l.descriptif }}</p>
+                                        </div>
+                                        <a href="{{path('lieuxavisiter_edit',{'id':l.id })}}" class="properties__more">Modifier</a>
+                                        <a href="#" data-href="{{path('lieuxavisiter_delete',{'id':l.id })}}" class="properties__more"data-toggle="modal" data-target="#confirm-delete">Supprimer</a>
+
+                                        <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                        <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                                                    </div>
+
+                                                    <div class="modal-body">
+                                                        <p>You are about to delete one track, this procedure is irreversible.</p>
+                                                        <p>Do you want to proceed?</p>
+                                                        <p class="debug-url"></p>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                        <a class="btn btn-danger btn-ok">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end of block .properties__info-->
+                                </div>
+                                <!-- end of block .properties__item-->
+                            </div>
+                        {% endfor %}
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

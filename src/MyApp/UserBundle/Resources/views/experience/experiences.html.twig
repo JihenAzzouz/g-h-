@@ -1,0 +1,208 @@
+{% extends 'MyAppUserBundle:experience:layout.html.twig' %}
+{% block body %}
+    <nav class="breadcrumbs">
+        <div class="container">
+            <ul>
+                <li class="breadcrumbs__item"><a href="{{ url('my_app_user_homepage') }}" class="breadcrumbs__link">Accueil</a>
+                </li>
+                <li class="breadcrumbs__item"><a href="{{ url('guestandhost_experiences') }}" class="breadcrumbs__link">Experiences</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="center" style="background-image: url('{{ asset('bundles/img/2.jpg') }}');background-size: 100%;">
+
+        <div class="container">
+            <div class="row">
+                <div class="site__main">
+                    <header class="site__header">
+                        <h1 class="site__title"> Welcome !</h1>
+                        {% if e['afrique'] is defined and e['amerique De Nord'] is defined and e['amerique De Sud'] is defined and
+                            e['asie'] is defined  and  e['ocenie'] is defined  and e['europe'] is defined %}
+                            <h3 STYLE="color: white"> {{ e['afrique']+e['amerique De Nord']+e['amerique De Sud']+e['asie']+ e['ocenie']+ e['europe'] }}
+                                EXPERIENCES</h3>
+                        {% endif %}
+                    </header>
+                    <div class="site__main" style="width:1200px">
+
+                        <div class="widget js-widget widget--main widget--no-margin">
+                            <div class="widget__content">
+                                <div class="listing listing--grid " style="margin-top: 10px">
+
+                                    <div class="listing__item">
+                                        <div class="properties properties--grid">
+                                            <div class="properties__header">
+                                            </div>
+                                            <div class="properties__thumb">
+                                                <a href="{{ path('experiences_affichage_continnet',{ 'id': 2 }) }}"
+                                                   class="item-photo item-photo--static"><img
+                                                            src="{{ asset('bundles/img/92.jpg') }}" alt=""
+                                                            style="width: 380px;height: 250px;">
+                                                    <figure class="item-photo__hover">
+                                                        <span class="item-photo__more">View Experiences</span>
+                                                    </figure>
+                                                </a>
+                                            </div>
+                                            <div class="properties__info">
+                                                <span class="properties__address-street">Africa</span>
+                                                <span class="properties__address-street">
+												{% if e['afrique'] is defined %}
+                                                    {{ e['afrique'] }} Experiences
+                                                {% else %}
+                                                    0 Experiences
+                                                {% endif %}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="listing__item">
+                                        <div class="properties properties--grid">
+                                            <div class="properties__header">
+                                            </div>
+                                            <div class="properties__thumb">
+                                                <a href="{{ path('experiences_affichage_continnet',{ 'id': 3 }) }}"
+                                                   class="item-photo item-photo--static"><img
+                                                            src="{{ asset('bundles/img/202.jpg') }}" alt=""
+                                                            style="width: 380px;height: 250px;">
+                                                    <figure class="item-photo__hover">
+                                                        <span class="item-photo__more">View Experiences</span>
+                                                    </figure>
+                                                </a>
+                                            </div>
+                                            <div class="properties__info">
+                                                <span class="properties__address-street">North America</span>
+                                                <span class="properties__address-street">
+												{% if e['amerique_nord'] is defined%}
+                                                    {{ e['amerique_nord'] }}
+
+                                                    Experiences
+                                                {% else %}
+                                                    0 Experiences
+                                                {% endif %}
+												</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="listing__item">
+                                        <div class="properties properties--grid">
+                                            <div class="properties__header">
+                                            </div>
+                                            <div class="properties__thumb">
+                                                <a href="{{ path('experiences_affichage_continnet',{ 'id': 4 }) }}"
+                                                   class="item-photo item-photo--static"><img
+                                                            src="{{ asset('bundles/img/502.jpg') }}" alt=""
+                                                            style="width: 380px;height: 250px;">
+                                                    <figure class="item-photo__hover">
+                                                        <span class="item-photo__more">View Experiences</span>
+                                                    </figure>
+                                                </a>
+                                            </div>
+                                            <div class="properties__info">
+                                                <span class="properties__address-street">South America</span>
+                                                <span class="properties__address-street">
+												{% if e['amerique_sud'] is defined %}
+                                                    {{ e['amerique_sud'] }}  Experiences
+                                                {% else %}
+                                                    0 Experiences
+                                                {% endif %}
+												</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="listing__item">
+                                        <div class="properties properties--grid">
+                                            <div class="properties__header">
+                                            </div>
+                                            <div class="properties__thumb">
+                                                <a href="{{ path('experiences_affichage_continnet',{ 'id': 5 }) }}"
+                                                   class="item-photo item-photo--static"><img
+                                                            src="{{ asset('bundles/img/102.jpg') }}" alt=""
+                                                            style="width: 380px;height: 250px;">
+                                                    <figure class="item-photo__hover">
+                                                        <span class="item-photo__more"> View Experiences</span>
+                                                    </figure>
+                                                </a>
+                                            </div>
+                                            <div class="properties__info">
+                                                <span class="properties__address-street">Asia</span>
+                                                <span class="properties__address-street">
+
+												{% if e['asie'] is defined %}
+
+                                                    {{ e['asie'] }}
+
+                                                    Experiences
+                                                {% else %}
+                                                    0 Experiences
+
+                                                {% endif %}
+												</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="listing__item">
+                                        <div class="properties properties--grid">
+                                            <div class="properties__header">
+                                            </div>
+                                            <div class="properties__thumb">
+                                                <a href="{{ path('experiences_affichage_continnet',{ 'id': 6 }) }}"
+                                                   class="item-photo item-photo--static"><img
+                                                            src="{{ asset('bundles/img/402.jpg') }}" alt=""
+                                                            style="width: 380px;height: 250px;">
+                                                    <figure class="item-photo__hover">
+                                                        <span class="item-photo__more">View Experiences</span>
+                                                    </figure>
+                                                </a>
+                                            </div>
+                                            <div class="properties__info">
+                                                <span class="properties__address-street"> Australia</span>
+                                                <span class="properties__address-street">
+												{% if e['ocenie'] is defined %}
+                                                    {{ e['ocenie'] }} Experiences
+                                                {% else %}
+                                                    0 Experiences
+                                                {% endif %}
+												</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="listing__item">
+                                        <div class="properties properties--grid">
+                                            <div class="properties__header">
+                                            </div>
+                                            <div class="properties__thumb">
+                                                <a href="{{ path('experiences_affichage_continnet',{ 'id': 1 }) }}"
+                                                   class="item-photo item-photo--static"><img
+                                                            src="{{ asset('bundles/img/302.jpg') }}" alt=""
+                                                            style="width: 380px;height: 250px;">
+                                                    <figure class="item-photo__hover">
+                                                        <span class="item-photo__more">View Experiences</span>
+                                                    </figure>
+                                                </a>
+                                            </div>
+                                            <div class="properties__info">
+                                                <span class="properties__address-street"> Europe</span>
+                                                <span class="properties__address-street">
+												{% if e['europe'] is defined %}
+
+                                                    {{ e['europe'] }}
+
+                                                    Experiences
+                                                {% else %}
+                                                    0 Experiences
+
+                                                {% endif %}
+												</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

@@ -1,0 +1,40 @@
+{% extends 'MyAppUserBundle:forum:indexForum.html.twig' %}
+{% block bodyF %}
+    <nav class="breadcrumbs">
+        <div class="container">
+            <ul>
+                <li class="breadcrumbs__item"><a href="{{ path('my_app_user_homepage') }}" class="breadcrumbs__link">Accueil</a></li>
+                <li class="breadcrumbs__item"><a href="{{ path('my_app_user_forumIndex') }}" class="breadcrumbs__link">Forum index</a></li>
+                <li class="breadcrumbs__item"><a href="#" class="breadcrumbs__link"> Modifier catégorie</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="center"  style="background-image: url('{{ asset('bundles/front/media-demo/banner/BackGForum.jpg') }}');background-size: cover;">
+        <div class="container">
+    <header class="site__header">
+        <h2 style="color:white">Bienvenue sur Guest&Host Forum</h2>
+        <p style="color:white">C'est votre espace pour discuter avec les autres membres</p>
+    </header>
+            <div class="row" >
+                <!-- BEGIN LISTING-->
+                <div class="site site--dashboard" style="width:100%">
+
+                    <div class="site__main" style="margin-top:0px">
+                        <div class="widget js-widget widget--dashboard">
+                            <div class="widget__content">
+                <h4>Modification catégorie</h4>
+                                {{ form_start(fm) }}
+                                <label>Titre</label>
+                                {{ form_widget(fm.titre, {'attr' : {'class':'form-control'}}) }}
+                                <br>
+                                {{ form_widget(fm.Ajouter, {'attr' : {'class':'btn btn-success'}, 'label': 'Enregistrer'}) }}
+                                {{ form_end(fm) }}
+                                <br>
+                               <a href="{{ path('my_app_user_forumIndex') }}"> <i class="fa fa-arrow-left" style="margin-right:10px"></i>Annuler et retourner à la page d'accueil</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+{% endblock bodyF %}

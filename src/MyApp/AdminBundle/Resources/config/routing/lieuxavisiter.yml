@@ -1,0 +1,30 @@
+lieuxavisiter_index:
+    path:     /
+    defaults: { _controller: "MyAppAdminBundle:LieuxAVisiter:index" }
+    methods:  GET
+
+lieuxavisiter_show:
+    path:     /{id}/show
+    defaults: { _controller: "MyAppAdminBundle:LieuxAVisiter:show" }
+    methods:  GET
+
+lieuxavisiter_new:
+    path:     /{id}/new
+    defaults: { _controller: "MyAppAdminBundle:LieuxAVisiter:new" }
+    methods:  [GET, POST]
+
+lieuxavisiter_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "MyAppAdminBundle:LieuxAVisiter:edit" }
+    methods:  [GET, POST]
+
+
+lieuxavisiter_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "MyAppAdminBundle:LieuxAVisiter:delete" }
+
+lieux:
+    path:     /{id}/lieux
+    defaults: { _controller: "MyAppAdminBundle:LieuxAVisiter:lieuxDetailOffre" }
+    methods:  [GET, POST]
+

@@ -1,0 +1,38 @@
+<div class="content-area p-y-1">
+    <div class="container-fluid">
+        <div class="box box-block bg-white">
+            <h5 class="m-b-1">Génerer Carte</h5>
+            <div class="overflow-x-auto">
+                <table class="table table-striped table-bordered dataTable" id="table-3">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Code</th>
+                        <th>Montant</th>
+                        <th style="width: 50px"></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for i in m %}
+                        <tr id="{{ i.typeMaison }}">
+                            <td>{{ i.typeLogement }}</td>
+                            <td>{{ i.prix }}</td>
+                            <td>{{ i.idPays }}</td>
+                            <td><a data-toggle="modal" data-target="#confirm-delete" > <i name="{{ i.id }}" class="ion-ios-trash-outline supprimer" style="color: #990000;font-size: 30px"></i></a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+
+                    <tfoot>
+                    <tr>
+                        <th>Id</th>
+                        <th>Code</th>
+                        <th>Montant</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

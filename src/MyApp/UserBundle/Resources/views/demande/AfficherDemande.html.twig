@@ -1,0 +1,249 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+
+{% block body %}
+
+    <div class="dashboard_blog menu-default hover-default sidebar-left">
+        <div id="header-nav-offset"></div>
+
+        <!-- END NAVBAR-->
+        <div class="site-wrap js-site-wrap">
+            <!-- BEGIN CENTER SECTION-->
+            <div class="center">
+                <div class="container">
+                    <div class="row">
+                        <header class="site__header">
+                            <h1 class="site__title site__title--center">Dashboard</h1>
+                        </header>
+                        <!-- BEGIN LISTING-->
+                        <div class="site site--dashboard" style="background:white">
+                            <header class="site__header">
+                                <h2 class="widget__title">Détail de la demande</h2>
+                            </header>
+
+                            <div class="site__main">
+
+
+                                <!-- BEGIN PROPERTY DETAILS-->
+                                <div class="property">
+                                    <h1 class="property__title">Request for host
+                                        <span class="property__city">à {{ demande.ville.libelleVille }},{{ demande.pays.libelle }}</span><div  class="property__city "style="text-align:right" >du {{ demande.dateDebut|date('y-m-d') }} au {{ demande.dateFin|date('y-m-d') }} </div></h1>
+                                    <div class="property__header">
+                                        <div class="property__price"><strong class="property__price-value">${{ demande.prix }}</strong><span class="property__price-label"></span></div>
+
+
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="property__slider">
+                                        <div class="property__ribon">Request fo hosting</div>
+                                        <div id="properties-thumbs" class="slider slider--small js-slider-thumbs">
+                                            <div class="slider__block js-slick-slider">
+                                                <div class="slider__item slider__item--0"><img  src="{{ asset('bundles/img/photos-1/'~demande.ville.libelleville~'.jpg') }}" alt="test image"><span class="slider__description">Awesome Kitchen!!! Spacious kitchen with a granite counter tops, stainless steel appliances, hardwood floors, and plenty of cupboard space. On the other hand, a nicely designed feature sheet can create a quality, professional brand for your property, attracting more buyers who are interested in the benefits that the property can offer.</span></div>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="property__info">
+                                        <div class="property__info-item">Type lodging: <strong> {{ demande.typeLogement }}</strong></div>
+                                        <div class="property__info-item">Date : <strong></strong></div>
+                                    </div>
+                                    <div class="property__plan">
+                                        <dl class="property__plan-item">
+                                            <dt class="property__plan-icon">
+                                                <svg>
+                                                    <use xlink:href="#icon-bedrooms"></use>
+                                                </svg>
+                                            </dt>
+                                            <dd class="property__plan-title">Type of lodging</dd>
+                                            <dd class="property__plan-value">{{ demande.typeLogement }}</dd>
+                                        </dl>
+                                        <dl class="property__plan-item">
+                                            <dt class="property__plan-icon property__plan-icon--garage">
+                                                <svg>
+                                                    <use xlink:href="#icon-garage"></use>
+                                                </svg>
+                                            </dt>
+                                            <dd class="property__plan-title">Type of local</dd>
+                                            <dd class="property__plan-value">{{ demande.typeMaison }}</dd>
+                                        </dl>
+                                        <dl class="property__plan-item">
+                                            <dt class="property__plan-icon">
+                                                <svg>
+                                                    <use xlink:href="#icon-area"></use>
+                                                </svg>
+                                            </dt>
+                                            <dd class="property__plan-title">Number travelers</dd>
+                                            <dd class="property__plan-value">{{ demande.nombreVoyageur }}</dd>
+                                        </dl>
+                                        <dl class="property__plan-item">
+                                            <dt class="property__plan-icon property__plan-icon--window">
+                                                <svg>
+                                                    <use xlink:href="#icon-window"></use>
+                                                </svg>
+                                            </dt>
+                                            <dd class="property__plan-title">Number rooms</dd>
+                                            <dd class="property__plan-value">{{ demande.nombreChambre }}</dd>
+                                        </dl>
+                                        <dl class="property__plan-item">
+                                            <dt class="property__plan-icon property__plan-icon--bathrooms">
+                                                <svg>
+                                                    <use xlink:href="#icon-bathrooms"></use>
+                                                </svg>
+                                            </dt>
+                                            <dd class="property__plan-title">Number bathrooms</dd>
+                                            <dd class="property__plan-value">{{ demande.nombreSalleDebain }} </dd>
+                                        </dl>
+
+                                    </div>
+                                        <div class="property__description js-unhide-block">
+                                            <h4 class="property__subtitle">Description</h4>
+                                            <div class="property__description-wrap">
+                                                <p style="font-size:18px">
+                                                    {{ demande.description }}
+                                                </p>
+                                            </div>
+                                    <div class="property__params">
+                                        <h4 class="property__subtitle">The space</h4>
+                                        <ul class="property__params-list">
+                                            <li>Year Built:<strong>1971</strong></li>
+                                            <li>Number of Parking Spaces:<strong>24</strong></li>
+                                            <li>Garage Size In Square Feet:<strong>50</strong></li>
+                                            <li>Basement:<strong>Full</strong></li>
+                                            <li>External<strong>Construction: Terace</strong></li>
+                                            <li>Roofing:<strong>New</strong></li>
+                                            <li>Exterior Material:<strong>Brick</strong></li>
+                                            <li>Structure Type:<strong>Mansion</strong></li>
+                                            <li>Doors &amp; windows:<strong>Double Pane Windows, Skylights</strong></li>
+                                            <li>Fireplace description:<strong> Brick</strong></li>
+                                            <li>Fireplace fuel:<strong>Uses Both Gas &amp; Wood</strong></li>
+                                            <li>Fireplace location:<strong>Living Room</strong></li>
+                                            <li>Floors:<strong>Carpet - Partial, Ceramic Tile</strong></li>
+                                            <li>Plumbing:<strong>Full Copper Plumbing/</strong></li>
+                                            <li>Garage Size In Square Feet:<strong>500</strong></li>
+                                            <li>Basement:<strong>Full</strong></li>
+                                            <li>Available From:<strong>2013-05-29</strong></li>
+                                            <li>MLS ID #:<strong>0</strong></li>
+                                        </ul>
+                                    </div>
+                                    <div class="property__params">
+                                        <h4 class="property__subtitle">Amenities</h4>
+                                        <ul class="property__params-list property__params-list--options">
+                                            <li>Wireless Internet</li>
+                                            <li>Kitchen</li>
+                                            <li>Internet</li>
+                                            <li>Air Conditioning</li>
+                                            <li>Heating</li>
+                                            <li>Smoking Allowed</li>
+                                            <li>Wheelchair Accessible</li>
+                                            <li>Washer</li>
+                                            <li>Dryer</li>
+                                            <li>TV</li>
+                                            <li>Suitable for Events</li>
+                                            <li>Smoking Allowed</li>
+                                            <li>Wheelchair Accessible</li>
+                                            <li>Elevator in Building</li>
+                                            <li>Indoor Fireplace</li>
+                                            <li>Buzzer/Wireless Intercom</li>
+                                            <li>Doorman</li>
+                                            <li>Pool</li>
+                                            <li>Hot Tub</li>
+                                            <li>Gym</li>
+                                        </ul>
+                                    </div>
+
+
+                                    </div>
+
+
+                                </div>
+                                <!-- end of block .property-->
+                                <!-- END PROPERTY DETAILS-->
+                            </div>
+
+
+                            </div>
+                        </div>
+
+                        <!-- END LISTING-->
+                        <!-- BEGIN SIDEBAR-->
+                        <div class="sidebar sidebar--dashboard">
+                            <div class="widget js-widget widget--sidebar-dashboard widget--collapsing">
+                                <div class="widget__header"><a class="widget__btn js-widget-btn widget__btn--toggle">Dashboard</a>
+                                </div>
+                                <div class="widget__content">
+                                    <nav class="nav nav--sidebar">
+                                        <ul class="nav__list">
+                                            <li class="nav__item"><a href="{{ path('Recharger Compte')}}"
+                                                                     class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-dashboard"></use>
+                                                    </svg>
+                                                    Profile</a></li>
+                                            <hr class="nav__separator">
+                                            <li class="nav__item"><a href="{{ path("afficherAnnonceUser") }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-add-listing"></use>
+                                                    </svg>
+                                                    My Ads</a></li>
+                                            <li class="nav__item">
+
+                                            </li>
+                                            <li class="nav__item"><a href="{{ path("AllMydemande_show") }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-news"></use>
+                                                    </svg>
+                                                    My Requests</a></li>
+                                            <li class="nav__item"><a href="{{ path("Afficher Favories") }}"
+                                                                     class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-user-admin"></use>
+                                                    </svg>
+                                                    My Favorites</a></li>
+                                            <hr class="nav__separator">
+
+                                            <li class="nav__item"><a href="{{ url('experiences_affichage') }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-clock"></use>
+                                                    </svg>
+                                                    My Experiences</a></li>
+                                            <li class="nav__item">
+                                                <hr class="nav__separator">
+                                            </li>
+                                            <li class="nav__item"><a href="{{ path("Mes Reservations") }}" class="nav__link active">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-favorite-listings"></use>
+                                                    </svg>
+                                                    My Reservations</a></li>
+                                            <hr class="nav__separator">
+
+                                            <li class="nav__item"><a href="{{ url('graphePie') }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-favorite-agents"></use>
+                                                    </svg>
+                                                    Statistics</a></li>
+                                            <li class="nav__item"><a href="#" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-favorite-search"></use>
+                                                    </svg>
+                                                    Parameters</a></li>
+                                            <li class="nav__item">
+                                                <hr class="nav__separator">
+                                            </li>
+                                            <li class="nav__item"><a href="http://localhost/guest_andhost/guestandhost/web/app_dev.php/logout" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-financials"></use>
+                                                    Logout</svg>
+                                                    </a></li>
+
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END SIDEBAR-->
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

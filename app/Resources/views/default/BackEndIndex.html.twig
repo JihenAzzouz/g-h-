@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Title -->
+    <title>Neptune</title>
+
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="{{ asset('bundles/vendor/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/vendor/themify-icons/themify-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/vendor/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/vendor/animate.css/animate.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/vendor/jscrollpane/jquery.jscrollpane.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/vendor/waves/waves.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/vendor/chartist/chartist.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/vendor/switchery/dist/switchery.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/vendor/morris/morris.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/vendor/jvectormap/jquery-jvectormap-2.0.3.css') }}">
+
+    <!-- Neptune CSS -->
+    <link rel="stylesheet" href="{{ asset('bundles/css/core.css') }}">
+
+    <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="large-sidebar fixed-sidebar fixed-header content-appear">
+<div class="wrapper">
+
+    <!-- Sidebar -->
+    <div class="site-sidebar-overlay"></div>
+    <div class="site-sidebar">
+        <a class="logo" href="index.html">
+            <span class="l-text">Host&Guest </span>
+            <span class="fa fa-home"></span>
+        </a>
+        <div class="custom-scroll custom-scroll-light">
+            <ul class="sidebar-menu">
+
+
+                <li class="with-sub">
+                    <a href="#" class="waves-effect  waves-light">
+                        <span class="s-caret"><i class="fa fa-angle-down"></i></span>
+                        <span class="s-icon"><i class="ti-user"></i></span>
+                        <span class="s-text">Gestion utilisateurs </span>
+                    </a>
+
+                </li>
+                <li class="with-sub">
+                    <a href="#" class="waves-effect  waves-light">
+                        <span class="s-caret"><i class="fa fa-angle-down"></i></span>
+                        <span class="s-icon"><i class="ti-home"></i></span>
+                        <span class="s-text">Gestion annonces</span>
+                    </a>
+                    <ul>
+                        <li class="compact-hide">
+                            <a href="frontend.html" class="waves-effect  waves-light">
+                                <span class="s-icon"><i class="fa fa-circle-o"style="color:#a42a2a"></i></span>
+                                <span class="s-text">Gerer annonces</span>
+                            </a>
+                        </li>
+                        <li class="compact-hide">
+                            <a href="frontend2.html" class="waves-effect  waves-light">
+                                <span class="s-icon"><i class="fa fa-circle-o" style="color:#0a7280"></i></span>
+                                <span class="s-text">Gerer offres annonce</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="with-sub">
+                    <a href="{{ path("AfficherCarte") }}" class="waves-effect  waves-light">
+                        <span class="s-caret"><i class="fa fa-angle-down"></i></span>
+                        <span class="s-icon"><i class="ti-money"></i></span>
+                        <span class="s-text">Gestion Cartes </span>
+                    </a>
+                </li>
+                <li class="with-sub">
+                    <a href="{{ path('Forum') }}" class="waves-effect  waves-light">
+                        <span class="s-caret"><i class="fa fa-angle-down"></i></span>
+                        <span class="s-icon"><i class="ti-themify-favicon"></i></span>
+                        <span class="s-text">Gestion forum</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="calendar.html" class="waves-effect  waves-light">
+                        <span class="s-icon"><i class="ti-comments"></i></span>
+                        <span class="s-text">Gestion feedback</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="calendar.html" class="waves-effect  waves-light">
+                        <span class="s-icon"><i class="ti-gallery"></i></span>
+                        <span class="s-text">Gestion experiences</span>
+                    </a>
+                </li>
+                <li class="with-sub">
+                    <a href="javascript: void(0);" class="waves-effect  waves-light">
+                        <span class="s-caret"><i class="fa fa-angle-down"></i></span>
+                        <span class="s-icon"><i class="ti-light-bulb"></i></span>
+                        <span class="s-text">Gestion guide </span>
+                    </a>
+                    <ul>
+                        <li class="with-sub">
+                            <a href="javascript: void(0);"class="waves-effect  waves-light">
+                                <span class="s-caret"><i class="fa fa-angle-down"></i></span>
+                                <span class="s-text">Gerer offre</span>
+                            </a>
+                            <ul>
+
+                                <li>
+                                    <a href="{{ path('offresguide_new') }}">
+                                        <span class="s-icon"><i class="fa fa-circle-o"style="color: #ff5a5f;"></i></span>
+                                        <span class="s-text">Ajouter</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('offresguide_showAll') }}">
+                                        <span class="s-icon"><i class="fa fa-circle-o"style="color:#00b3ee"></i></span>
+                                        <span class="s-text">Afficher</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                    </ul>
+                </li>
+
+                <li class="menu-title compact-hide">Tags</li>
+                <li class="compact-hide">
+                    <a href="javascript: void(0);" class="waves-effect  waves-light">
+                        <span class="s-icon"><i class="fa fa-circle-o "style="color:#B22222"></i></span>
+                        <span class="s-text">couleu1</span>
+                    </a>
+                </li>
+                <li class="compact-hide">
+                    <a href="javascript: void(0);" class="waves-effect  waves-light">
+                        <span class="s-icon"><i class="fa fa-circle-o"style="color:#FF8C00"></i></span>
+                        <span class="s-text">couleur2</span>
+                    </a>
+                </li>
+                <li class="compact-hide">
+                    <a href="documentation.html" class="waves-effect  waves-light">
+                        <span class="s-icon"><i class="fa fa-circle-o"style="color:#008080"></i></span>
+                        <span class="s-text">couleur3</span>
+                    </a>
+                </li>
+
+                <li class="compact-hide">
+                    <a href="documentation.html" class="waves-effect  waves-light">
+                        <span class="s-icon"><i class="fa fa-circle-o" style="color:#DC143C"></i></span>
+                        <span class="s-text">couleur4</span>
+                    </a>
+                </li>
+
+                <li class="compact-hide">
+                    <a href="documentation.html" class="waves-effect  waves-light">
+                        <span class="s-icon"><i class="fa fa-circle-o" style="color:#C71585"></i></span>
+                        <span class="s-text">couleur5</span>
+                    </a>
+                </li>
+
+                <li class="compact-hide">
+                    <a href="documentation.html" class="waves-effect  waves-light">
+                        <span class="s-icon"><i class="fa fa-circle-o" style="color:#2E8B57"></i></span>
+                        <span class="s-text">couleur6</span>
+                    </a>
+                </li>
+
+                <li class="compact-hide">
+                    <a href="documentation.html" class="waves-effect  waves-light">
+                        <span class="s-icon"><i class="fa fa-circle-o" style="color:#9400D3"></i></span>
+                        <span class="s-text">couleur7</span>
+                    </a>
+                </li>
+
+                <li class="compact-hide">
+                    <a href="documentation.html" class="waves-effect  waves-light">
+                        <span class="s-icon"><i class="fa fa-circle-o" style="color:#0000CD"></i></span>
+                        <span class="s-text">couleur8</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Sidebar second -->
+    <div class="site-sidebar-second custom-scroll custom-scroll-dark">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#tab-1" role="tab">Chat</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#tab-2" role="tab">Activity</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#tab-3" role="tab">Todo</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#tab-4" role="tab">Settings</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab-1" role="tabpanel">
+                <div class="sidebar-chat animated fadeIn">
+                    <div class="sidebar-group">
+                        <h6>Favorites</h6>
+                        <a class="text-black" href="#">
+                            <span class="sc-status bg-success"></span>
+                            <span class="sc-name">John Doe</span>
+                            <span class="sc-writing"> typing...<i class="ti-pencil"></i></span>
+                        </a>
+                        <a class="text-black" href="#">
+                            <span class="sc-status bg-success"></span>
+                            <span class="sc-name">Vance Osborn</span>
+                        </a>
+                        <a class="text-black" href="#">
+                            <span class="sc-status bg-danger"></span>
+                            <span class="sc-name">Wolfe Stevie</span>
+                            <span class="tag tag-primary">7</span>
+                        </a>
+                        <a class="text-black" href="#">
+                            <span class="sc-status bg-warning"></span>
+                            <span class="sc-name">Jonathan Mel</span>
+                        </a>
+                        <a class="text-black" href="#">
+                            <span class="sc-status bg-secondary"></span>
+                            <span class="sc-name">Carleton Josiah</span>
+                        </a>
+                    </div>
+                    <div class="sidebar-group">
+                        <h6>Work</h6>
+                        <a class="text-black" href="#">
+                            <span class="sc-status bg-secondary"></span>
+                            <span class="sc-name">Larry Hal</span>
+                        </a>
+                        <a class="text-black" href="#">
+                            <span class="sc-status bg-success"></span>
+                            <span class="sc-name">Ron Carran</span>
+                            <span class="sc-writing"> typing...<i class="ti-pencil"></i></span>
+                        </a>
+                    </div>
+                    <div class="sidebar-group">
+                        <h6>Social</h6>
+                        <a class="text-black" href="#">
+                            <span class="sc-status bg-success"></span>
+                            <span class="sc-name">Lucius Skyler</span>
+                            <span class="tag tag-primary">3</span>
+                        </a>
+                        <a class="text-black" href="#">
+                            <span class="sc-status bg-danger"></span>
+                            <span class="sc-name">Landon Graham</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="sidebar-chat-window animated fadeIn">
+                    <div class="scw-header clearfix">
+                        <a class="text-grey pull-xs-left" href="#"><i class="ti-angle-left"></i> Back</a>
+                        <div class="pull-xs-right">
+                            <strong>Jonathan Mel</strong>
+                            <div class="avatar box-32">
+                                <img src="img/avatars/5.jpg" alt="">
+                                <span class="status bg-success top right"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="scw-item">
+                        <span>Hello!</span>
+                    </div>
+                    <div class="scw-item self">
+                        <span>Meeting at 16:00 in the conference room. Remember?</span>
+                    </div>
+                    <div class="scw-item">
+                        <span>No problem. Thank's for reminder!</span>
+                    </div>
+                    <div class="scw-item self">
+                        <span>Prepare to be amazed.</span>
+                    </div>
+                    <div class="scw-item">
+                        <span>Good. Can't wait!</span>
+                    </div>
+                    <div class="scw-form">
+                        <form>
+                            <input class="form-control" type="text" placeholder="Type...">
+                            <button class="btn btn-secondary" type="button"><i class="ti-angle-right"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-2" role="tabpanel">
+                <div class="sidebar-activity animated fadeIn">
+                    <div class="notifications">
+                        <div class="n-item">
+                            <div class="media">
+                                <div class="media-left">
+                                    <div class="avatar box-48">
+                                        <img class="b-a-radius-circle" src="img/avatars/1.jpg" alt="">
+                                        <span class="n-icon bg-danger"><i class="ti-pin-alt"></i></span>
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <div class="n-text"><a class="text-black" href="#">John Doe</a> <span class="text-muted">uploaded <a class="text-black" href="#">monthly report</a></span></div>
+                                    <div class="text-muted font-90">12 minutes ago</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="n-item">
+                            <div class="media">
+                                <div class="media-left">
+                                    <div class="avatar box-48">
+                                        <img class="b-a-radius-circle" src="img/avatars/3.jpg" alt="">
+                                        <span class="n-icon bg-success"><i class="ti-comment"></i></span>
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <div class="n-text"><a class="text-black" href="#">Vance Osborn</a> <span class="text-muted">commented </span> <a class="text-black" href="#">Project</a></div>
+                                    <div class="n-comment m-y-0-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore</div>
+                                    <div class="text-muted font-90">3 hours ago</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="n-item">
+                            <div class="media">
+                                <div class="media-left">
+                                    <div class="avatar box-48">
+                                        <img class="b-a-radius-circle" src="img/avatars/2.jpg" alt="">
+                                        <span class="n-icon bg-danger"><i class="ti-email"></i></span>
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <div class="n-text"><a class="text-black" href="#">Ron Carran</a> <span class="text-muted">send you files</span></div>
+                                    <div class="row row-sm m-y-0-5">
+                                        <div class="col-xs-4">
+                                            <img class="img-fluid" src="img/photos-1/1.jpg" alt="">
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <img class="img-fluid" src="img/photos-1/2.jpg" alt="">
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <img class="img-fluid" src="img/photos-1/3.jpg" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="text-muted font-90">30 minutes ago</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="n-item">
+                            <div class="media">
+                                <div class="media-left">
+                                    <div class="avatar box-48">
+                                        <img class="b-a-radius-circle" src="img/avatars/4.jpg" alt="">
+                                        <span class="n-icon bg-primary"><i class="ti-plus"></i></span>
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <div class="n-text"><a class="text-black" href="#">Larry Hal</a> <span class="text-muted">invited you to </span><a class="text-black" href="#">Project</a></div>
+                                    <div class="text-muted font-90">10:58</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-3" role="tabpanel">
+                <div class="sidebar-todo animated fadeIn">
+                    <div class="sidebar-group">
+                        <h6>Important</h6>
+                        <div class="st-item">
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">Mock up</span>
+                            </label>
+                        </div>
+                        <div class="st-item">
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" checked>
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">Prototype iPhone</span>
+                            </label>
+                        </div>
+                        <div class="st-item">
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">Build final version</span>
+                            </label>
+                        </div>
+                        <div class="st-item">
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">Approval docs</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="sidebar-group">
+                        <h6>Secondary</h6>
+                        <div class="st-item">
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" checked>
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">Website redesign</span>
+                            </label>
+                        </div>
+                        <div class="st-item">
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" checked>
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">Skype call</span>
+                            </label>
+                        </div>
+                        <div class="st-item">
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input">
+                                <span class="custom-control-indicator"></span>
+                                <span class="custom-control-description">Blog post</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="tab-4" role="tabpanel">
+                <div class="sidebar-settings animated fadeIn">
+                    <div class="sidebar-group">
+                        <h6>Main</h6>
+                        <div class="ss-item">
+                            <div class="text-truncate">Anyone can register</div>
+                            <div class="ss-checkbox"><input type="checkbox" class="js-switch" data-size="small" data-color="#3e70c9" checked></div>
+                        </div>
+                        <div class="ss-item">
+                            <div class="text-truncate">Allow commenting</div>
+                            <div class="ss-checkbox"><input type="checkbox" class="js-switch" data-size="small" data-color="#3e70c9"></div>
+                        </div>
+                        <div class="ss-item">
+                            <div class="text-truncate">Allow deleting</div>
+                            <div class="ss-checkbox"><input type="checkbox" class="js-switch" data-size="small" data-color="#3e70c9"></div>
+                        </div>
+                    </div>
+                    <div class="sidebar-group">
+                        <h6>Notificatiоns</h6>
+                        <div class="ss-item">
+                            <div class="text-truncate">Commits</div>
+                            <div class="ss-checkbox"><input type="checkbox" class="js-switch" data-size="small" data-color="#3e70c9"></div>
+                        </div>
+                        <div class="ss-item">
+                            <div class="text-truncate">Messages</div>
+                            <div class="ss-checkbox"><input type="checkbox" class="js-switch" data-size="small" data-color="#3e70c9" checked></div>
+                        </div>
+                    </div>
+                    <div class="sidebar-group">
+                        <h6>Security</h6>
+                        <div class="ss-item">
+                            <div class="text-truncate">Daily backup</div>
+                            <div class="ss-checkbox"><input type="checkbox" class="js-switch" data-size="small" data-color="#3e70c9" checked></div>
+                        </div>
+                        <div class="ss-item">
+                            <div class="text-truncate">API Access</div>
+                            <div class="ss-checkbox"><input type="checkbox" class="js-switch" data-size="small" data-color="#3e70c9" checked></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template options -->
+    <div class="template-options custom-scroll custom-scroll-dark">
+        <div class="to-toggle"><i class="ti-settings"></i></div>
+        <div class="to-content">
+            <h6>Layouts</h6>
+            <div class="row m-b-2 text-xs-center">
+                <div class="col-xs-6 m-b-2">
+                    <a href="index.html">
+                        <img src="img/layouts/1.png" class="img-fluid">
+                    </a>
+                    <div class="text-muted">Default</div>
+                </div>
+                <div class="col-xs-6 m-b-2">
+                    <label>
+                        <input name="compact-sidebar" type="checkbox">
+                        <div class="to-icon"><i class="ti-check"></i></div>
+                        <img src="img/layouts/2.png" class="img-fluid">
+                    </label>
+                    <div class="text-muted">Compact Sidebar</div>
+                </div>
+                <div class="col-xs-6 m-b-2">
+                    <label>
+                        <input name="fixed-header" type="checkbox" checked>
+                        <div class="to-icon"><i class="ti-check"></i></div>
+                        <img src="img/layouts/3.png" class="img-fluid">
+                    </label>
+                    <div class="text-muted">Fixed Header</div>
+                </div>
+                <div class="col-xs-6 m-b-2">
+                    <label>
+                        <input name="boxed-wrapper" type="checkbox">
+                        <div class="to-icon"><i class="ti-check"></i></div>
+                        <img src="img/layouts/4.png" class="img-fluid">
+                    </label>
+                    <div class="text-muted">Boxed Wrapper</div>
+                </div>
+            </div>
+            <h6>Skins</h6>
+            <div class="row">
+                <div class="col-xs-3 m-b-2">
+                    <label>
+                        <input name="skin" value="skin-default" type="radio" >
+                        <div class="to-icon"><i class="ti-check"></i></div>
+                        <div class="to-skin">
+                            <span class="skin-first bg-white"></span>
+                            <span class="skin-second skin-dark-blue"></span>
+                            <span class="skin-third bg-info"></span>
+                        </div>
+                    </label>
+                </div>
+                <div class="col-xs-3 m-b-2">
+                    <label>
+                        <input name="skin" value="skin-1" type="radio" >
+                        <div class="to-icon"><i class="ti-check"></i></div>
+                        <div class="to-skin">
+                            <span class="skin-first skin-dark-blue-2"></span>
+                            <span class="skin-second bg-white"></span>
+                            <span class="skin-third bg-danger"></span>
+                        </div>
+                    </label>
+                </div>
+                <div class="col-xs-3 m-b-2">
+                    <label>
+                        <input name="skin" value="skin-2" type="radio">
+                        <div class="to-icon"><i class="ti-check"></i></div>
+                        <div class="to-skin">
+                            <span class="skin-first bg-white"></span>
+                            <span class="skin-second bg-black"></span>
+                            <span class="skin-third bg-success"></span>
+                        </div>
+                    </label>
+                </div>
+                <div class="col-xs-3 m-b-2">
+                    <label>
+                        <input name="skin" value="skin-3" type="radio">
+                        <div class="to-icon"><i class="ti-check"></i></div>
+                        <div class="to-skin">
+                            <span class="skin-first bg-white"></span>
+                            <span class="skin-second skin-grey"></span>
+                            <span class="skin-third bg-purple"></span>
+                        </div>
+                    </label>
+                </div>
+                <div class="col-xs-3 m-b-2">
+                    <label>
+                        <input name="skin" value="skin-4" type="radio" checked>
+                        <div class="to-icon"><i class="ti-check"></i></div>
+                        <div class="to-skin">
+                            <span class="skin-first skin-dark-blue"></span>
+                            <span class="skin-second skin-dark-blue-2"></span>
+                            <span class="skin-third bg-warning"></span>
+                        </div>
+                    </label>
+                </div>
+                <div class="col-xs-3 m-b-2">
+                    <label>
+                        <input name="skin" value="skin-5" type="radio">
+                        <div class="to-icon"><i class="ti-check"></i></div>
+                        <div class="to-skin">
+                            <span class="skin-first bg-primary"></span>
+                            <span class="skin-second bg-white"></span>
+                            <span class="skin-third bg-primary"></span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <div class="site-header">
+        <nav class="navbar navbar-light">
+            <ul class="nav navbar-nav">
+                <li class="nav-item m-r-1 hidden-lg-up">
+                    <a class="nav-link collapse-button" href="#">
+                        <i class="ti-menu"></i>
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav pull-xs-right">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#" data-toggle="dropdown" aria-expanded="false">
+                        <i class="ti-check"></i>
+                        <span class="tag tag-success top">3</span>
+                    </a>
+                    <div class="dropdown-tasks dropdown-menu dropdown-menu-right animated slideInUp">
+                        <div class="t-item">
+                            <div class="m-b-0-5">
+                                <a class="text-black" href="#">First Task</a>
+                                <span class="pull-xs-right text-muted">75%</span>
+                            </div>
+                            <progress class="progress progress-danger progress-sm" value="75" max="100">100%</progress>
+                            <span class="avatar box-32">
+										<img src="img/avatars/2.jpg" alt="">
+									</span>
+                            <a class="text-black" href="#">John Doe</a>, <span class="text-muted">5 min ago</span>
+                        </div>
+                        <div class="t-item">
+                            <div class="m-b-0-5">
+                                <a class="text-black" href="#">Second Task</a>
+                                <span class="pull-xs-right text-muted">40%</span>
+                            </div>
+                            <progress class="progress progress-purple progress-sm" value="40" max="100">100%</progress>
+                            <span class="avatar box-32">
+										<img src="img/avatars/3.jpg" alt="">
+									</span>
+                            <a class="text-black" href="#">John Doe</a>, <span class="text-muted">15:07</span>
+                        </div>
+                        <div class="t-item">
+                            <div class="m-b-0-5">
+                                <a class="text-black" href="#">Third Task</a>
+                                <span class="pull-xs-right text-muted">100%</span>
+                            </div>
+                            <progress class="progress progress-warning progress-sm" value="100" max="100">100%</progress>
+                            <span class="avatar box-32">
+										<img src="img/avatars/4.jpg" alt="">
+									</span>
+                            <a class="text-black" href="#">John Doe</a>, <span class="text-muted">yesterday</span>
+                        </div>
+                        <div class="t-item">
+                            <div class="m-b-0-5">
+                                <a class="text-black" href="#">Fourth Task</a>
+                                <span class="pull-xs-right text-muted">60%</span>
+                            </div>
+                            <progress class="progress progress-success progress-sm" value="60" max="100">100%</progress>
+                            <span class="avatar box-32">
+										<img src="img/avatars/5.jpg" alt="">
+									</span>
+                            <a class="text-black" href="#">John Doe</a>, <span class="text-muted">3 days ago</span>
+                        </div>
+                        <a class="t-item text-black text-xs-center" href="#">
+                            <strong>View all tasks</strong>
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#" data-toggle="dropdown" aria-expanded="false">
+                        <i class="ti-bell"></i>
+                        <span class="tag tag-danger top">12</span>
+                    </a>
+                    <div class="dropdown-messages dropdown-tasks dropdown-menu dropdown-menu-right animated slideInUp">
+                        <div class="m-item">
+                            <div class="mi-icon bg-info"><i class="ti-comment"></i></div>
+                            <div class="mi-text"><a class="text-black" href="#">John Doe</a> <span class="text-muted">commented post</span> <a class="text-black" href="#">Lorem ipsum dolor</a></div>
+                            <div class="mi-time">5 min ago</div>
+                        </div>
+                        <div class="m-item">
+                            <div class="mi-icon bg-danger"><i class="ti-heart"></i></div>
+                            <div class="mi-text"><a class="text-black" href="#">John Doe</a> <span class="text-muted">liked post</span> <a class="text-black" href="#">Lorem ipsum dolor</a></div>
+                            <div class="mi-time">15:07</div>
+                        </div>
+                        <div class="m-item">
+                            <div class="mi-icon bg-purple"><i class="ti-user"></i></div>
+                            <div class="mi-text"><a class="text-black" href="#">John Doe</a> <span class="text-muted">followed</span> <a class="text-black" href="#">Kate Doe</a></div>
+                            <div class="mi-time">yesterday</div>
+                        </div>
+                        <div class="m-item">
+                            <div class="mi-icon bg-danger"><i class="ti-heart"></i></div>
+                            <div class="mi-text"><a class="text-black" href="#">John Doe</a> <span class="text-muted">liked post</span> <a class="text-black" href="#">Lorem ipsum dolor</a></div>
+                            <div class="mi-time">3 days ago</div>
+                        </div>
+                        <a class="t-item text-black text-xs-center" href="#">
+                            <strong>View all notifications</strong>
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#" data-toggle="dropdown" aria-expanded="false">
+                        <div class="avatar box-32">
+                            <img src="img/avatars/1.jpg" alt="">
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right animated flipInY">
+                        <a class="dropdown-item" href="#">
+                            <i class="ti-email m-r-0-5"></i> Inbox
+                        </a>
+                        <a class="dropdown-item" href="pages-profile.html">
+                            <i class="ti-user m-r-0-5"></i> Profile
+                        </a>
+
+                        <div class="dropdown-divider"></div>
+
+                        <a class="dropdown-item" href="#"><i class="ti-power-off m-r-0-5"></i> Sign out</a>
+                    </div>
+                </li>
+                <li class="nav-item hidden-md-up">
+                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapse-1">
+                        <i class="ti-more"></i>
+                    </a>
+                </li>
+
+            </ul>
+            <div class="navbar-toggleable-sm collapse" id="collapse-1">
+                <div class="header-form pull-md-left m-md-r-1">
+                    <form>
+                        <input type="text" class="form-control b-a" placeholder="Search for...">
+                        <button type="submit" class="btn bg-white b-a-0">
+                            <i class="ti-search"></i>
+                        </button>
+                    </form>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
+                            Add
+                        </a>
+                        <div class="dropdown-menu animated flipInY">
+                            <a class="dropdown-item" href="#">
+                                Link
+                                <span class="tag tag-primary">3</span>
+                            </a>
+                            <a class="dropdown-item" href="#">Another link</a>
+                            <a class="dropdown-item" href="#">
+                                Something else here
+                                <span class="tag tag-success">7</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Separated link</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div class="site-content">
+        <!-- Content -->
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container-fluid">
+                2016 © Neptune
+            </div>
+        </footer>
+    </div>
+
+</div>
+
+<!-- Vendor JS -->
+<script type="text/javascript" src="{{ asset('bundles/vendor/jquery/jquery-1.12.3.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/vendor/tether/js/tether.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/vendor/detectmobilebrowser/detectmobilebrowser.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/vendor/jscrollpane/jquery.mousewheel.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/vendor/jscrollpane/mwheelIntent.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/vendor/jscrollpane/jquery.jscrollpane.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/vendor/waves/waves.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/vendor/chartist/chartist.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/vendor/chartist/chartist.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/vendor/switchery/dist/switchery.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/vendor/flot/jquery.flot.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/vendor/flot/jquery.flot.resize.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/vendor/flot.tooltip/js/jquery.flot.tooltip.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/vendor/CurvedLines/curvedLines.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/vendor/TinyColor/tinycolor.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/vendor/sparkline/jquery.sparkline.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/vendor/raphael/raphael.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/vendor/morris/morris.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/vendor/jvectormap/jquery-jvectormap-2.0.3.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/vendor/jvectormap/jquery-jvectormap-world-mill.js') }}"></script>
+
+<!-- Neptune JS -->
+<script type="text/javascript" src="{{ asset('bundles/js/app.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/js/demo.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/js/index.js') }}"></script>
+</body>
+</html>

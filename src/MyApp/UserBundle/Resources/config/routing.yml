@@ -1,0 +1,218 @@
+my_app_user_homepage:
+    path:     /
+    defaults: { _controller: MyAppUserBundle:User:test }
+my_app_user_forumIndex:
+    path:     /forum
+    defaults: { _controller: MyAppUserBundle:Forum:getAllCategorie }
+discussion:
+    path:     /discussion
+    defaults: { _controller: MyAppUserBundle:Discussion:viewDiscussion }
+categorie:
+    path:     /categorie
+    defaults: { _controller: MyAppUserBundle:Forum:getCategorie }
+newDiscussion:
+    path:     /newdiscussion
+    defaults: { _controller: MyAppUserBundle:Discussion:newDiscussion }
+affichage_des_discussion:
+    path:     /disrech
+    defaults: { _controller: MyAppUserBundle:Discussion:RechercheAJAX}
+    methods: [post]
+supression_rep:
+    path:     /deleterep
+    defaults: { _controller: MyAppUserBundle:Discussion:deleteDisAJAX}
+    methods: [post]
+delete_discussion:
+    path:     /deletediscussion
+    defaults: { _controller: MyAppUserBundle:Discussion:deleteDis}
+newRep:
+    path:     /newRep
+    defaults: { _controller: MyAppUserBundle:Discussion:newRep}
+uprep:
+    path:     /uprep
+    defaults: { _controller: MyAppUserBundle:Discussion:upRepAJAX}
+    methods: [post]
+downrep:
+    path:     /downrep
+    defaults: { _controller: MyAppUserBundle:Discussion:downRepAJAX}
+    methods: [post]
+modifRep:
+    path:     /modifRep
+    defaults: { _controller: MyAppUserBundle:Discussion:ModifRep}
+modifDis:
+    path:     /modifDis
+    defaults: { _controller: MyAppUserBundle:Discussion:ModifDis}
+citerRep:
+    path:     /citerRep
+    defaults: { _controller: MyAppUserBundle:Discussion:citerRep}
+likedis:
+    path:     /likedis
+    defaults: { _controller: MyAppUserBundle:Discussion:likeDisAJAX}
+    methods: [post]
+chat:
+    path:     /chat/{id}
+    defaults: { _controller: MyAppUserBundle:Discussion:chat}
+exitChat:
+    path:     /exitchat
+    defaults: { _controller: MyAppUserBundle:Discussion:Exitchat}
+RechercheForum:
+    path:     /searchForum
+    defaults: { _controller: MyAppUserBundle:Discussion:SearchF}
+supression_cat:
+    path:     /deletecat
+    defaults: { _controller: MyAppUserBundle:Forum:deleteCatAJAX}
+    methods: [post]
+modifierC:
+    path:     /modifCat
+    defaults: { _controller: MyAppUserBundle:Forum:editCategorie}
+categorihedd:
+    path:     /tt
+    defaults: { _controller: MyAppUserBundle:Default:test }
+my_app_user_demande:
+    resource: "@MyAppUserBundle/Resources/config/routing/demande.yml"
+    prefix:   /demande
+ajouter Annonce:
+    path:     /ajoutAnnonce
+    defaults: {_controller: MyAppUserBundle:Annonce:createVehicle}
+ajouter Image :
+    path:     /ajoutImage
+    defaults: {_controller: MyAppUserBundle:Annonce:addSp}
+afficher image:
+    path:      /afficher
+    defaults:  {_controller: MyAppUserBundle:Annonce:AfficherAnnonce}
+afficher Annonce:
+    path:      /afficherAnnonce
+    defaults:  {_controller: MyAppUserBundle:Annonce:afficherUneAnnonce}
+afficher UserAnnonce1:
+     path:     /afficherUserAnnonce1
+     defaults:  {_controller: MyAppUserBundle:Annonce:afficherUneAnnonceUser}
+rechercher Annonce:
+    path:      /rechercherAnnonce
+    defaults:   {_controller: MyAppUserBundle:Annonce:AffichHum}
+test map:
+    path:      /map
+    defaults:   {_controller: MyAppUserBundle:Annonce:Afficher}
+ville:
+    path:      /ville/{idpays}
+    defaults:   {_controller: MyAppUserBundle:Annonce:ville}
+afficherAnnonceUser:
+     path:     /annonceUser
+     defaults: {_controller: MyAppUserBundle:Annonce:afficherAnnonceUser}
+afficherAnnonceProposition:
+     path:     /annonceUserPropose/{id_demande}
+     defaults: {_controller: MyAppUserBundle:Annonce:afficherAnnonceProposition}
+Modifier annonce:
+     path:      /modifierAnnonce
+     defaults: {_controller: MyAppUserBundle:Annonce:modifier}
+
+supprimer annonce:
+     path:     /supprimerAnnonce
+     defaults:  {_controller: MyAppUserBundle:Annonce:supprimer}
+afficher adminAnnonce:
+     path:     /adminAnnonce
+     defaults:  {_controller: MyApp }
+Recharger Compte:
+    path:     /rechargerCompte
+    defaults: { _controller: MyAppUserBundle:Carte:rechargerCompte }
+Mes Reservations:
+    path:     /mesReservations
+    defaults: { _controller: MyAppUserBundle:Reservation:MesReservations }
+
+Recherche All:
+    path:     /recherchAll
+    defaults: { _controller: MyAppUserBundle:Reservation:rechercheAll }
+
+Recherche:
+    path:     /recherch/{caractere}
+    defaults: { _controller: MyAppUserBundle:Reservation:recherche }
+
+Res des visiteurs:
+    path:     /resDesVisiteurs
+    defaults: { _controller: MyAppUserBundle:Reservation:ResDesVisiteurs }
+
+Reservations des visiteurs acceptee:
+     path:     /ResDesVisiteursAcceptee/{id}
+     defaults: { _controller:  MyAppUserBundle:Reservation:ReservationsDesVisiteurAcceptee }
+
+Reservations des visiteurs a Traiter:
+     path:     /ResDesVisiteursATraiter/{id}
+     defaults: { _controller:  MyAppUserBundle:Reservation:ReservationsDesVisiteursATraiter }
+
+Accepter Reservation:
+     path:     /Acceptee/{id}/{idAnnonce}
+     defaults: { _controller:  MyAppUserBundle:Reservation:AccepterReservation }
+
+Refuser Reservation:
+     path:     /Refusee/{id}/{idAnnonce}
+     defaults: { _controller:  MyAppUserBundle:Reservation:RefuserReservation }
+
+Mes reservations a payer:
+     path:     /MesReservationsAPayer
+     defaults: { _controller:  MyAppUserBundle:Reservation:MesReservationsAPayer }
+
+Payer Reservation:
+     path:     /Payer/{id}
+     defaults: { _controller:  MyAppUserBundle:Reservation:Payer }
+
+Historique Paiment:
+     path:     /HistoriquePaiment
+     defaults: { _controller:  MyAppUserBundle:Reservation:HistoriquePaiment }
+
+Generer PDF:
+     path:     /Facture/{id}
+     defaults: { _controller:  MyAppUserBundle:Reservation:GeneratePdf }
+
+Ajouter Favoris:
+     path:     /Favoris/{id}
+     defaults: { _controller:  MyAppUserBundle:Reservation:AjouterFavories}
+
+Afficher Favories:
+     path:     /AffichFav
+     defaults: { _controller:  MyAppUserBundle:Reservation:AfficherFavories}
+
+Supprimer Favories:
+     path:     /supprimerFav/{id}
+     defaults: { _controller:  MyAppUserBundle:Reservation:SupprimerFavorie}
+my_app_user_feedIndex:
+    path:     /feedback
+    defaults: { _controller: MyAppUserBundle:Feedback:getAllCommentaires }
+feeds:
+    path:     /detailsFeed
+    defaults: { _controller: MyAppUserBundle:Feedback:getAllFeeds }
+demande:
+    path:     /demande
+    defaults: { _controller: MyAppUserBundle:Feedback:getAllDemande }
+    methods:  GET
+my_app_user_commentaire:
+    path:     /news
+    defaults: { _controller: MyAppUserBundle:Commentaire:newcommentaire }
+AllMycomments_show:
+    path:     /showallcomments
+    defaults: { _controller: "MyAppUserBundle:Commentaire:showAllMycomments" }
+commentaire_show:
+    path:     /{id}/show
+    defaults: { _controller: "MyAppUserBundle:Commentaire:show" }
+    methods:  GET
+commentaire_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "MyAppUserBundle:Commentaire:edit" }
+    methods:  [GET, POST]
+commentaire_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "MyAppUserBundle:Commentaire:delete" }
+reply:
+    path:     /reply
+    defaults: { _controller: MyAppUserBundle:Commentaire:AjouterReply }
+questionnaire:
+    path:     /sondage
+    defaults: { _controller: "MyAppUserBundle:Commentaire:afficherQuestion" }
+
+sendquestionnaire:
+    path:     /send
+    defaults: { _controller: "MyAppUserBundle:Commentaire:sendquestionnaire" }
+charts:
+    path:     /charts
+    defaults: { _controller: MyAppUserBundle:Commentaire:charts }
+
+RechecherCommentaire:
+    path:     /rechercher
+    defaults: { _controller: MyAppUserBundle:Commentaire:search }

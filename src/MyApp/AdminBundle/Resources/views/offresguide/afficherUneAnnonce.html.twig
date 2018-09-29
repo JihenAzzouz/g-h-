@@ -1,0 +1,174 @@
+
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+{% block body %}
+<div class="box js-box">
+    <!-- BEGIN HEADER-->
+    <header class="header header--brand">
+        <div class="container">
+
+        </div>
+    </header>
+    <!-- END HEADER-->
+    <!-- BEGIN NAVBAR-->
+    <div id="header-nav-offset"></div>
+    <nav id="header-nav" class="navbar navbar--header">
+        <div class="container">
+
+
+    </nav>
+    <!-- END NAVBAR-->
+    <div class="site-wrap js-site-wrap">
+        <!-- BEGIN BREADCRUMBS-->
+
+        <!-- END BREADCRUMBS-->
+        <div class="center">
+            <div class="container">
+                <div class="row">
+                    <div class="site site--main">
+                        <!-- BEGIN PROPERTY DETAILS-->
+                        <div class="property">
+
+                            <div class="clearfix"></div>
+                            <div class="property__slider">
+                                <div class="property__ribon">{{ m.prix }} dinars par jour </div>
+                                <div class="property__ribon property__ribon--status property__ribon--done">Reserver</div>
+
+                                <div id="properties-thumbs" class="slider slider--small js-slider-thumbs">
+                                    <div class="slider__block js-slick-slider">
+
+
+                                        <div class="slider__item slider__item--0"><a href="http:\\localhost:9090\uprofils\{{ m.image[0].url }}" data-size="1740x960" data-gallery-index='0' class="slider__img js-gallery-item"><img src="http:\\localhost:9090\uprofils\{{ m.image[0].url }}" style="display: block;width: 100%;height: auto"><span class="slider__description">Awesome Kitchen!!! Spacious kitchen with a granite counter tops, stainless steel appliances, hardwood floors, and plenty of cupboard space. On the other hand, a nicely designed feature sheet can create a quality, professional brand for your property, attracting more buyers who are interested in the benefits that the property can offer.</span></a></div>
+                                        <div class="slider__item slider__item--1"><a href="http:\\localhost:9090\uprofils\{{ m.image[1].url }}" data-size="1740x960" data-gallery-index='1' class="slider__img js-gallery-item"><img data-lazy="http:\\localhost:9090\uprofils\{{ m.image[1].url }}" src="http:\\localhost:9090\uprofils\{{ m.image[1].url }}" alt="" style="display: block;width: 100%;height: auto"><span class="slider__description">2</span></a></div>
+                                        <div class="slider__item slider__item--2"><a href="http:\\localhost:9090\uprofils\{{ m.image[2].url }}" data-size="1740x960" data-gallery-index='2' class="slider__img js-gallery-item"><img data-lazy="http:\\localhost:9090\uprofils\{{ m.image[2].url }}" src="http:\\localhost:9090\uprofils\{{ m.image[2].url }}" alt="" style="display: block;width: 100%;height: auto"><span class="slider__description">3</span></a></div>
+                                        <div class="slider__item slider__item--3"><a href="http:\\localhost:9090\uprofils\{{ m.image[3].url }}" data-size="1740x960" data-gallery-index='3' class="slider__img js-gallery-item"><img data-lazy="http:\\localhost:9090\uprofils\{{ m.image[3].url }}" src="http:\\localhost:9090\uprofils\{{ m.image[3].url }}" alt=""style="display: block;width: 100%;height: auto"><span class="slider__description">Ok</span></a></div>
+                                        <div class="slider__item slider__item--0"><a href="http:\\localhost:9090\uprofils\{{ m.image[4].url }}" data-size="1740x960" data-gallery-index='4' class="slider__img js-gallery-item"><img data-lazy="http:\\localhost:9090\uprofils\{{ m.image[4].url }}" src="http:\\localhost:9090\uprofils\{{ m.image[4].url }}" alt=""style="display: block;width: 100%;height: auto"><span class="slider__description">5</span></a></div>
+                                        <div class="slider__item slider__item--1"><a href="http:\\localhost:9090\uprofils\{{ m.image[5].url }}" data-size="1740x960" data-gallery-index='5' class="slider__img js-gallery-item"><img data-lazy="http:\\localhost:9090\uprofils\{{ m.image[5].url }}" src="http:\\localhost:9090\uprofils\{{ m.image[5].url }}" alt="" style="display: block;width: 100%;height: auto"><span class="slider__description">6</span></a></div>
+
+                                    </div>
+                                </div>
+<div class="slider slider--thumbs">
+    <div class="slider__wrap">
+        <div class="slider__block js-slick-slider">
+            <div data-slide-rel='0' class="slider__item slider__item--0">
+                <div class="slider__img"><img data-lazy="http:\\localhost:9090\uprofils\{{ m.image[0].url }}}" src="http:\\localhost:9090\uprofils\{{ m.image[0].url }}" alt=""></div>
+            </div>
+            <div data-slide-rel='1' class="slider__item slider__item--1">
+                <div class="slider__img"><img data-lazy="http:\\localhost:9090\uprofils\{{ m.image[1].url }}" src="http:\\localhost:9090\uprofils\{{ m.image[1].url }}" alt=""></div>
+            </div>
+            <div data-slide-rel='2' class="slider__item slider__item--2">
+                <div class="slider__img"><img data-lazy="http:\\localhost:9090\uprofils\{{ m.image[2].url }}" src="http:\\localhost:9090\uprofils\{{ m.image[2].url }}" alt=""></div>
+            </div>
+            <div data-slide-rel='3' class="slider__item slider__item--3">
+                <div class="slider__img"><img data-lazy="http:\\localhost:9090\uprofils\{{ m.image[3].url }}" src="http:\\localhost:9090\uprofils\{{ m.image[3].url }}" alt=""></div>
+            </div>
+            <div data-slide-rel='4' class="slider__item slider__item--0">
+                <div class="slider__img"><img data-lazy="http:\\localhost:9090\uprofils\{{ m.image[4].url }}" src="http:\\localhost:9090\uprofils\{{ m.image[4].url }}" alt=""></div>
+            </div>
+            <div data-slide-rel='5' class="slider__item slider__item--1">
+                <div class="slider__img"><img data-lazy="http:\\localhost:9090\uprofils\{{ m.image[5].url }}" src="http:\\localhost:9090\uprofils\{{ m.image[5].url }}" alt=""></div>
+            </div>
+
+        </div>
+        <button type="button" class="slider__control slider__control--prev js-slick-prev">
+            <svg class="slider__control-icon">
+                <use xlink:href="#icon-arrow-left"></use>
+            </svg>
+        </button>
+        <button type="button" class="slider__control slider__control--next js-slick-next">
+            <svg class="slider__control-icon">
+                <use xlink:href="#icon-arrow-right"></use>
+            </svg>
+        </button>
+    </div>
+</div>
+                            </div>
+        <div class="property__info">
+            <div class="property__info-item">Type de maison:  <strong> {{ m.typeMaison }}</strong></div>
+            <div class="property__info-item">Type de logement:  <strong> {{ m.typeLogement }} </strong></div>
+            <div class="property__info-item">Pays:  <strong> {{ m.idPays }}</strong></div>
+            <div class="property__info-item">Ville:  <strong> {{ m.ville }}</strong></div>
+      </div>
+                            <div class="property__plan">
+                                <dl class="property__plan-item">
+                                    <dt class="property__plan-icon">
+                                        <svg>
+                                            <use xlink:href="#icon-area"></use>
+                                        </svg>
+                                    </dt>
+                                    <dd class="property__plan-title">Espace</dd>
+                                    <dd class="property__plan-value">120</dd>
+                                </dl>
+                                <dl class="property__plan-item">
+                                    <dt class="property__plan-icon property__plan-icon--window">
+                                        <svg>
+                                            <use xlink:href="#icon-window"></use>
+                                        </svg>
+                                    </dt>
+                                    <dd class="property__plan-title">Chambres</dd>
+                                    <dd class="property__plan-value">{{ m.nombreChambre }}</dd>
+                                </dl>
+                                <dl class="property__plan-item">
+                                    <dt class="property__plan-icon property__plan-icon--bathrooms">
+                                        <svg>
+                                            <use xlink:href="#icon-bathrooms"></use>
+                                        </svg>
+                                    </dt>
+                                    <dd class="property__plan-title">Salles de bains</dd>
+                                    <dd class="property__plan-value">{{ m.nombreSalleDebain }}</dd>
+                                </dl>
+                                <dl class="property__plan-item">
+                                    <dt class="property__plan-icon">
+                                        <svg>
+                                            <use xlink:href="#icon-bedrooms"></use>
+                                        </svg>
+                                    </dt>
+                                    <dd class="property__plan-title">Lits</dd>
+                                    <dd class="property__plan-value">{{ m.nbreLit }}</dd>
+                                </dl>
+                                <dl class="property__plan-item">
+                                    <dt class="property__plan-icon property__plan-icon--garage">
+                                        <svg>
+                                            <use xlink:href="#icon-garage"></use>
+                                        </svg>
+                                    </dt>
+                                    <dd class="property__plan-title">Voyageurs</dd>
+                                    <dd class="property__plan-value">{{ m.nombreVoyageur }}</dd>
+                                </dl>
+                            </div>
+                            <div class="property__params-list property__params-list--options">
+                            <div class="property__params">
+                                <h1 class="property__subtitle">         Details       </h1>
+                                <ul class="property__params-list">
+                                    <li>Adresse<strong>{{ m.adresse }}</strong></li>
+                                    <li>Rue:<strong>{{ m.rue }}</strong></li>
+                                    <li>Batiment<strong>{{ m.batiment }}</strong></li>
+                                    <li>Code Postal<strong>{{ m.codePostal }}</strong></li>
+                                    <li>Prix<strong>{{ m.prix }}</strong></li>
+                                    <li>Date debut :<strong>{{ m.dateDebut|date('y-m-d') }}</strong></li>
+                                    <li>Date fin :<strong>{{ m.dateFin|date('y-m-d') }}</strong></li>
+
+
+                                </ul>
+                            </div>
+                            <div class="property__description js-unhide-block">
+                                <h4 class="property__subtitle">Description</h4>
+                                <div class="property__description-wrap">
+                                    <p>{{ m.description }}
+                                    </p>
+                                </div>
+
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}
+

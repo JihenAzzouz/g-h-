@@ -1,0 +1,380 @@
+{% extends 'MyAppUserBundle:experience:layout.html.twig' %}
+
+
+{% block body %}
+    <style>.loading {
+            float: right;
+            width: 30px;
+            height: 30px;
+
+            background: url({{ asset('bundles/img/arrows32.gif') }});
+        }</style>
+    <nav class="breadcrumbs">
+        <div class="container">
+            <ul>
+                <li class="breadcrumbs__item"><a href="{{ url('my_app_user_homepage') }}" class="breadcrumbs__link">Accueil</a>
+                </li>
+                <li class="breadcrumbs__item"><a href="{{ url('guestandhost_experiences') }}" class="breadcrumbs__link">Experiences</a>
+                </li>
+                <li class="breadcrumbs__item"><a href="{{ url('guestandhost_experiences') }}" class="breadcrumbs__link">Experiences {{ c.nom }}</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="widget__content">
+        <div class="center" style="background-image: url('{{ asset('bundles/img/1.jpg') }}');background-size: cover;">
+            <div class="container">
+                <div class="row">
+                    <header class="site__header">
+                        <h1 class="site__title"> Experiences {{ c.nom }}</h1>
+                        <h2 class="site__headline"></h2>
+                    </header>
+                    <div class="site__panel">
+                        <div class="listing__sort">
+                            <div class="form-group">
+                                <label for="in-listing-sort" class="control-label">Country:</label>
+                                {{ form_widget(fo.idPays) }}
+                            </div>
+                        </div>
+
+                        <div class="listing__sort">
+                            <div id="ll"></div>
+                            <div class="form-group">
+                                <label for="in-listing-sort" class="control-label">City:</label>
+                                {{ form_widget(fo.idVille) }}
+                            </div>
+                        </div>
+                        <div class="listing__sort">
+                            <div class="form-group">
+                                <input type="text" placeholder="recherche" name="" id="att" class="form-control input-sm" style="    margin-top: 24px;
+    height: 36px;    width: 236px;">
+                            </div>
+                        </div>
+
+
+                        <!--end of block .listing__sort-->
+                    </div>
+                    <div class="site__main">
+                        <div class="widget js-widget widget--main">
+                            <div class="listing listing--list" style="margin-top:10px;" id="exp">
+
+                                {% for i in v %}
+                                    <div class="listing__item" style="background-color: rgba(239, 239, 239, 0.6);margin-bottom: 3px;">
+                                        <div data-sr="enter bottom move 80px, scale(0), over 0s"
+                                             data-animate-end="animate-end"
+                                             class="worker js-unhide-block vcard worker--list">
+                                            <div class="worker__photo"><a
+                                                        href="{{ url('experiences_affichage_experience',{ 'id': i.id,'idc':c.id}) }}"
+                                                        class="item-photo item-photo--static"><img
+                                                            src="http://localhost:9090/uprofils/{{ i.images|first }}"
+                                                            alt="Christopher Pakulla" class="photo"/>
+
+                                                    {#  {{ socialButtons( { 'facebook': {'locale':'fr_FR', 'send':true}} ) }}#}
+                                                    <figure class="item-photo__hover"><span
+                                                                class="item-photo__more">View Details</span>
+                                                    </figure>
+                                                </a>
+
+
+
+                                              {#  {{ socialButtons( {'googleplus':false, 'facebook':false, 'linkedin':false} ) }}#}
+                                            </div>
+                                            <div class="worker__intro">
+                                                <div class="worker__intro-head">
+                                                    <h3 class="worker__name fn"> {{ i.titre }}</h3>
+                                                    <div class="worker__post">{{ i.idPays }}
+                                                        , {{ i.idVille }}</div>
+                                                    <button type="button" class="worker__show js-unhide">Contact
+                                                        agent
+                                                    </button>
+                                                    <div class="worker__listings"><i
+                                                                class="worker__favorites worker__favorites--highlight"></i>
+                                                        My Listings -<a href="agent_profile.html">12
+                                                            property</a></div>
+                                                </div>
+                                                <div class="worker__intro-row">
+                                                    <div class="worker__descr">
+                                                        <p>
+                                                            {{ i.description }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                </div>
+                                            </div>
+                                            <a href="agent_profile.html" class="worker__more">more details</a>
+                                        </div>
+                                        <!-- end of block .worker-->
+                                    </div>
+                                {% endfor %}
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script src="{{ asset('bundles/main/jquery.min.js') }}"></script>
+    <script src="{{ asset('bundles/main/m.js') }}"></script>
+    <script type="text/javascript">
+        $("document").ready(function () {
+            $.ajax({
+                type: 'get',
+                dataType: 'json',
+                url: Routing.generate('pays', {'idContinent':{{ c.id }} }),
+                beforeSend: function () {
+                    if ($(".loading").length == 0) {
+                        $("form #ll").append('<div class="loading"></div>');
+                    }
+                },
+                success: function (data) {
+                    $("#guestandhost_guestandhostbundle_experience_idPays").html('');
+                    for (i in data) {
+                        x = data[i];
+
+                        $('#guestandhost_guestandhostbundle_experience_idPays').append('<option value="' + x[1] + '" selected="selected"> ' + x[0] + ' </option>');
+                    }
+                    $(".loading").remove();
+                }
+            });
+        })
+    </script>
+    <script type="text/javascript">
+        $("document").ready(function () {
+            $("#guestandhost_guestandhostbundle_experience_idPays").click(
+                function () {
+                    $.ajax({
+                        type: 'get',
+                        dataType: 'json',
+                        // url: Routing.generate('villes',{'idPays':$(this).val()}),
+                        url: 'http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/experience/UserExperiencePays/' + $(this).val(),
+                        success: function (data) {
+                            // alert("eeee");
+                            if (data === null) {
+                                $("#exp").html('');
+                                $("#exp").html('<h4>null</h4>');
+                            } else {
+                                $("#exp").html('');
+                                for (i in data) {
+                                    x = data[i];
+                                    $("#exp").append('<div class="listing__item" style="background-color: rgba(239, 239, 239, 0.6);margin-bottom: 3px;">' +
+                                        '<div  class="worker js-unhide-block vcard worker--list">' +
+                                        '<div class="worker__photo">' +
+                                        '<a href="http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/experience/uneExperienceUser/' + x[1] + '" class="item-photo item-photo--static">' +
+                                        '<img src="http://localhost:9090/uprofils/' + x[3][0] + '" alt="Christopher Pakulla" class="photo">' +
+                                        '<figure class="item-photo__hover"><span class="item-photo__more">View Details</span></figure>' +
+                                        '</a></div>' +
+                                        '<div class="worker__intro">' +
+                                        '<div class="worker__intro-head">' +
+                                        '<h3 class="worker__name fn">' + x[0] + '</h3>' +
+                                        '<div class="worker__post">' + x[4] + ',' + x[5] +
+                                        '</div>' +
+                                        '<button type="button" class="worker__show js-unhide">' +
+                                        'Contact agent ' +
+                                        '</button>' +
+                                        '<div class="worker__listings">' +
+                                        '<i class="worker__favorites worker__favorites--highlight">' +
+                                        '</i>My Listings -' +
+                                        '<a href="agent_profile.html">12 property</a>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '<div class="worker__intro-row">' +
+                                        '<div class="worker__descr">' +
+                                        '<p>' + x[2] + '</p>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '<a href="agent_profile.html" class="worker__more">more details</a>' +
+                                        '</div>' +
+                                        '</div>'
+                                    );
+                                }
+                            }
+                        }
+                    });
+                })
+        })
+
+    </script>
+    <script type="text/javascript">
+        $("document").ready(function () {
+            $("#guestandhost_guestandhostbundle_experience_idVille").click(
+                function () {
+                    $.ajax({
+                        type: 'get',
+                        dataType: 'json',
+                        // url: Routing.generate('villes',{'idPays':$(this).val()}),
+                        url: 'http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/experience/UserExperienceVille/' + $(this).val(),
+                        success: function (data) {
+                            // alert("eeee");
+                            if (data === null) {
+                                $("#exp").html('');
+                                $("#exp").html('<h4>null</h4>');
+                            } else {
+                                $("#exp").html('');
+                                for (i in data) {
+                                    x = data[i];
+                                    $("#exp").append('<div class="listing__item" style="background-color: rgba(239, 239, 239, 0.6);margin-bottom: 3px;">' +
+                                        '<div  class="worker js-unhide-block vcard worker--list">' +
+                                        '<div class="worker__photo">' +
+                                        '<a href="http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/experience/uneExperienceUser/' + x[1] + '" class="item-photo item-photo--static">' +
+                                        '<img src="http://localhost:9090/uprofils/' + x[3][0] + '" alt="Christopher Pakulla" class="photo">' +
+                                        '<figure class="item-photo__hover"><span class="item-photo__more">View Details</span></figure>' +
+                                        '</a></div>' +
+                                        '<div class="worker__intro">' +
+                                        '<div class="worker__intro-head">' +
+                                        '<h3 class="worker__name fn">' + x[0] + '</h3>' +
+                                        '<div class="worker__post">' + x[4] + ',' + x[5] +
+                                        '</div>' +
+                                        '<button type="button" class="worker__show js-unhide">' +
+                                        'Contact agent ' +
+                                        '</button>' +
+                                        '<div class="worker__listings">' +
+                                        '<i class="worker__favorites worker__favorites--highlight">' +
+                                        '</i>My Listings -' +
+                                        '<a href="agent_profile.html">12 property</a>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '<div class="worker__intro-row">' +
+                                        '<div class="worker__descr">' +
+                                        '<p>' + x[2] + '</p>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '<a href="agent_profile.html" class="worker__more">more details</a>' +
+                                        '</div>' +
+                                        '</div>'
+                                    );
+                                }
+                            }
+                        }
+                    });
+                });
+            $("#att").keyup(function () {
+                var recherche = $(this).val();
+               // alert("ok");
+               // alert("ok");
+                if(recherche.length>0) {
+                    $.ajax({
+                        type: "GET",
+                        url: "http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/experience/exp/" + recherche + "/" +{{ c.id }},
+                        dataType: 'json',
+                        success: function (data) {
+                            // alert("eeee");
+                            if (data === null) {
+                                $("#exp").html('');
+                                $("#exp").html('<h4>null</h4>');
+                            } else {
+                                $("#exp").html('');
+                                for (i in data) {
+                                    x = data[i];
+                                    $("#exp").append('<div class="listing__item" style="background-color: rgba(239, 239, 239, 0.6);margin-bottom: 3px;">' +
+                                        '<div  class="worker js-unhide-block vcard worker--list">' +
+                                        '<div class="worker__photo">' +
+                                        '<a href="http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/experience/uneExperienceUser/' + x[1] + '" class="item-photo item-photo--static">' +
+                                        '<img src="http://localhost:9090/uprofils/' + x[3][0] + '" alt="Christopher Pakulla" class="photo">' +
+                                        '<figure class="item-photo__hover"><span class="item-photo__more">View Details</span></figure>' +
+                                        '</a></div>' +
+                                        '<div class="worker__intro">' +
+                                        '<div class="worker__intro-head">' +
+                                        '<h3 class="worker__name fn">' + x[0] + '</h3>' +
+                                        '<div class="worker__post">' + x[4] + ',' + x[5] +
+                                        '</div>' +
+                                        '<button type="button" class="worker__show js-unhide">' +
+                                        'Contact agent ' +
+                                        '</button>' +
+                                        '<div class="worker__listings">' +
+                                        '<i class="worker__favorites worker__favorites--highlight">' +
+                                        '</i>My Listings -' +
+                                        '<a href="agent_profile.html">12 property</a>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '<div class="worker__intro-row">' +
+                                        '<div class="worker__descr">' +
+                                        '<p>' + x[2] + '</p>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '<a href="agent_profile.html" class="worker__more">more details</a>' +
+                                        '</div>' +
+                                        '</div>'
+                                    );
+                                }
+                            }
+                        }
+                    });
+
+                }else {
+                    $.ajax({
+                        type: "GET",
+                        url: "http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/experience/expJson/" +{{ c.id }},
+                        dataType: 'json',
+                        success: function (data) {
+                            // alert("eeee");
+                            if (data === null) {
+                                $("#exp").html('');
+                                $("#exp").html('<h4>null</h4>');
+                            } else {
+                                $("#exp").html('');
+                                for (i in data) {
+                                    x = data[i];
+                                    $("#exp").append('<div class="listing__item">' +
+                                        '<div  class="worker js-unhide-block vcard worker--list">' +
+                                        '<div class="worker__photo">' +
+                                        '<a href="http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/experience/uneExperienceUser/' + x[1] + '" class="item-photo item-photo--static">' +
+                                        '<img src="http://localhost:9090/uprofils/' + x[3][0] + '" alt="Christopher Pakulla" class="photo">' +
+                                        '<figure class="item-photo__hover"><span class="item-photo__more">View Details</span></figure>' +
+                                        '</a></div>' +
+                                        '<div class="worker__intro">' +
+                                        '<div class="worker__intro-head">' +
+                                        '<h3 class="worker__name fn">' + x[0] + '</h3>' +
+                                        '<div class="worker__post">' + x[4] + ',' + x[5] +
+                                        '</div>' +
+                                        '<button type="button" class="worker__show js-unhide">' +
+                                        'Contact agent ' +
+                                        '</button>' +
+                                        '<div class="worker__listings">' +
+                                        '<i class="worker__favorites worker__favorites--highlight">' +
+                                        '</i>My Listings -' +
+                                        '<a href="agent_profile.html">12 property</a>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '<div class="worker__intro-row">' +
+                                        '<div class="worker__descr">' +
+                                        '<p>' + x[2] + '</p>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '<a href="agent_profile.html" class="worker__more">more details</a>' +
+                                        '</div>' +
+                                        '</div>'
+                                    );
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+
+
+        })
+
+    </script>
+
+
+    <script type="javascript">
+
+
+        $("document").ready(function () {
+
+
+        });
+
+
+    </script>
+{% endblock %}

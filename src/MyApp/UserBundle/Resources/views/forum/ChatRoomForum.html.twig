@@ -1,0 +1,260 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+{% block body %}
+    <style>
+        li {
+            list-style-type: none;
+        }
+        .alertco {
+            color : #f44336;
+            margin: 5px;
+        }
+        img {
+            border-radius: 50%;
+            height: 50px;
+            width: 50px;
+        }
+        .people-list ul li {
+            padding-bottom: 60px;
+        }
+    </style>
+    <link rel="stylesheet" href="{{ asset('bundles/Forum/chat/style.css') }}">
+    <nav class="breadcrumbs">
+        <div class="container">
+            <ul>
+                <li class="breadcrumbs__item"><a href="{{ path('my_app_user_homepage') }}" class="breadcrumbs__link">Home</a></li>
+                <li class="breadcrumbs__item"><a href="{{ path('my_app_user_forumIndex') }}" class="breadcrumbs__link">Forum </a></li>
+                <li class="breadcrumbs__item"><a href="#" class="Chat Room"> ChatRoom </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="site__main">
+        <div class="widget js-widget widget--dashboard" style="padding-top: 10px;background-image: url('{{ asset('bundles/front/media-demo/banner/BackGForum.jpg') }}');">
+            <header class="site__header">
+                <h2 style="color:white">Guest&Host ChatRoom</h2>
+                <p style="color:white;margin-bottom: 0px">Chat now with other members !</p>
+            </header>
+            <div class="container clearfix" style="margin: 0 auto;width: 1300px;background:#2c3e50; border-radius: 5px;height: 600px;">
+
+                <div class="people-list" id="people-list" style="height: 600px;">
+                    <div class="search" style="padding: 15px">
+                        members in this chatroom :
+                    </div>
+                    <ul id="users" class="list" style="padding: 15px;display: inline-block" >
+                        {% for i in users %}
+                            {%  if i != app.user %}
+                                <li>
+                                    <img src="{{ asset(i.photo) }}">
+                                    <div class="about">
+                                        <div class="name">
+                                            {{ i }}
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div style="position:relative;">
+                    <div style="float:right; position:initial">
+                        <a href="{{ path('exitChat', {'id' : user.id }) }}"><i class="fa fa-close" style="margin:5px;margin-right: 10px" id="close"></i></a>
+                    </div>
+
+                    <div class="chat" style="width:1040px;height: 580px;">
+                        <div class="chat-history" style="height: 490px">
+                            <ul id="chat-list">
+
+                            </ul>
+
+                        </div> <!-- end chat-history -->
+
+                        <div class="chat-message clearfix" style="padding:20px">
+                            <textarea name="message-to-send" id="form-message" placeholder ="Type your message" rows="1" style="width:900px"></textarea>
+                            <input type="button" id="form-submit" class="btn btn-primary" value="Envoyer" style="float:right"/>
+
+
+                        </div> <!-- end chat-message -->
+
+                    </div>
+                </div><!-- end chat -->
+            </div>
+        </div>
+    </div>
+    <script>
+        // This object will be sent everytime you submit a message in the sendMessage function.
+        d = new Date();
+        clientInformation = {
+            username: "{{ user }}",
+            date: d.toLocaleDateString()+'  '+d.toLocaleTimeString()+'.'
+
+        };
+
+        conn = new WebSocket('ws://localhost:8080/chat');
+
+        conn.onopen = function() {
+            console.info("Connection established succesfully");
+            Chat.sendMessage('co');
+        };
+
+        conn.onmessage = function(e) {
+            var data = JSON.parse(e.data);
+            Chat.appendMessage(data.username, data.message,data.date);
+            console.log(data);
+        };
+
+        conn.onerror = function(e){
+            alert("Error: something went wrong with the socket.");
+            console.error(e);
+        };
+
+        conn.onclose  = function(e) {
+            console.info("Connection closed");
+        };
+        // END SOCKET CONFIG
+
+
+        /// Some code to add the messages to the list element and the message submit.
+        document.getElementById("form-submit").addEventListener("click",function(){
+            var msg = document.getElementById("form-message").value;
+
+            if(!msg){
+                alert("Please send something on the chat");
+            }
+
+            Chat.sendMessage(msg);
+            // Empty text area
+            document.getElementById("form-message").value = "";
+        }, false);
+
+
+        document.getElementById("close").addEventListener("click",function(){
+            Chat.sendMessage('deco');
+        }, false);
+
+        // Mini API to send a message with the socket and append a message in a UL element.
+        var Chat = {
+            appendMessage: function(username,message,d){
+                var from;
+                if (message.localeCompare('deco')==0)
+                {
+                    ul = document.getElementById("chat-list");
+                    li = document.createElement("li");
+                    li.className = "alertco";
+                    li.innerHTML = username + '  a quitté le chatroom';
+                    ul.appendChild(li);
+                    li2 = document.getElementById(username);
+                    ul2 = document.getElementById("users");
+                    ul2.removeChild(li2);
+                }
+                else if (message.localeCompare('co')==0) {
+                    if(username.localeCompare(clientInformation.username)==0) {
+                        ul = document.getElementById("chat-list");
+                        li = document.createElement("li");
+                        li.className = "alertco";
+                        li.innerHTML = username + '  a rejoint le chatroom';
+                        ul.appendChild(li);
+                        ul2 = document.getElementById("users");
+                        li2 = document.createElement("li");
+                        li2.id = username;
+                        li.className = "clearfix";
+                        img2 = document.createElement("img");
+                        img2.src = "{{ asset(user.photo) }}";
+                        div22 = document.createElement("div");
+                        div22.className = "about";
+                        div23 = document.createElement("div");
+                        div23.className = "name";
+                        div23.innerHTML = username;
+                        div22.appendChild(div23);
+                        li2.appendChild(img2);
+                        li2.appendChild(div22);
+                        ul2.appendChild(li2);
+                    }
+                    else {
+                        ul = document.getElementById("chat-list");
+                        li = document.createElement("li");
+                        li.className = "alertco";
+                        li.innerHTML = username + '  a rejoint le chatroom';
+                        ul.appendChild(li);
+                        var ul2 = document.getElementById("users");
+                        var li2 = document.createElement("li");
+                        li2.id = username;
+                        li.className = "clearfix";
+                        var img2 = document.createElement("img");
+                        {% for i in online %}
+                        if (username.equals("{{ i.username }}"))
+                            img2.src = "{{ asset(i.photo) }}";
+                        {% endfor %}
+                        var div22 = document.createElement("div");
+                        div22.className = "about";
+                        var div23 = document.createElement("div");
+                        div23.className = "name";
+                        div23.innerHTML = username;
+                        div22.appendChild(div23);
+                        li2.appendChild(img2);
+                        li2.appendChild(div22);
+                        ul2.appendChild(li2);
+                    }
+                }
+                else {
+                    if(username.localeCompare(clientInformation.username)==0){
+                        var ul = document.getElementById("chat-list");
+                        var li = document.createElement("li");
+                        li.className = "clearfix";
+                        var div1 = document.createElement("div");
+                        div1.className ="message-data align-right";
+                        var span = document.createElement("span");
+                        span.className ="message-data-time";
+                        span.innerHTML = d;
+                        var span2 = document.createElement("span");
+                        span2.className ="message-data-name";
+                        span2.innerHTML =  '  '+username+'   ';
+                        var icon = document.createElement("i");
+                        icon.className="fa fa-circle me";
+                        div1.appendChild(span);
+                        div1.appendChild(span2);
+                        div1.appendChild(icon);
+                        var div2 = document.createElement("div");
+                        div2.className = "message other-message float-right";
+                        div2.innerHTML = message;
+                        li.appendChild(div1);
+                        li.appendChild(div2);
+                        ul.appendChild(li);
+                    }else{
+                        var ul = document.getElementById("chat-list");
+                        var li = document.createElement("li");
+                        li.className = "clearfix";
+                        var div1 = document.createElement("div");
+                        div1.className ="message-data align-left";
+                        var span = document.createElement("span");
+                        span.className ="message-data-time";
+                        span.innerHTML =d;
+                        var span2 = document.createElement("span");
+                        span2.className ="message-data-name";
+                        span2.innerHTML =  '  '+username+'   ';
+                        var icon = document.createElement("i");
+                        icon.className="fa fa-circle me";
+                        div1.appendChild(span);
+                        div1.appendChild(span2);
+                        div1.appendChild(icon);
+                        var div2 = document.createElement("div");
+                        div2.className = "message my-message";
+                        div2.innerHTML = message;
+                        li.appendChild(div1);
+                        li.appendChild(div2);
+                        ul.appendChild(li);
+                    }
+                }
+            },
+
+            sendMessage: function(text){
+                clientInformation.message = text;
+
+                // Send info as JSON
+                conn.send(JSON.stringify(clientInformation));
+                // Add my own message to the list
+                this.appendMessage(clientInformation.username, clientInformation.message,clientInformation.date);
+            }
+
+        };
+    </script>
+{% endblock body %}

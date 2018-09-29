@@ -1,0 +1,54 @@
+{% extends 'MyAppAdminBundle:Default:index.html.twig' %}
+{% block body %}
+    <h1>Offresguides list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Descriptif</th>
+                <th>Iduser</th>
+                <th>Tensionelectricite</th>
+                <th>Langue</th>
+                <th>Capitale</th>
+                <th>Population</th>
+                <th>Monnaie</th>
+                <th>Frequenceelectricite</th>
+                <th>Id</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for offresguide in offresguides %}
+            <tr>
+                <td><a href="{{ path('offresguide_show', { 'id': offresguide.id }) }}">{{ offresguide.titre }}</a></td>
+                <td>{{ offresguide.descriptif }}</td>
+                <td>{{ offresguide.idUser }}</td>
+                <td>{{ offresguide.tensionElectricite }}</td>
+                <td>{{ offresguide.langue }}</td>
+                <td>{{ offresguide.capitale }}</td>
+                <td>{{ offresguide.population }}</td>
+                <td>{{ offresguide.monnaie }}</td>
+                <td>{{ offresguide.frequenceElectricite }}</td>
+                <td>{{ offresguide.id }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('offresguide_show', { 'id': offresguide.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('offresguide_edit', { 'id': offresguide.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('offresguide_new') }}">Create a new offresguide</a>
+        </li>
+    </ul>
+{% endblock %}
